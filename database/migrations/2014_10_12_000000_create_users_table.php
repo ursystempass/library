@@ -16,14 +16,12 @@ return new class extends Migration
             $table->string('kode_user', 25);
             $table->char('nis', 20)->unique();
             $table->string('fullname', 125);
-            $table->string('username', 50);
-            $table->string('password', 255);
+            $table->string('password')->bcrypt();
             $table->string('kelas', 50);
+            $table->string('image')->nullable(); // Kolom untuk menyimpan nama file gambar
             $table->string('alamat', 225);
-            $table->string('verif', 50);
             $table->string('role', 50)->default('member'); // Tambah kolom role
             $table->string('join_date', 125);
-            $table->string('terakhir_login', 125)->nullable();
             $table->timestamps();
         });
 

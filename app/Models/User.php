@@ -21,14 +21,12 @@ class User extends Authenticatable
         'kode_user',
         'nis',
         'fullname',
-        'username',
         'password',
         'kelas',
         'alamat',
-        'verif',
         'role',
         'join_date',
-        'terakhir_login',
+        'image',
     ];
 
     /**

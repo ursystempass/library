@@ -27,18 +27,18 @@
               <i class="mdi mdi-crosshairs-gps menu-icon"></i>
           </a>
           <div class="collapse" id="ui-basic">
-              <ul class="nav flex-column sub-menu">
+              {{-- <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="{{ route('books.index') }}">Buku</a></li>
                   <li class="nav-item"> <a class="nav-link" href="{{ route('acquisitions.index') }}">Data Perolehan</a></li>
                   <li class="nav-item"> <a class="nav-link" href="{{ route('reductionbook.index') }}">Data Keluar</a></li>
                   <li class="nav-item"> <a class="nav-link" href="{{ route('shelves.index') }}">Rak Buku</a></li>
-              </ul>
+              </ul> --}}
           </div>
       </li>
 
       <li class="nav-item">
-          <a class="nav-link" href="{{ url('/borrowings') }}">
-              <span class="menu-title">Peminjaman</span>
+          <a class="nav-link" href="{{ url('/users') }}">
+              <span class="menu-title">Anggota</span>
               <i class="mdi mdi-home menu-icon"></i>
             </a>
       </li>
