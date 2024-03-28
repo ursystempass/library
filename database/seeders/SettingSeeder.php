@@ -17,7 +17,7 @@ class SettingSeeder extends Seeder
             'name' => 'Nama Pengaturan',
             'image' => 'path/to/image.jpg',
             'desc' => 'Deskripsi Pengaturan',
-            'address' => 'Alamat Pengaturan',
+                'address' => 'Alamat Pengaturan',
             'email' => 'pengaturan@example.com',
         ]);
     }
