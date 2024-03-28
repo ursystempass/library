@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\DashboardController;
 
@@ -23,7 +24,7 @@ Route::get('/', function () {
 
 // sidebar
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 });
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -32,3 +33,4 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 //all crud
 Route::resource('users', UserController::class);
+Route::resource('settings', SettingController::class);

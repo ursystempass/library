@@ -7,43 +7,47 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    /**
-     * Menampilkan formulir login.
-     *
-     * @return \Illuminate\View\View
-     */
     public function showLoginForm()
     {
-        return view('auth.member.login');
+        if (Auth::check()) {
+            if (Auth::user()->role === 'admin') {
+                return redirect()->route('admin.dashboard');
+            } else {
+                return redirect()->route('member.catalog');
+            }
+        }
+        return view('auth.login');
     }
 
-    /**
-     * Proses login pengguna.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
+    public function showAdminLoginForm()
+    {
+        return view('auth.admin-login');
+    }
+
+    public function showMemberLoginForm()
+    {
+        return view('auth.login');
+    }
+
     public function login(Request $request)
     {
         $credentials = $request->only('nis', 'password');
 
         if (Auth::attempt($credentials)) {
-            // Authentication passed...
-            return redirect()->intended('/dashboard');
+            $user = Auth::user();
+            if ($user->role === 'admin') {
+                return redirect()->route('admin.dashboard');
+            } else {
+                return redirect()->route('catalog');
+            }
         }
 
-        return redirect()->back()->withInput()->withErrors(['password' => 'Invalid NIS or password.']);
+        return redirect()->route('login')->with('error', 'Invalid credentials');
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
         Auth::logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
-
-        return redirect('/');
+        return redirect()->route('login');
     }
-
 }
