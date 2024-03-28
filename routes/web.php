@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CatalogController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
@@ -34,3 +35,6 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 //all crud
 Route::resource('users', UserController::class);
 Route::resource('settings', SettingController::class);
+Route::resource('catalog', CatalogController::class)->names([
+    'index' => 'member.catalog',
+]);
