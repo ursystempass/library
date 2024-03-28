@@ -28,31 +28,29 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Kode User</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control" name="kode_user" required />
+                                                    <input type="text" class="form-control" name="kode_user"
+                                                        required />
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">NIS</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control" name="nis" required />
+                                                    <input type="text" class="form-control" name="nis"
+                                                        required />
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Fullname</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control" name="fullname" required />
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">Username</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control" name="username" required />
+                                                    <input type="text" class="form-control" name="fullname"
+                                                        required />
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Password</label>
                                                 <div class="col-sm-9">
-                                                    <input type="password" class="form-control" name="password" required />
+                                                    <input type="password" class="form-control" name="password"
+                                                        required />
                                                 </div>
                                             </div>
                                         </div>
@@ -60,43 +58,38 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Kelas</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control" name="kelas" required />
+                                                    <input type="text" class="form-control" name="kelas"
+                                                        required />
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Image</label>
                                                 <div class="col-sm-9">
-                                                    <input type="file" class="form-control-file" name="image" accept="image/*">
+                                                    <input type="file" class="form-control-file" name="image"
+                                                        accept="image/*">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Alamat</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control" name="alamat" required />
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">Verif</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control" name="verif" required />
+                                                    <input type="text" class="form-control" name="alamat"
+                                                        required />
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Role</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control" name="role" />
+                                                    <select class="form-control" name="role">
+                                                        <option value="admin">Admin</option>
+                                                        <option value="member">Member</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Join Date</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control" name="join_date" required />
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">Terakhir Login</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control" name="terakhir_login" />
+                                                    <input type="text" class="form-control" name="join_date"
+                                                        value="{{ date('Y-m-d') }}" readonly />
                                                 </div>
                                             </div>
                                         </div>

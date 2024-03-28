@@ -40,79 +40,91 @@ class UserController extends Controller
             'kode_user' => 'required|string|max:25',
             'nis' => 'required|string|max:20|unique:users,nis',
             'fullname' => 'required|string|max:125',
-            'username' => 'required|string|max:50|unique:users,username',
             'password' => 'required|string|max:255',
             'kelas' => 'required|string|max:50',
             'alamat' => 'required|string|max:225',
-            'verif' => 'required|string|max:50',
             'role' => 'string|max:50',
-            'join_date' => 'required|string|max:125',
-            'terakhir_login' => 'nullable|string|max:125',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Maksimum 2MB
+            'join_date' => 'required|date_format:Y-m-d',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Maximum 2MB
         ]);
 
-        // Simpan gambar
+        // Initialize $requestData
+        $requestData = $request->all();
+
+        // Save image if present
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imageName = time().'.'.$image->getClientOriginalExtension();
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('images/users'), $imageName);
             $requestData['image'] = $imageName;
         }
 
         User::create($requestData);
 
-        return redirect()->route('user.index')
-            ->with('success', 'User created successfully.');
+        return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
+
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\User  $user
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit($id)
     {
-        return view('user.edit', compact('user'));
+        $user = User::findOrFail($id);
+        return view('admin.user.edit', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'kode_user' => 'required|string|max:25',
-            'nis' => 'required|string|max:20|unique:users,nis,' . $user->id,
+            'nis' => 'required|string|max:20|unique:users,nis,' . $id,
             'fullname' => 'required|string|max:125',
-            'username' => 'required|string|max:50|unique:users,username,' . $user->id,
-            'password' => 'required|string|max:255',
             'kelas' => 'required|string|max:50',
             'alamat' => 'required|string|max:225',
-            'verif' => 'required|string|max:50',
             'role' => 'string|max:50',
-            'join_date' => 'required|string|max:125',
-            'terakhir_login' => 'nullable|string|max:125',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Maksimum 2MB
+            'join_date' => 'required|date_format:Y-m-d',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Maximum 2MB
         ]);
 
-        // Simpan gambar
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time().'.'.$image->getClientOriginalExtension();
-            $image->move(public_path('images/users'), $imageName);
-            $requestData['image'] = $imageName;
+        $user = User::findOrFail($id);
+
+        $user->kode_user = $request->input('kode_user');
+        $user->nis = $request->input('nis');
+        $user->fullname = $request->input('fullname');
+        $user->kelas = $request->input('kelas');
+        $user->alamat = $request->input('alamat');
+        $user->role = $request->input('role');
+        $user->join_date = $request->input('join_date');
+
+        // Handle password update
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->input('password'));
         }
 
-        $user->update($requestData);
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images/users'), $imageName);
+            $user->image = $imageName;
+        }
 
-        return redirect()->route('user.index')
-            ->with('success', 'User updated successfully');
+        $user->save();
+
+        return redirect()->route('users.index')->with('success', 'User updated successfully.');
     }
+
 
     /**
      * Remove the specified resource from storage.
