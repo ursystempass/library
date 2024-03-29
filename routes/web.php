@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\CatalogController;
+use App\Http\Controllers\ClasseController;
+use App\Http\Controllers\MajorController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
@@ -26,15 +28,17 @@ Route::get('/', function () {
 // sidebar
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::resource('settings', SettingController::class);
+    Route::resource('majors', MajorController::class);
+    Route::resource('classes', ClasseController::class);
 });
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/logout', [AuthController::class, 'logout']);
 
-//all crud
 Route::resource('users', UserController::class);
-Route::resource('settings', SettingController::class);
 Route::resource('catalog', CatalogController::class)->names([
     'index' => 'member.catalog',
 ]);

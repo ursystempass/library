@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('alamat', 225);
             $table->string('role', 50)->default('member'); // Tambah kolom role
             $table->string('join_date', 125);
+            $table->unsignedBigInteger('classe_id'); // Kolom untuk kunci asing ke tabel 'classe'
+            $table->unsignedBigInteger('major_id'); 
             $table->timestamps();
         });
 

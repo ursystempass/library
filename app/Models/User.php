@@ -70,4 +70,14 @@ class User extends Authenticatable
     {
         $this->attributes['password'] = Hash::make($value);
     }
+
+    public function classe()
+    {
+        return $this->belongsTo(Classe::class);
+    }
+
+    public function major()
+    {
+        return $this->belongsTo(Major::class);
+    }
 }

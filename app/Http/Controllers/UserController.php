@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Major;
+use App\Models\Classe;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -25,7 +27,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.user.create');
+        $classes = Classe::all();
+        $majors = Major::all();
+        return view('admin.user.create', compact('classes','majors'));
     }
 
     /**
@@ -36,19 +40,21 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        // Validasi data input
         $request->validate([
             'kode_user' => 'required|string|max:25',
             'nis' => 'required|string|max:20|unique:users,nis',
             'fullname' => 'required|string|max:125',
             'password' => 'required|string|max:255',
-            'kelas' => 'required|string|max:50',
+            'classe_id' => 'required|exists:classes,id',
+            'major_id' => 'required|exists:majors,id',
             'alamat' => 'required|string|max:225',
             'role' => 'string|max:50',
             'join_date' => 'required|date_format:Y-m-d',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Maximum 2MB
         ]);
 
-        // Initialize $requestData
+        // Tangani penyimpanan data pengguna
         $requestData = $request->all();
 
         // Save image if present
@@ -59,7 +65,8 @@ class UserController extends Controller
             $requestData['image'] = $imageName;
         }
 
-        User::create($requestData);
+        // Buat data pengguna baru
+        $user = User::create($requestData);
 
         return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
