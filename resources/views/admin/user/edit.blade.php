@@ -29,8 +29,8 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Kode User</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control" name="kode_user"
-                                                        value="{{ $user->kode_user }}" required />
+                                                    <input type="text" class="form-control" name="user_code"
+                                                        value="{{ $user->user_code }}" required />
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -56,14 +56,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">Kelas</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control" name="kelas"
-                                                        value="{{ $user->kelas }}" required />
-                                                </div>
-                                            </div>
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Image</label>
                                                 <div class="col-sm-9">
@@ -74,8 +66,8 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Alamat</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control" name="alamat"
-                                                        value="{{ $user->alamat }}" required />
+                                                    <input type="text" class="form-control" name="address"
+                                                        value="{{ $user->address }}" required />
                                                 </div>
                                             </div>
                                             <div class="form-group row">

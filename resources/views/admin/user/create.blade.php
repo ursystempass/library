@@ -58,10 +58,28 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Kelas</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control" name="kelas"
-                                                        required />
+                                                    <select class="form-control" name="kelas" required>
+                                                        <option value="">Pilih Kelas</option>
+                                                        <!-- Tambahkan looping untuk menampilkan kelas -->
+                                                        @foreach($classes as $class)
+                                                            <option value="{{ $class->id }}">{{ $class->nama }}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">Jurusan</label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control" name="major" required>
+                                                        <option value="">Pilih Jurusan</option>
+                                                        <!-- Tambahkan looping untuk menampilkan jurusan -->
+                                                        @foreach($majors as $major)
+                                                            <option value="{{ $major->id }}">{{ $major->nama }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Image</label>
                                                 <div class="col-sm-9">

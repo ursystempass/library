@@ -21,41 +21,27 @@
                             <div class="card-body">
                                 <h4 class="card-title">Daftar Pengguna</h4>
                                 <!-- <button type="button" class="btn btn-gradient-primary btn-sm">Tambah Pengguna</button> -->
-                                <a href="{{ route('users.create') }}" class="btn btn-gradient-primary">Tambah
+                                <a href="{{ route('majors.create') }}" class="btn btn-gradient-primary">Tambah
                                     Pengguna</a>
                                 <div class="table-responsive"> <!-- Tambahkan kelas table-responsive di sini -->
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
-                                                <th>Kode User</th>
-                                                <th>NIS</th>
-                                                <th>Fullname</th>
-                                                <th>Username</th>
-                                                <th>Alamat</th>
-                                                <th>Status</th>
-                                                <th>Kelas</th>
-                                                <th>Jurusan</th>
-                                                <th>Join Date</th>
+                                                <th>Nama Jurusan</th>
+                                                <th>Kakom</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($users as $user)
+                                            @foreach ($majors as $major)
                                                 <tr>
-                                                    <td>{{ $user->kode_user }}</td>
-                                                    <td>{{ $user->nis }}</td>
-                                                    <td>{{ $user->fullname }}</td>
-                                                    <td>{{ $user->username }}</td>
-                                                    <td>{{ $user->alamat }}</td>
-                                                    <td>{{ $user->role }}</td>
-                                                    <td>{{ $user->classe->nama }}</td>
-                                                    <td>{{ $user->major->nama }}</td>
-                                                    <td>{{ $user->join_date }}</td>
+                                                    <td>{{ $major->nama }}</td>
+                                                    <td>{{ $major->kepala }}</td>
                                                     <td>
                                                         <!-- Tambahkan tombol untuk edit dan delete -->
-                                                        <a href="{{ route('users.edit', $user->id) }}"
+                                                        <a href="{{ route('majors.edit', $major->id) }}"
                                                             class="btn btn-info btn-sm">Edit</a>
-                                                        <form action="{{ route('users.destroy', $user->id) }}"
+                                                        <form action="{{ route('majors.destroy', $major->id) }}"
                                                             method="POST" style="display: inline;">
                                                             @csrf
                                                             @method('DELETE')
