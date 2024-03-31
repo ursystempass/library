@@ -6,6 +6,7 @@ namespace App\Models;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -23,11 +24,12 @@ class User extends Authenticatable
         'nis',
         'fullname',
         'password',
-        'kelas',
+        'image',
         'alamat',
         'role',
         'join_date',
-        'image',
+        'major_id',
+        'class_id',
     ];
 
     /**
@@ -71,13 +73,14 @@ class User extends Authenticatable
         $this->attributes['password'] = Hash::make($value);
     }
 
-    public function classe()
-    {
-        return $this->belongsTo(Classe::class);
-    }
-
     public function major()
     {
-        return $this->belongsTo(Major::class);
+        return $this->belongsTo(Major::class, 'major_id', 'id');
     }
+
+    public function class()
+    {
+        return $this->belongsTo(Classe::class, 'class_id', 'id');
+    }
+
 }
