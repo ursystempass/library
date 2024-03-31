@@ -1,127 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    @include('layouts.partials.head')
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create User</title>
 </head>
-
 <body>
-    <div class="container-scroller">
-        <!-- Include navbar -->
-        @include('layouts.partials.navbar')
+    <h1>Create User</h1>
 
-        <div class="container-fluid page-body-wrapper">
-            <!-- Include sidebar -->
-            @include('layouts.partials.sidebar')
-
-            <div class="main-panel">
-                <div class="content-wrapper">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Form User</h4>
-                                <form action="{{ route('users.store') }}" method="post" enctype="multipart/form-data">
-                                    @csrf
-                                    <p class="card-description">Informasi Pengguna</p>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">Kode User</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control" name="kode_user"
-                                                        required />
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">NIS</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control" name="nis"
-                                                        required />
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">Fullname</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control" name="fullname"
-                                                        required />
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">Password</label>
-                                                <div class="col-sm-9">
-                                                    <input type="password" class="form-control" name="password"
-                                                        required />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">Kelas</label>
-                                                <div class="col-sm-9">
-                                                    <select class="form-control" name="kelas" required>
-                                                        <option value="">Pilih Kelas</option>
-                                                        <!-- Tambahkan looping untuk menampilkan kelas -->
-                                                        @foreach($classes as $class)
-                                                            <option value="{{ $class->id }}">{{ $class->nama }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">Jurusan</label>
-                                                <div class="col-sm-9">
-                                                    <select class="form-control" name="major" required>
-                                                        <option value="">Pilih Jurusan</option>
-                                                        <!-- Tambahkan looping untuk menampilkan jurusan -->
-                                                        @foreach($majors as $major)
-                                                            <option value="{{ $major->id }}">{{ $major->nama }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">Image</label>
-                                                <div class="col-sm-9">
-                                                    <input type="file" class="form-control-file" name="image"
-                                                        accept="image/*">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">Alamat</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control" name="alamat"
-                                                        required />
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">Role</label>
-                                                <div class="col-sm-9">
-                                                    <select class="form-control" name="role">
-                                                        <option value="admin">Admin</option>
-                                                        <option value="member">Member</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">Join Date</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control" name="join_date"
-                                                        value="{{ date('Y-m-d') }}" readonly />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
-                                    <a href="{{ route('users.index') }}" class="btn btn-light">Cancel</a>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    @if ($errors->any())
+        <div>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
         </div>
-    </div>
-</body>
+    @endif
 
+    <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <input type="text" name="kode_user" placeholder="Kode User" required>
+        <input type="text" name="nis" placeholder="NIS" required>
+        <input type="text" name="fullname" placeholder="Full Name" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <input type="file" name="image" accept="image/*">
+        <input type="text" name="alamat" placeholder="Alamat" required>
+
+        <!-- Dropdown for selecting role -->
+        <select name="role">
+            <option value="member">Member</option>
+            <option value="admin">Admin</option>
+        </select>
+
+        <input type="text" name="join_date" placeholder="Join Date" required>
+
+        <!-- Dropdown for selecting major -->
+        <select name="major_id">
+            <option value="">Select Major</option>
+            @foreach($majors as $major)
+                <option value="{{ $major->id }}">{{ $major->nama }}</option>
+            @endforeach
+        </select>
+
+        <!-- Dropdown for selecting class -->
+        <select name="class_id">
+            <option value="">Select Class</option>
+            @foreach($classes as $class)
+                <option value="{{ $class->id }}">{{ $class->nama }}</option>
+            @endforeach
+        </select>
+
+        <button type="submit">Create</button>
+    </form>
+</body>
 </html>

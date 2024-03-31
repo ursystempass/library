@@ -17,13 +17,14 @@ return new class extends Migration
             $table->char('nis', 20)->unique();
             $table->string('fullname', 125);
             $table->string('password')->bcrypt();
-            $table->string('kelas', 50);
             $table->string('image')->nullable(); // Kolom untuk menyimpan nama file gambar
             $table->string('alamat', 225);
             $table->string('role', 50)->default('member'); // Tambah kolom role
             $table->string('join_date', 125);
-            $table->unsignedBigInteger('classe_id'); // Kolom untuk kunci asing ke tabel 'classe'
-            $table->unsignedBigInteger('major_id'); 
+            $table->unsignedBigInteger('major_id')->nullable();
+            $table->foreign('major_id')->references('id')->on('majors');
+            $table->unsignedBigInteger('class_id')->nullable();
+            $table->foreign('class_id')->references('id')->on('classes');
             $table->timestamps();
         });
 

@@ -6,25 +6,18 @@ use App\Models\User;
 use App\Models\Major;
 use App\Models\Classe;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $users = User::where('role', 'member')->get();
         return view('admin.user.index', compact('users'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         $classes = Classe::all();
@@ -32,65 +25,52 @@ class UserController extends Controller
         return view('admin.user.create', compact('classes','majors'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        // Validasi data input
         $request->validate([
             'kode_user' => 'required|string|max:25',
-            'nis' => 'required|string|max:20|unique:users,nis',
+            'nis' => 'required|string|max:20|unique:users',
             'fullname' => 'required|string|max:125',
-            'password' => 'required|string|max:255',
-            'classe_id' => 'required|exists:classes,id',
-            'major_id' => 'required|exists:majors,id',
+            'password' => 'required|string|min:6',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'alamat' => 'required|string|max:225',
-            'role' => 'string|max:50',
-            'join_date' => 'required|date_format:Y-m-d',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Maximum 2MB
+            'role' => 'nullable|string|max:50',
+            'join_date' => 'required|string|max:125',
+            'major_id' => 'nullable|exists:majors,id',
+            'class_id' => 'nullable|exists:classes,id',
         ]);
 
-        // Tangani penyimpanan data pengguna
-        $requestData = $request->all();
+        try {
+            $user = new User();
+            $user->kode_user = $request->kode_user;
+            $user->nis = $request->nis;
+            $user->fullname = $request->fullname;
+            $user->password = Hash::make($request->password);
+            $user->alamat = $request->alamat;
+            $user->role = $request->role ?? 'member';
+            $user->join_date = $request->join_date;
+            $user->major_id = $request->major_id;
+            $user->class_id = $request->class_id;
 
-        // Save image if present
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images/users'), $imageName);
-            $requestData['image'] = $imageName;
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $imageName = time() . '_' . $image->getClientOriginalName();
+                $image->move(public_path('images/users'), $imageName);
+                $user->image = 'images/users/' . $imageName;
+            }
+
+            $user->save();
+
+            return redirect()->route('users.index')
+                ->with('success', 'User created successfully.');
+        } catch (\Exception $e) {
+            return redirect()->route('users.create')
+                ->with('error', 'Failed to create user. ' . $e->getMessage())
+                ->withInput();
         }
-
-        // Buat data pengguna baru
-        $user = User::create($requestData);
-
-        return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
 
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $user = User::findOrFail($id);
-        return view('admin.user.edit', compact('user'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -133,12 +113,7 @@ class UserController extends Controller
     }
 
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(User $user)
     {
         $user->delete();
