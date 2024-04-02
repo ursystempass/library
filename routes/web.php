@@ -35,7 +35,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('settings', SettingController::class);
     Route::resource('majors', MajorController::class);
     Route::resource('classes', ClasseController::class);
-    Route::resource('users', UserController::class);
 
 });
 
@@ -44,5 +43,6 @@ Route::resource('catalog', CatalogController::class)->names([
     'index' => 'member.catalog',
 ]);
 
+Route::resource('users', UserController::class);
 
 

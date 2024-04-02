@@ -1,57 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create User</title>
+    @include('layouts.partials.head')
 </head>
+
 <body>
-    <h1>Create User</h1>
+    <div class="container-scroller">
+        <!-- Include navbar -->
+        @include('layouts.partials.navbar')
 
-    @if ($errors->any())
-        <div>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+        <div class="container-fluid page-body-wrapper">
+            <!-- Include sidebar -->
+            @include('layouts.partials.sidebar')
+
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    <div class="col-lg-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Tambah Pengguna</h4>
+                                <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label for="kode_user">Kode User</label>
+                                        <input type="text" class="form-control" id="kode_user" name="kode_user" placeholder="Kode User" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nis">NIS</label>
+                                        <input type="text" class="form-control" id="nis" name="nis" placeholder="NIS" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fullname">Nama Lengkap</label>
+                                        <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Nama Lengkap" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password">Password</label>
+                                        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="image">Image</label>
+                                        <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="alamat">Alamat</label>
+                                        <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Alamat" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="role">Role</label>
+                                        <select class="form-control" id="role" name="role">
+                                            <option value="member">Member</option>
+                                            <option value="admin">Admin</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="join_date">Tanggal Bergabung</label>
+                                        <input type="text" class="form-control" id="join_date" name="join_date" placeholder="Tanggal Bergabung" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="major_id">Jurusan</label>
+                                        <select class="form-control" id="major_id" name="major_id">
+                                            <option value="">Pilih Jurusan</option>
+                                            @foreach($majors as $major)
+                                                <option value="{{ $major->id }}">{{ $major->nama }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="class_id">Kelas</label>
+                                        <select class="form-control" id="class_id" name="class_id">
+                                            <option value="">Pilih Kelas</option>
+                                            @foreach($classes as $class)
+                                                <option value="{{ $class->id }}">{{ $class->nama }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-gradient-primary mr-2">Simpan</button>
+                                    <a href="{{ route('users.index') }}" class="btn btn-light">Batal</a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    @endif
-
-    <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        <input type="text" name="kode_user" placeholder="Kode User" required>
-        <input type="text" name="nis" placeholder="NIS" required>
-        <input type="text" name="fullname" placeholder="Full Name" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <input type="file" name="image" accept="image/*">
-        <input type="text" name="alamat" placeholder="Alamat" required>
-
-        <!-- Dropdown for selecting role -->
-        <select name="role">
-            <option value="member">Member</option>
-            <option value="admin">Admin</option>
-        </select>
-
-        <input type="text" name="join_date" placeholder="Join Date" required>
-
-        <!-- Dropdown for selecting major -->
-        <select name="major_id">
-            <option value="">Select Major</option>
-            @foreach($majors as $major)
-                <option value="{{ $major->id }}">{{ $major->nama }}</option>
-            @endforeach
-        </select>
-
-        <!-- Dropdown for selecting class -->
-        <select name="class_id">
-            <option value="">Select Class</option>
-            @foreach($classes as $class)
-                <option value="{{ $class->id }}">{{ $class->nama }}</option>
-            @endforeach
-        </select>
-
-        <button type="submit">Create</button>
-    </form>
+    </div>
 </body>
+
 </html>
