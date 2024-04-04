@@ -3,28 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Auth;
 
 class AuthController extends Controller
 {
     public function showLoginForm()
-    {
-        if (Auth::check()) {
-            if (Auth::user()->role === 'admin') {
-                return redirect()->route('admin.dashboard');
-            } else {
-                return redirect()->route('member.catalog');
-            }
-        }
-        return view('auth.login');
-    }
-
-    public function showAdminLoginForm()
-    {
-        return view('auth.admin-login');
-    }
-
-    public function showMemberLoginForm()
     {
         return view('auth.login');
     }
@@ -34,20 +17,24 @@ class AuthController extends Controller
         $credentials = $request->only('nis', 'password');
 
         if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-            if ($user->role === 'admin') {
+            // Jika autentikasi berhasil, redirect sesuai peran pengguna
+            if (Auth::user()->role === 'admin') {
                 return redirect()->route('admin.dashboard');
             } else {
                 return redirect()->route('member.catalog');
             }
         }
 
-        return redirect()->route('login')->with('error', 'Invalid credentials');
+        // Jika autentikasi gagal, kembalikan ke halaman login dengan pesan error
+        return redirect()->back()->withErrors(['message' => 'Invalid credentials']);
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::logout();
-        return redirect()->route('login');
+
+        $request->session()->invalidate();
+
+        return redirect('/');
     }
 }
