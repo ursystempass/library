@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\BookShelvesController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\MajorController;
+use App\Models\BookShelves;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
@@ -34,10 +37,11 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
-    Route::resource('users', UserController::class);
     Route::resource('settings', SettingController::class);
     Route::resource('majors', MajorController::class);
     Route::resource('classes', ClasseController::class);
+    Route::resource('bookshelves', BookShelvesController::class);
+    Route::resource('books', BookController::class);
 });
 
 
@@ -45,3 +49,4 @@ Route::resource('catalog', CatalogController::class)->names([
     'index' => 'member.catalog',
 ]);
 
+Route::resource('users', UserController::class);
