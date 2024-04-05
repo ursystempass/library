@@ -99,3 +99,17 @@ body {
     height: auto;
     margin-bottom: 10px;
 }
+
+.book button {
+    margin-top: 10px; /* Jarak antara tombol dan teks di bawahnya */
+    padding: 8px 16px; /* Ukuran padding untuk membuat tombol lebih lebar */
+    border-radius: 20px; /* Mengubah bentuk tombol menjadi lebih oval */
+    background-color: #ffcc00; /* Warna latar belakang tombol */
+    color: white; /* Warna teks tombol */
+    border: none; /* Menghilangkan border tombol */
+    cursor: pointer; /* Mengubah kursor saat diarahkan ke tombol */
+}
+
+.book button:hover {
+    background-color: #ff9900; /* Warna latar belakang tombol saat dihover */
+}
