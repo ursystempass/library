@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\BookShelvesController;
+use App\Http\Controllers\BorrowingController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\MajorController;
@@ -50,3 +51,4 @@ Route::resource('catalog', CatalogController::class)->names([
 ]);
 
 Route::resource('users', UserController::class);
+Route::resource('borrowings', BorrowingController::class);
