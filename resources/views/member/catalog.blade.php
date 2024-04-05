@@ -33,33 +33,15 @@
         </form>
 
         <div class="catalog">
-            <!-- Book 1 -->
-            <div class="book">
-                <img src="book1.jpg" alt="Book 1">
-                <h3>Book 1 Title</h3>
-                <p>Jumlah Peminjam: 50</p>
-                <p>Jumlah Buku: 100</p>
-            </div>
-            <div class="book">
-                <img src="book1.jpg" alt="Book 1">
-                <h3>Book 1 Title</h3>
-                <p>Jumlah Peminjam: 50</p>
-                <p>Jumlah Buku: 100</p>
-            </div>
-            <div class="book">
-                <img src="book1.jpg" alt="Book 1">
-                <h3>Book 1 Title</h3>
-                <p>Jumlah Peminjam: 50</p>
-                <p>Jumlah Buku: 100</p>
-            </div>
-            <!-- Book 2 -->
-            <div class="book">
-                <img src="book2.jpg" alt="Book 2">
-                <h3>Book 2 Title</h3>
-                <p>Jumlah Peminjam: 30</p>
-                <p>Jumlah Buku: 80</p>
-            </div>
-            <!-- Add more books as needed -->
+            @foreach($books as $book)
+                <div class="book">
+                    <img src="{{ $book->image }}" alt="{{ $book->title }}">
+                    <h3>{{ $book->title }}</h3>
+                    {{-- <p>Jumlah Peminjam: {{ $book->jumlah_peminjam }}</p>
+                    <p>Jumlah Buku: {{ $book->jumlah_buku }}</p> --}}
+                    <button onclick="location.href=''" type="button">Detail</button>
+                </div>
+            @endforeach
         </div>
 
     </div>

@@ -44,30 +44,10 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">Book</label>
-                                                <div class="col-sm-9">
-                                                    <select name="book_id" class="form-control">
-                                                        @foreach ($books as $book)
-                                                            <option value="{{ $book->id }}">{{ $book->book_code }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Borrow Date</label>
                                                 <div class="col-sm-9">
                                                     <input type="date" class="form-control" name="borrow_date"
                                                         required />
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">Book Condition</label>
-                                                <div class="col-sm-9">
-                                                    <select name="book_condition" class="form-control" required>
-                                                        <option value="good">Good</option>
-                                                        <option value="damaged">Damaged</option>
-                                                    </select>
                                                 </div>
                                             </div>
                                         </div>

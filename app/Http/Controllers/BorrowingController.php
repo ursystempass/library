@@ -11,7 +11,7 @@ class BorrowingController extends Controller
 {
     public function index()
     {
-        $borrowing = Borrowing::with('user', 'book')->get();
+        $borrowing = Borrowing::with('user')->get();
         return view('admin.borrowing.index', compact('borrowing'));
     }
 
@@ -27,9 +27,7 @@ class BorrowingController extends Controller
         $request->validate([
             'borrow_code' => 'required',
             'user_id' => 'required|exists:users,id',
-            'book_id' => 'required|exists:books,id',
             'borrow_date' => 'required',
-            'book_condition' => 'required|in:good,damaged',
         ]);
 
         Borrowing::create($request->all());
@@ -41,7 +39,6 @@ class BorrowingController extends Controller
     {
         $borrowing = Borrowing::findOrFail($id);
         $users = User::all();
-        $books = Book::all();
         return view('admin.borrowing.edit', compact('borrowing', 'users', 'books'));
     }
 
@@ -50,9 +47,7 @@ class BorrowingController extends Controller
         $request->validate([
             'borrow_code' => 'required',
             'user_id' => 'required|exists:users,id',
-            'book_id' => 'required|exists:books,id',
             'borrow_date' => 'required',
-            'book_condition' => 'required|in:good,damaged',
         ]);
 
         $borrowing = Borrowing::findOrFail($id);

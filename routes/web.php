@@ -1,18 +1,19 @@
 <?php
 
-use App\Http\Controllers\BookController;
-use App\Http\Controllers\BookShelvesController;
-use App\Http\Controllers\BorrowingController;
-use App\Http\Controllers\CatalogController;
-use App\Http\Controllers\ClasseController;
-use App\Http\Controllers\MajorController;
 use App\Models\BookShelves;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MajorController;
+use App\Http\Controllers\ClasseController;
+use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\BorrowingController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\BookShelvesController;
+use App\Http\Controllers\BorrowingDetailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,3 +53,4 @@ Route::resource('catalog', CatalogController::class)->names([
 
 Route::resource('users', UserController::class);
 Route::resource('borrowings', BorrowingController::class);
+Route::resource('borrowingdetails', BorrowingDetailController::class);
