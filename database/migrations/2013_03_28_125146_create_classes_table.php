@@ -14,9 +14,8 @@ return new class extends Migration
         Schema::create('classes', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->string('wali');
-            $table->integer('jumlah')->default(0);
-            $table->year('tahun_ajaran');
+            $table->integer('quantity')->default(0);
+            $table->year('academic_year');
             $table->timestamps();
         });
     }

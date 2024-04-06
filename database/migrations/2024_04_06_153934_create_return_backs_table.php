@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('majors', function (Blueprint $table) {
+        Schema::create('return_backs', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->string('dept_head');
+            $table->string('return_code');
+            $table->unsignedBigInteger('user_id');
+            $table->string('return_date', 125);
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('majors');
+        Schema::dropIfExists('return_backs');
     }
 };

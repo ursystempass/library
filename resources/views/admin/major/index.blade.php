@@ -36,9 +36,8 @@
                                             @foreach ($majors as $major)
                                                 <tr>
                                                     <td>{{ $major->nama }}</td>
-                                                    <td>{{ $major->kepala }}</td>
+                                                    <td>{{ $major->dept_head }}</td>
                                                     <td>
-                                                        <!-- Tambahkan tombol untuk edit dan delete -->
                                                         <a href="{{ route('majors.edit', $major->id) }}"
                                                             class="btn btn-info btn-sm">Edit</a>
                                                         <form action="{{ route('majors.destroy', $major->id) }}"
