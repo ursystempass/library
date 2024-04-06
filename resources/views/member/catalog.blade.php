@@ -37,8 +37,7 @@
                 <div class="book">
                     <img src="{{ $book->image }}" alt="{{ $book->title }}">
                     <h3>{{ $book->title }}</h3>
-                    {{-- <p>Jumlah Peminjam: {{ $book->jumlah_peminjam }}</p>
-                    <p>Jumlah Buku: {{ $book->jumlah_buku }}</p> --}}
+                    <p class="book-quantity">Jumlah Buku: {{ $book->jumlah_buku }}</p>
                     <button onclick="location.href=''" type="button">Detail</button>
                 </div>
             @endforeach

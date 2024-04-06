@@ -28,16 +28,12 @@
                                         <input type="text" class="form-control" id="nama" name="nama" value="{{ $class->nama }}">
                                     </div>
                                     <div class="form-group">
-                                        <label for="wali">Nama Wali Kelas</label>
-                                        <input type="text" class="form-control" id="wali" name="wali" value="{{ $class->wali }}">
+                                        <label for="quantity">Jumlah Siswa</label>
+                                        <input type="number" class="form-control" id="quantity" name="quantity" value="{{ $class->quantity }}">
                                     </div>
                                     <div class="form-group">
-                                        <label for="jumlah">Jumlah Siswa</label>
-                                        <input type="number" class="form-control" id="jumlah" name="jumlah" value="{{ $class->jumlah }}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="tahun_ajaran">Tahun Ajaran</label>
-                                        <input type="text" class="form-control" id="tahun_ajaran" name="tahun_ajaran" value="{{ $class->tahun_ajaran }}">
+                                        <label for="academic_year">Tahun Ajaran</label>
+                                        <input type="text" class="form-control" id="academic_year" name="academic_year" value="{{ $class->academic_year }}">
                                     </div>
                                     <button type="submit" class="btn btn-gradient-primary me-2">Update</button>
                                     <a href="{{ route('classes.index') }}" class="btn btn-light">Cancel</a>

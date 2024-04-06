@@ -7,14 +7,12 @@ use App\Models\Classe;
 
 class ClasseController extends Controller
 {
-    // Menampilkan semua data kelas
     public function index()
     {
         $classe = Classe::all();
         return view('admin.classe.index', compact('classe'));
     }
 
-    // Menampilkan form untuk menambah kelas
     public function create()
     {
         return view('admin.classe.create');
@@ -24,35 +22,30 @@ class ClasseController extends Controller
     {
         $request->validate([
             'nama' => 'required|string',
-            'wali' => 'required|string',
-            'jumlah' => 'required|integer', // Ensure 'jumlah' is required
-            'tahun_ajaran' => 'required', // You may need to adjust this validation based on your requirements
+            'quantity' => 'required|integer',
+            'academic_year' => 'required',
         ]);
 
         Classe::create([
             'nama' => $request->nama,
-            'wali' => $request->wali,
-            'tahun_ajaran' => $request->tahun_ajaran,
-            'jumlah' => $request->jumlah,
+            'academic_year' => $request->academic_year,
+            'quantity' => $request->quantity,
         ]);
 
         return redirect()->route('classes.index')->with('success', 'Class created successfully.');
     }
 
-    // Menampilkan form untuk mengedit kelas
     public function edit(Classe $class)
     {
         return view('admin.classe.edit', compact('class'));
     }
 
-    // Menyimpan perubahan pada kelas
     public function update(Request $request, Classe $class)
     {
         $request->validate([
             'nama' => 'required|string|unique:classes,nama,' . $class->id,
-            'wali' => 'required|string',
-            'jumlah' => 'required|integer',
-            'tahun_ajaran' => 'required', // You may need to adjust this validation based on your requirements
+            'quantity' => 'required|integer',
+            'academic_year' => 'required',
         ]);
 
         $class->update($request->all());
@@ -60,7 +53,6 @@ class ClasseController extends Controller
         return redirect()->route('classes.index')->with('success', 'Class updated successfully.');
     }
 
-    // Menghapus kelas
     public function destroy(Classe $class)
     {
         $class->delete();

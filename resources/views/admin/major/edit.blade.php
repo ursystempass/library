@@ -37,8 +37,8 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Kakom</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control" name="kepala"
-                                                        value="{{ $major->kepala }}" required />
+                                                    <input type="text" class="form-control" name="dept_head"
+                                                        value="{{ $major->dept_head }}" required />
                                                 </div>
                                             </div>
                                         </div>

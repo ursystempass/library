@@ -28,7 +28,6 @@
                                         <thead>
                                             <tr>
                                                 <th>Kelas</th>
-                                                <th>Wali</th>
                                                 <th>Tahun Ajaran</th>
                                                 <th>Jumlah Siswa</th>
                                                 <th>Jumlah Siswa</th>
@@ -38,9 +37,8 @@
                                             @foreach ($classe as $class)
                                                 <tr>
                                                     <td>{{ $class->nama }}</td>
-                                                    <td>{{ $class->wali }}</td>
-                                                    <td>{{ $class->tahun_ajaran }}</td>
-                                                    <td>{{ $class->jumlah }}</td>
+                                                    <td>{{ $class->academic_year }}</td>
+                                                    <td>{{ $class->quantity }}</td>
                                                     <td>
                                                         <!-- Tambahkan tombol untuk edit dan delete -->
                                                         <a href="{{ route('classes.edit', $class->id) }}"

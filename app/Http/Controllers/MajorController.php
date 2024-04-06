@@ -24,7 +24,7 @@ class MajorController extends Controller
     {
         $validatedData = $request->validate([
             'nama' => 'required|string',
-            'kepala' => 'required|string',
+            'dept_head' => 'required|string',
         ]);
 
         Major::create($validatedData);
@@ -43,7 +43,7 @@ class MajorController extends Controller
     {
         $validatedData = $request->validate([
             'nama' => 'required|string',
-            'kepala' => 'required|string',
+            'dept_head' => 'required|string',
         ]);
 
         $major = Major::findOrFail($id);

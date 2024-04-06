@@ -15,8 +15,8 @@ class MajorSeeder extends Seeder
     {
         // Seed majors
         $majors = [
-            ['nama' => 'Teknik Informatika', 'kepala' => 'Bapak X'],
-            ['nama' => 'Manajemen', 'kepala' => 'Ibu Y'],
+            ['nama' => 'Teknik Informatika', 'dept_head' => 'Bapak X'],
+            ['nama' => 'Manajemen', 'dept_head' => 'Ibu Y'],
             // tambahkan data jurusan lainnya sesuai kebutuhan
         ];
 
