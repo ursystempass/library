@@ -88,11 +88,13 @@ body {
 .book {
     width: calc(25% - 20px); /* 4 books per row with spacing */
     margin: 20px;
-    background-color: #000; /* book background color */
+    background-color: #000; /* Book background color */
     padding: 20px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); /* added shadow for 3D effect */
-    border-radius: 10px; /* rounded corners for a smoother look */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); /* Added shadow for 3D effect */
+    border-radius: 10px; /* Rounded corners for a smoother look */
+    text-align: center; /* Center-align the content */
 }
+
 .book img {
     max-width: 100%;
     max-height: 200px; /* Max height of book cover */
@@ -100,16 +102,37 @@ body {
     margin-bottom: 10px;
 }
 
+.book h3 {
+    color: #fff; /* Set text color to white */
+}
+
+.book-quantity {
+    color: #fff; /* Set text color to white */
+}
+
 .book button {
-    margin-top: 10px; /* Jarak antara tombol dan teks di bawahnya */
-    padding: 8px 16px; /* Ukuran padding untuk membuat tombol lebih lebar */
-    border-radius: 20px; /* Mengubah bentuk tombol menjadi lebih oval */
-    background-color: #ffcc00; /* Warna latar belakang tombol */
-    color: white; /* Warna teks tombol */
-    border: none; /* Menghilangkan border tombol */
-    cursor: pointer; /* Mengubah kursor saat diarahkan ke tombol */
+    margin-top: 10px; /* Adjust spacing between the content and button */
+    padding: 8px 16px; /* Padding for the button */
+    border-radius: 20px; /* Rounded button */
+    background-color: #ffcc00; /* Button background color */
+    color: white; /* Button text color */
+    border: none; /* Remove button border */
+    cursor: pointer; /* Change cursor to pointer on hover */
 }
 
 .book button:hover {
-    background-color: #ff9900; /* Warna latar belakang tombol saat dihover */
+    background-color: #ff9900; /* Change button background color on hover */
+}
+
+.book-details {
+    color: #000; /* Set text color to black */
+    text-align: center; /* Center-align the details */
+}
+
+.book-details h3 {
+    margin-top: 10px; /* Adjust spacing from the image */
+}
+
+.book-quantity {
+    margin-top: 10px; /* Adjust spacing from the title */
 }
