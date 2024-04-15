@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\DescController;
+use App\Http\Controllers\ReturnBackController;
+use App\Http\Controllers\ReturnDetailController;
 use App\Models\BookShelves;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -44,13 +47,19 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('classes', ClasseController::class);
     Route::resource('bookshelves', BookShelvesController::class);
     Route::resource('books', BookController::class);
+    Route::get('/users/admin', [UserController::class, 'showAdminPage'])->name('users.admin');
+    Route::resource('users', UserController::class);
+    Route::resource('borrowings', BorrowingController::class);
+    Route::resource('borrowingdetails', BorrowingDetailController::class);
+    Route::resource('rebacks', ReturnBackController::class);
+    Route::resource('redets', ReturnDetailController::class);
 });
 
 
-Route::resource('catalog', CatalogController::class)->names([
-    'index' => 'member.catalog',
-]);
+Route::middleware('member')->group(function () {
+    Route::resource('catalog', CatalogController::class)->names([
+        'index' => 'member.catalog',
+    ]);
+    Route::get('/book/{id}', [CatalogController::class, 'showDescription'])->name('member.desc');
+});
 
-Route::resource('users', UserController::class);
-Route::resource('borrowings', BorrowingController::class);
-Route::resource('borrowingdetails', BorrowingDetailController::class);
