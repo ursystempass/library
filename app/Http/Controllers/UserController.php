@@ -105,4 +105,16 @@ class UserController extends Controller
         return redirect()->route('users.index')
             ->with('success', 'User deleted successfully');
     }
+
+    public function showAdminPage()
+    {
+        $users = User::where('role', 'admin')->get();
+        return view('admin.user.admin', compact('users'));
+    }
+
+    public function show($id)
+{
+    $user = User::findOrFail($id);
+    return view('admin.user.admin', compact('user'));
+}
 }
