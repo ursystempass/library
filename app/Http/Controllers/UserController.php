@@ -18,32 +18,54 @@ class UserController extends Controller
 
     public function create()
     {
-        $majors = Major::all();
         $classes = Classe::all();
-
-        return view('admin.user.create', compact('majors', 'classes'));
+        $majors = Major::all();
+        return view('admin.user.create', compact('classes', 'majors'));
     }
 
     public function store(Request $request)
     {
-        // Validasi input
-        $validatedData = $request->validate([
+        $request->validate([
             'kode_user' => 'required|string|max:25',
             'nis' => 'required|string|max:20|unique:users',
             'fullname' => 'required|string|max:125',
-            'password' => 'required|string',
-            'image' => 'nullable|string',
+            'password' => 'required|string|min:6',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'alamat' => 'required|string|max:225',
-            'role' => 'required|string|max:50',
+            'role' => 'nullable|string|max:50',
             'join_date' => 'required|string|max:125',
             'major_id' => 'nullable|exists:majors,id',
             'class_id' => 'nullable|exists:classes,id',
         ]);
 
-        // Simpan data ke dalam database
-        User::create($validatedData);
+        try {
+            $user = new User();
+            $user->kode_user = $request->kode_user;
+            $user->nis = $request->nis;
+            $user->fullname = $request->fullname;
+            $user->password = Hash::make($request->password);
+            $user->alamat = $request->alamat;
+            $user->role = $request->role ?? 'member';
+            $user->join_date = $request->join_date;
+            $user->major_id = $request->major_id;
+            $user->class_id = $request->class_id;
 
-        return redirect()->route('users.index')->with('success', 'User created successfully.');
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $imageName = time() . '_' . $image->getClientOriginalName();
+                $image->move(public_path('images/users'), $imageName);
+                $user->image = 'images/users/' . $imageName;
+            }
+
+            $user->save();
+
+            return redirect()->route('users.index')
+                ->with('success', 'User created successfully.');
+        } catch (\Exception $e) {
+            return redirect()->route('users.create')
+                ->with('error', 'Failed to create user. ' . $e->getMessage())
+                ->withInput();
+        }
     }
 
     public function edit($id)
@@ -105,16 +127,4 @@ class UserController extends Controller
         return redirect()->route('users.index')
             ->with('success', 'User deleted successfully');
     }
-
-    public function showAdminPage()
-    {
-        $users = User::where('role', 'admin')->get();
-        return view('admin.user.admin', compact('users'));
-    }
-
-    public function show($id)
-{
-    $user = User::findOrFail($id);
-    return view('admin.user.admin', compact('user'));
-}
 }
