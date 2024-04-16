@@ -1,32 +1,39 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 </head>
 <body>
-    <h1>Login</h1>
-
-    @if ($errors->any())
-        <div>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+    <div class="container">
+        <div class="gradient-background">
+            <h1>Login</h1>
         </div>
-    @endif
 
-    <form action="{{ route('login') }}" method="POST">
-        @csrf
-        <label for="nis">NIS:</label><br>
-        <input type="text" id="nis" name="nis"><br>
+        @if ($errors->any())
+            <div class="error-msg">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password"><br>
+        <form action="{{ route('login') }}" method="POST" class="login-form">
+            @csrf
+            <label for="nis">NIS:</label>
+            <input type="text" id="nis" name="nis">
 
-        <button type="submit">Login</button>
-    </form>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+
+            <button type="submit">Login</button>
+        </form>
+    </div>
 </body>
 </html>

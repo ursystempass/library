@@ -18,8 +18,8 @@ class BorrowingController extends Controller
     public function create()
     {
         $users = User::all();
-        $books = Book::all();
-        return view('admin.borrowing.create', compact('users', 'books'));
+        $borrowCode = $this->generateBorrowCode(); // Generate kode peminjaman otomatis
+        return view('admin.borrowing.create', compact('users', 'borrowCode'));
     }
 
     public function store(Request $request)
@@ -34,6 +34,20 @@ class BorrowingController extends Controller
 
         return redirect()->route('borrowings.index')->with('success', 'Borrowing created successfully.');
     }
+
+    private function generateBorrowCode()
+    {
+        $latestBorrow = Borrowing::latest()->first(); // Dapatkan data peminjaman terbaru
+        if ($latestBorrow) {
+            $latestBorrowCode = $latestBorrow->borrow_code;
+            $latestBorrowNumber = intval(substr($latestBorrowCode, 10));
+            $newBorrowNumber = $latestBorrowNumber + 1;
+            return "CODEPINJAM$newBorrowNumber";
+        } else {
+            return "CODEPINJAM1";
+        }
+    }
+
 
     public function edit($id)
     {
@@ -56,12 +70,11 @@ class BorrowingController extends Controller
         return redirect()->route('borrowings.index')->with('success', 'Borrowing updated successfully.');
     }
     public function destroy($id)
-{
-    $borrowing = Borrowing::findOrFail($id);
-    $borrowing->delete();
+    {
+        $borrowing = Borrowing::findOrFail($id);
+        $borrowing->delete();
 
-    return redirect()->route('borrowings.index')->with('success', 'Borrowing deleted successfully.');
+        return redirect()->route('borrowings.index')->with('success', 'Borrowing deleted successfully.');
+    }
 }
 
-
-}

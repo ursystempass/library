@@ -16,8 +16,7 @@
                 <th>Book Title</th>
                 <th>Return Date</th>
                 <th>Book Condition</th>
-                <th>Created At</th>
-                <th>Updated At</th>
+                <th>Type</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -29,8 +28,7 @@
                 <td>{{ $detail->book->title }}</td>
                 <td>{{ $detail->return_date }}</td>
                 <td>{{ $detail->book_condition }}</td>
-                <td>{{ $detail->created_at }}</td>
-                <td>{{ $detail->updated_at }}</td>
+                <td>{{ $detail->type }}</td>
                 <td>
                     <a href="{{ route('borrowingdetails.edit', $detail->id) }}">Edit</a>
                     <form action="{{ route('borrowingdetails.destroy', $detail->id) }}" method="POST">

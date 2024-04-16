@@ -30,6 +30,14 @@
             <input type="date" name="return_date" id="return_date">
         </div>
         <div>
+            <label for="type">Type:</label>
+            <select name="type" id="type">
+                <option value="personal">Personal</option>
+                <option value="monthly">Monthly</option>
+                <option value="annual">Annual</option>
+            </select>
+        </div>
+        <div>
             <label for="book_condition">Book Condition:</label>
             <select name="book_condition" id="book_condition">
                 <option value="good">Good</option>

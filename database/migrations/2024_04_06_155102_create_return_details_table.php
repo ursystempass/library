@@ -17,8 +17,6 @@ return new class extends Migration
             $table->unsignedBigInteger('borrow_id');
             $table->decimal('fine', 10, 2)->default(0.00);
             $table->timestamps();
-
-            // Foreign keys
             $table->foreign('return_back_id')->references('id')->on('return_backs')->onDelete('cascade');
             $table->foreign('borrow_id')->references('id')->on('borrowings')->onDelete('cascade');
         });

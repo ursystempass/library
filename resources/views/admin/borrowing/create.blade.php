@@ -28,9 +28,11 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Kode Peminjaman</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="borrow_code" required />
+                                                <input type="text" class="form-control" name="borrow_code"
+                                                    value="{{ $borrowCode }}" readonly required />
                                             </div>
                                         </div>
+
                                         <div class="col-md-6">
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">User</label>

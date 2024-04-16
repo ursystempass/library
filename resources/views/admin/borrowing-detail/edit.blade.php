@@ -31,6 +31,15 @@
             <input type="date" name="return_date" id="return_date" value="{{ $borrowingDetail->return_date }}">
         </div>
         <div>
+            <label for="type">Type:</label>
+            <select name="type" id="type">
+                <option value="personal" {{ old('type', $borrowingDetail->type) === 'personal' ? 'selected' : '' }}>Personal</option>
+                <option value="monthly" {{ old  ('type', $borrowingDetail->type) === 'monthly' ? 'selected' : '' }}>Monthly</option>
+                <option value="annual" {{ old('type', $borrowingDetail->type) === 'annual' ? 'selected' : '' }}>Annual</option>
+            </select>
+        </div>
+
+        <div>
             <label for="book_condition">Book Condition:</label>
             <select name="book_condition" id="book_condition">
                 <option value="good" {{ $borrowingDetail->book_condition == 'good' ? 'selected' : '' }}>Good</option>
