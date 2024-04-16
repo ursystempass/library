@@ -33,12 +33,11 @@
         </form>
 
         <div class="catalog">
-            @foreach($books as $book)
+            @foreach($groupedBooks as $groupedBook)
                 <div class="book">
-                    <img src="{{ $book->image }}" alt="{{ $book->title }}">
-                    <h3>{{ $book->title }}</h3>
-                    <p class="book-quantity">Jumlah Buku: {{ $book->jumlah_buku }}</p>
-                    <button onclick="location.href=''" type="button">Detail</button>
+                    <h3>{{ $groupedBook->title }}</h3>
+                    <p class="book-quantity">Jumlah Buku: {{ $groupedBook->total_books }}</p>
+                    <a href="{{ route('member.desc', ['id' => $groupedBook->title]) }}" class="detail-button">Detail</a>
                 </div>
             @endforeach
         </div>
@@ -85,9 +84,19 @@
             });
         });
     </script>
-    <script>
-        function logout() {
-            fetch('/logout', {
+   <script>
+    function logout() {
+        Swal.fire({
+            title: 'Logout',
+            text: 'Are you sure you want to logout?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, logout'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch('/logout', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -104,8 +113,11 @@
                 .catch(error => {
                     console.error('Error:', error);
                 });
-        }
-    </script>
+            }
+        });
+    }
+</script>
+
 
 </body>
 
