@@ -17,6 +17,7 @@ use App\Http\Controllers\BorrowingController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BookShelvesController;
 use App\Http\Controllers\BorrowingDetailController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 
 // Route untuk proses login
@@ -42,6 +44,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::resource('settings', SettingController::class);
     Route::resource('majors', MajorController::class);
     Route::resource('classes', ClasseController::class);
