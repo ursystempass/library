@@ -17,9 +17,9 @@ class BookController extends Controller
     public function create()
     {
         $bookshelves = BookShelves::all();
-        return view('admin.book.create', compact('bookshelves'));
+        $bookCode = $this->generateBookCode(); // Generate kode buku otomatis
+        return view('admin.book.create', compact('bookshelves', 'bookCode'));
     }
-
     public function store(Request $request)
     {
         $request->validate([
@@ -39,7 +39,7 @@ class BookController extends Controller
         $book = new Book();
         $book->title = $request->input('title');
         $book->isbn = $request->input('isbn');
-        $book->book_code = $request->input('book_code');
+        $book->book_code = $this->generateBookCode(); // Generate kode buku otomatis
         $book->book_category = $request->input('book_category');
         $book->publisher = $request->input('publisher');
         $book->author = $request->input('author');
@@ -58,6 +58,22 @@ class BookController extends Controller
         $book->save();
 
         return redirect()->route('books.index')->with('success', 'Book created successfully');
+    }
+
+
+    private function generateBookCode()
+    {
+        $latestBook = Book::latest()->first(); // Dapatkan data buku terbaru
+        if ($latestBook) {
+            // Jika ada buku terbaru, ekstrak nomor urut dari kode buku terbaru dan tambahkan 1
+            $latestBookCode = $latestBook->book_code;
+            $latestBookNumber = intval(substr($latestBookCode, 4));
+            $newBookNumber = $latestBookNumber + 1;
+            return "CODE$newBookNumber";
+        } else {
+            // Jika tidak ada buku terbaru, mulai dari CODE1
+            return "CODE1";
+        }
     }
 
     public function edit($id)

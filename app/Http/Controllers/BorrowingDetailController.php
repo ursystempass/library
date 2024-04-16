@@ -30,6 +30,8 @@ class BorrowingDetailController extends Controller
                 'book_id' => 'required|numeric',
                 'return_date' => 'required|date',
                 'book_condition' => 'required|string|max:125',
+                'type' => 'required|in:personal,monthly,annual',
+
             ]);
 
             BorrowingDetail::create($request->all());
@@ -55,6 +57,8 @@ class BorrowingDetailController extends Controller
             'book_id' => 'required|numeric',
             'return_date' => 'required|date',
             'book_condition' => 'required|string|max:125',
+            'type' => 'required|in:personal,monthly,annual',
+
         ]);
 
         $borrowingDetail = BorrowingDetail::findOrFail($id);
