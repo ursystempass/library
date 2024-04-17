@@ -10,20 +10,21 @@ class CatalogController extends Controller
 {
     public function index()
     {
-        $groupedBooks = Book::select('title', DB::raw('COUNT(*) as total_books'))
-                        ->groupBy('title')
-                        ->get();
-
-        return view('member.catalog', ['groupedBooks' => $groupedBooks]);
+        $books = Book::all(); // Mengambil semua data buku dari database
+        return view('member.catalog', compact('books'));
     }
+    public function greeting()
+    {
+        // Anda dapat menyesuaikan logika di sini sesuai dengan kebutuhan
+        return view('member.greeting');
+    }
+
+
     public function showDescription($id)
     {
-        $book = Book::find($id);
-
-        if (!$book) {
-            return redirect()->route('member.catalog')->with('error', 'Book not found');
-        }
-
-        return view('member.desc', ['book' => $book]);
+        $book = Book::findOrFail($id);
+        return view('member.desc', compact('book'));
     }
+
+
 }
