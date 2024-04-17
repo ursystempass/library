@@ -1,0 +1,86 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom right, #9370db, #add8e6, #ff69b4); /* Gradasi ungu-biru-pink */
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 40px; /* Menambahkan padding atas dan bawah */
+    box-sizing: border-box; /* Menjamin padding tidak menambah lebar elemen */
+}
+
+.intro {
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.9); /* Warna latar belakang dengan opacity */
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Shadow */
+    width: 100%; /* Mengatur lebar intro */
+    max-width: 800px; /* Batasi lebar maksimum */
+}
+
+h1 {
+    color: #333; /* Warna teks */
+    margin-bottom: 20px;
+}
+
+p {
+    color: #555; /* Warna teks */
+    margin-bottom: 40px;
+}
+
+.options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.option {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    margin: 0 20px 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Shadow */
+    transition: transform 0.3s ease;
+    flex: 1 0 calc(33% - 40px);
+    max-width: calc(33% - 40px);
+}
+
+.option:hover {
+    transform: translateY(-5px); /* Efek mengangkat saat dihover */
+}
+
+.option h2 {
+    color: #ff69b4; /* Warna teks */
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.option p {
+    color: #666; /* Warna teks */
+    margin-bottom: 20px;
+}
+
+.explore-button {
+    text-decoration: none;
+    background-color: #ff69b4; /* Warna background tombol */
+    color: #fff; /* Warna teks tombol */
+    padding: 15px 40px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+.explore-button:hover {
+    background-color: #ff4d94; /* Warna background tombol saat dihover */
+}

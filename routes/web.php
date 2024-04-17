@@ -36,11 +36,7 @@ Route::get('/', function () {
 
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-
-// Route untuk proses login
 Route::post('/login', [AuthController::class, 'login']);
-
-// Route untuk logout
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
@@ -53,16 +49,22 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/users/admin', [UserController::class, 'showAdminPage'])->name('users.admin');
     Route::resource('users', UserController::class);
     Route::resource('borrowings', BorrowingController::class);
+    Route::get('borrow-scan', [BorrowingController::class, 'scan'])->name('borrow.scan');
+    Route::get('reserv-scan', [BorrowingController::class, 'scanReservation'])->name('reserv.scan.get');
+    Route::post('reserv-scan', [BorrowingController::class, 'scanReservation'])->name('reserv.scan.post');
+    Route::post('borrow-scan', 'BorrowingController@scanCode')->name('scan.code');
     Route::resource('borrowingdetails', BorrowingDetailController::class);
+    Route::put('/borrowingdetails/{id}/updateStatus', [BorrowingDetailController::class, 'updateStatus'])->name('borrowingdetails.updateStatus');
     Route::resource('rebacks', ReturnBackController::class);
     Route::resource('redets', ReturnDetailController::class);
 });
 
 
 Route::middleware('member')->group(function () {
-    Route::resource('catalog', CatalogController::class)->names([
-        'index' => 'member.catalog',
-    ]);
+        Route::resource('catalog', CatalogController::class)->names([
+            'index' => 'member.catalog',
+        ]);
+        Route::get('/greeting', [CatalogController::class, 'greeting'])->name('catalog.greeting'); // Rute untuk halaman greeting di CatalogController
     Route::get('/book/{id}', [CatalogController::class, 'showDescription'])->name('member.desc');
 });
 

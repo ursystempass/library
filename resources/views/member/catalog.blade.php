@@ -10,38 +10,52 @@
     <!-- Include SweetAlert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <link rel="stylesheet" href="{{ asset('css/catalog.css') }}">
+    <style>
+        /* CSS tambahan */
+        #bookList {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
 
     <div class="header">
-        <button id="logoutButton" onclick="logout()" class="logout-btn">
-            Logout
-        </button>
         <h1>Perpustakaan SMKN 1 Cibinong</h1>
         <div class="header-icons">
-            <i class="fas fa-bell"></i>
-            <i class="fas fa-user"></i>
+            <i class="fas fa-bell"></i> <!-- Icon notifikasi -->
+            <i class="fas fa-user"></i> <!-- Icon profil -->
         </div>
     </div>
 
-    <div class="container">
 
+    <div class="container">
         <form class="search-container" id="searchForm">
             <input type="text" placeholder="Search..." name="q">
             <button type="submit">Search</button>
         </form>
-
-        <div class="catalog">
-            @foreach($groupedBooks as $groupedBook)
-                <div class="book">
-                    <h3>{{ $groupedBook->title }}</h3>
-                    <p class="book-quantity">Jumlah Buku: {{ $groupedBook->total_books }}</p>
-                    <a href="{{ route('member.desc', ['id' => $groupedBook->title]) }}" class="detail-button">Detail</a>
-                </div>
-            @endforeach
+        <button id="logoutButton" onclick="logout()" class="logout-btn">
+            Logout
+        </button>
+        <!-- Daftar buku (akan dimunculkan setelah pencarian dilakukan) -->
+        <div id="bookList">
+            <div class="catalog">
+                <!-- HTML untuk menampilkan setiap buku akan ditempatkan di sini -->
+                @foreach ($books as $book)
+                    <div class="book">
+                        <img src="{{ $book->image }}" alt="{{ $book->title }}">
+                        <div class="book-details">
+                            <h3>{{ $book->title }}</h3>
+                            <p>{{ $book->author }}</p>
+                            <p>{{ $book->publisher }}</p>
+                            <p>Rak: {{ $book->shelf_location_id }}</p>
+                            <p class="book-quantity">Jumlah buku: {{ $book->quantity }}</p>
+                            <a href="{{ route('member.desc', ['id' => $book->id]) }}" class="btn-detail">Detail</a>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
         </div>
-
     </div>
 
     <div class="footer">
@@ -50,11 +64,11 @@
 
     <script>
         document.getElementById('searchForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the form from submitting
+            event.preventDefault(); // Mencegah form dari pengiriman
 
-            var query = this.querySelector('input[name="q"]').value; // Get the value from the search input
+            var query = this.querySelector('input[name="q"]').value
+        .toLowerCase(); // Dapatkan nilai dari input pencarian
 
-            // Example: Check if the query is empty, if so, show a SweetAlert
             if (!query.trim()) {
                 Swal.fire({
                     icon: 'error',
@@ -66,58 +80,68 @@
                         content: 'monochrome-content'
                     }
                 });
-                return; // Exit the function
+                return; // Keluar dari fungsi jika query kosong
             }
 
-            // You can perform an actual search here
-            // If no results found, you can show a SweetAlert as well
-            // For demonstration, we'll simply show "Book not found" if the query is not empty but no actual search is performed
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Book not found',
-                customClass: {
-                    popup: 'monochrome-popup',
-                    title: 'monochrome-title',
-                    content: 'monochrome-content'
+            var books = document.querySelectorAll('.book'); // Dapatkan semua elemen buku
+            var bookList = document.getElementById('bookList'); // Dapatkan div daftar buku
+            var searchContainer = document.getElementById('searchContainer'); // Dapatkan elemen pencarian
+
+            // Loop melalui setiap buku
+            books.forEach(function(book) {
+                var title = book.querySelector('h3').innerText.toLowerCase(); // Dapatkan judul buku
+                var author = book.querySelector('p:nth-of-type(2)').innerText
+            .toLowerCase(); // Dapatkan pengarang buku
+
+                // Periksa apakah judul buku atau pengarang buku cocok dengan query pencarian
+                if (title.includes(query) || author.includes(query)) {
+                    book.style.display = 'block'; // Tampilkan buku jika cocok
+                } else {
+                    book.style.display = 'none'; // Sembunyikan buku jika tidak cocok
                 }
             });
+
+            // Tampilkan daftar buku jika ada buku yang cocok dengan pencarian
+            bookList.style.display = 'block';
+
+            // Pindahkan elemen pencarian
+            searchContainer.style.top = '20px'; // Sesuaikan nilai top sesuai kebutuhan
+            searchContainer.style.bottom = 'auto'; // Hapus nilai bottom
         });
     </script>
-   <script>
-    function logout() {
-        Swal.fire({
-            title: 'Logout',
-            text: 'Are you sure you want to logout?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, logout'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                fetch('/logout', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                })
-                .then(response => {
-                    if (response.ok) {
-                        window.location.href = '{{ route('login') }}';
-                    } else {
-                        console.error('Logout failed');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-            }
-        });
-    }
-</script>
-
+    <script>
+        function logout() {
+            Swal.fire({
+                title: 'Logout',
+                text: 'Are you sure you want to logout?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, logout'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch('/logout', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                window.location.href = '{{ route('login') }}';
+                            } else {
+                                console.error('Logout failed');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                }
+            });
+        }
+    </script>
 
 </body>
 

@@ -3,7 +3,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f2f2f2; /* background color */
+    background: linear-gradient(to right,  #9370db, #add8e6, #ff69b4); /* Gradasi warna baru */
 }
 .container {
     max-width: 1200px;
@@ -12,18 +12,27 @@ body {
 }
 /* Navbar */
 .navbar {
-    background-color: #000000; /* navbar background color */
+    background-color: #4caf50; /* Green */
     color: #fff;
     padding: 10px 20px;
-    text-align: right;
+    display: flex;
+    justify-content: space-between; /* Mengatur ruang di antara elemen */
+    align-items: center; /* Mengatur vertikal align */
 }
+
 .navbar i {
-    font-size: 20px;
+    font-size: 24px;
     margin-left: 10px;
+    cursor: pointer; /* Mengubah kursor menjadi tangan saat dihover */
+    transition: color 0.3s ease; /* Efek transisi saat hover */
+}
+
+.navbar i:hover {
+    color: #333; /* Mengubah warna ikon saat dihover */
 }
 /* Header */
 .header {
-    background-color: #000000; /* header background color */
+    background-color: #9370db, #add8e6, #ff69b4; /* header background color */
     color: #fff;
     padding: 20px 0;
     text-align: center;
@@ -51,33 +60,62 @@ body {
     background-color: #333; /* Change color on hover */
 }
 /* Footer */
+/* Footer */
 .footer {
-    background-color: #000000; /* footer background color */
+    background-color: #9370db, #add8e6, #ff69b4; /* Sesuaikan dengan palet warna */
     color: #fff;
-    padding: 10px 0;
+    padding: 10px 0; /* Mengurangi padding atas dan bawah */
     text-align: center;
     position: fixed;
     bottom: 0;
     width: 100%;
+    z-index: 100;
 }
+
+@media only screen and (max-width: 768px) {
+    /* Responsif footer */
+    .footer {
+        padding: 10px 20px; /* Mengurangi padding pada perangkat kecil */
+    }
+}
+
 /* Search */
 .search-container {
     text-align: center;
     margin-bottom: 20px;
+    position: relative; /* Membuat posisi relatif untuk memungkinkan posisi absolut pada anak-anaknya */
 }
+
 .search-container input[type=text] {
-    padding: 10px;
+    padding: 15px; /* Tambahkan padding yang lebih besar */
     margin-right: 10px;
+    border-radius: 30px; /* Bulatkan sudut */
+    border: none;
+    width: 200px;
+    transition: width 0.3s ease; /* Efek transisi saat lebar input berubah */
 }
+
+.search-container input[type=text]:focus {
+    width: 250px; /* Lebar input saat fokus */
+}
+
 .search-container button {
-    padding: 10px 20px;
-    background-color: #333;
+    padding: 15px 30px; /* Tambahkan padding yang lebih besar */
+    background-color: #b52482;
     color: #fff;
     border: none;
     cursor: pointer;
+    border-radius: 30px; /* Bulatkan sudut */
+    transition: background-color 0.3s ease; /* Efek transisi saat hover */
 }
+
 .search-container button:hover {
     background-color: #555;
+}
+
+#bookList.show-search .search-container {
+    top: 20px; /* Menggeser ke atas */
+    bottom: auto; /* Menghapus bottom */
 }
 /* Catalog */
 .catalog {
@@ -88,7 +126,7 @@ body {
 .book {
     width: calc(25% - 20px); /* 4 books per row with spacing */
     margin: 20px;
-    background-color: #000; /* Book background color */
+    background-color: #fff; /* Book background color */
     padding: 20px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); /* Added shadow for 3D effect */
     border-radius: 10px; /* Rounded corners for a smoother look */
@@ -103,11 +141,11 @@ body {
 }
 
 .book h3 {
-    color: #fff; /* Set text color to white */
+    color: #000; /* Set text color to black */
 }
 
 .book-quantity {
-    color: #fff; /* Set text color to white */
+    color: #000; /* Set text color to black */
 }
 
 .book button {
@@ -135,4 +173,20 @@ body {
 
 .book-quantity {
     margin-top: 10px; /* Adjust spacing from the title */
+}
+
+/* Tombol Logout */
+.logout-btn {
+    padding: 10px 20px;
+    background-color: #b52482;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Efek transisi */
+}
+
+.logout-btn:hover {
+    background-color: #ff007f; /* Ubah warna latar belakang saat hover */
+    color: #fff; /* Ubah warna teks saat hover */
 }
