@@ -47,7 +47,7 @@
                 </div>
                 <div class="bottom-wrap">
                     <a href="#" class="btn btn-primary float-right" data-abc="true" id="borrowBtn">Pinjam</a>
-                    <a href="#" class="btn btn-warning float-left" data-abc="true">Cancel</a>
+                    <a href="/catalog" class="btn btn-warning float-left" data-abc="true">Cancel</a>
                 </div>
             </figure>
         </div>

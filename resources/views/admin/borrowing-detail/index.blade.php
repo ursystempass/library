@@ -13,8 +13,7 @@
             <tr>
                 <th>ID</th>
                 <th>Borrowing ID</th>
-                <th>Book Title</th>
-                <th>Return Date</th>
+                <th>Due Date</th>
                 <th>Book Condition</th>
                 <th>Type</th>
                 <th>Actions</th>
@@ -25,12 +24,17 @@
             <tr>
                 <td>{{ $detail->id }}</td>
                 <td>{{ $detail->borrowing_id }}</td>
-                <td>{{ $detail->book->title }}</td>
-                <td>{{ $detail->return_date }}</td>
+                <td>{{ $detail->due_date }}</td>
                 <td>{{ $detail->book_condition }}</td>
                 <td>{{ $detail->type }}</td>
                 <td>
                     <a href="{{ route('borrowingdetails.edit', $detail->id) }}">Edit</a>
+                    <form action="{{ route('borrowingdetails.updateStatus', $detail->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <input type="hidden" name="type" value="borrow"> <!-- Tambahkan input hidden untuk menentukan status -->
+                        <button type="submit">Change to Borrow</button>
+                    </form>
                     <form action="{{ route('borrowingdetails.destroy', $detail->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
@@ -39,6 +43,7 @@
                 </td>
             </tr>
             @endforeach
+
         </tbody>
     </table>
 </body>

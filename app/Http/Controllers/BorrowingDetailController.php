@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Book;
 use App\Models\Borrowing;
 use Illuminate\Http\Request;
@@ -20,28 +21,38 @@ class BorrowingDetailController extends Controller
     {
         $borrowings = Borrowing::all();
         $books = Book::all();
-        return view('admin.borrowing-detail.create', compact('borrowings', 'books'));
+
+        $dueDate = now()->addDays(3)->toDateString();
+
+        return view('admin.borrowing-detail.create', compact('borrowings', 'books', 'dueDate'));
     }
+
+
     public function store(Request $request)
     {
         try {
             $request->validate([
                 'borrowing_id' => 'required|numeric',
-                'book_id' => 'required|numeric',
-                'return_date' => 'required|date',
                 'book_condition' => 'required|string|max:125',
                 'type' => 'required|in:personal,monthly,annual',
-
             ]);
 
-            BorrowingDetail::create($request->all());
+            $borrowing = Borrowing::findOrFail($request->borrowing_id);
+            $dueDate = Carbon::parse($borrowing->borrow_date)->addDays(3);
 
-            return redirect()->route('borrowingdetails.index')
-                ->with('success', 'Borrowing detail created successfully.');
+            $data = $request->all();
+            $data['due_date'] = $dueDate;
+
+            BorrowingDetail::create($data);
+
+            return redirect()->route('borrowingdetails.index')->with('success', 'Borrowing detail created successfully.');
         } catch (QueryException $e) {
             return back()->withInput()->withErrors(['error' => 'Failed to create borrowing detail. Please try again later.']);
         }
     }
+
+
+
     public function edit($id)
     {
         $borrowingDetail = BorrowingDetail::findOrFail($id);
@@ -69,12 +80,25 @@ class BorrowingDetailController extends Controller
     }
 
     public function destroy($id)
-{
-    $borrowingDetail = BorrowingDetail::findOrFail($id);
-    $borrowingDetail->delete();
+    {
+        $borrowingDetail = BorrowingDetail::findOrFail($id);
+        $borrowingDetail->delete();
 
-    return redirect()->route('borrowingdetails.index')
-        ->with('success', 'Borrowing detail deleted successfully.');
-}
+        return redirect()->route('borrowingdetails.index')
+            ->with('success', 'Borrowing detail deleted successfully.');
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'type' => 'required|in:borrow',
+        ]);
+
+        $borrowingDetail = BorrowingDetail::findOrFail($id);
+        $borrowingDetail->type = $request->type;
+        $borrowingDetail->save();
+
+        return redirect()->route('borrowingdetails.index')->with('success', 'Status updated successfully.');
+    }
 
 }
