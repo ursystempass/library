@@ -13,18 +13,16 @@ return new class extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('isbn')->nullable();
-            $table->string('book_code');
-            $table->string('image')->nullable();
-            $table->string('book_category');
-            $table->string('publisher');
-            $table->string('author');
-            $table->integer('publication_year');
-            $table->enum('condition', ['good', 'damaged']);
-            $table->unsignedBigInteger('shelf_location_id');
-            $table->foreign('shelf_location_id')->references('id')->on('book_shelves');
-            $table->integer('copy_number');
+            $table->string('no');
+            $table->string('book_code')->unique();
+            $table->string('no_induk')->nullable();
+            $table->string('judul_buku');
+            $table->string('pengarang');
+            $table->string('penerbit');
+            $table->integer('tahun_terbit');
+            $table->date('tgl_thn_perolehan');
+            $table->integer('jumlah_exsemplar');
+            $table->string('sumber_perolehan');
             $table->timestamps();
         });
     }

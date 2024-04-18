@@ -1,68 +1,73 @@
-<!-- resources/views/books/create.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Book</title>
+    @include('layouts.partials.head')
 </head>
 
 <body>
-    <h1>Create Book</h1>
-    @if ($errors->any())
-        <div>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+    <div class="container-scroller">
+        <!-- Include navbar -->
+        @include('layouts.partials.navbar')
+
+        <div class="container-fluid page-body-wrapper">
+            <!-- Include sidebar -->
+            @include('layouts.partials.sidebar')
+
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    <div class="col-lg-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Tambah Buku</h4>
+                                <form action="{{ route('books.store') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label for="no">No:</label>
+                                        <input type="text" class="form-control" id="no" name="no" value="{{ old('no') }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="book_code">Kode Buku:</label>
+                                        <input type="text" class="form-control" id="book_code" name="book_code" value="{{ old('book_code', $bookCode) }}" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="judul_buku">Judul Buku:</label>
+                                        <input type="text" class="form-control" id="judul_buku" name="judul_buku" value="{{ old('judul_buku') }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="pengarang">Pengarang:</label>
+                                        <input type="text" class="form-control" id="pengarang" name="pengarang" value="{{ old('pengarang') }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="penerbit">Penerbit:</label>
+                                        <input type="text" class="form-control" id="penerbit" name="penerbit" value="{{ old('penerbit') }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tahun_terbit">Tahun Terbit:</label>
+                                        <input type="text" class="form-control" id="tahun_terbit" name="tahun_terbit" value="{{ old('tahun_terbit') }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tgl_thn_perolehan">Tanggal & Tahun Perolehan:</label>
+                                        <input type="date" class="form-control" id="tgl_thn_perolehan" name="tgl_thn_perolehan" value="{{ old('tgl_thn_perolehan') }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="jumlah_exsemplar">Jumlah Exsemplar:</label>
+                                        <input type="text" class="form-control" id="jumlah_exsemplar" name="jumlah_exsemplar" value="{{ old('jumlah_exsemplar') }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sumber_perolehan">Sumber Perolehan:</label>
+                                        <input type="text" class="form-control" id="sumber_perolehan" name="sumber_perolehan" value="{{ old('sumber_perolehan') }}">
+                                    </div>
+                                    <button type="submit" class="btn btn-gradient-primary mr-2">Submit</button>
+                                    <a href="{{ route('books.index') }}" class="btn btn-light">Cancel</a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    @endif
-    <form action="{{ route('books.store') }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        <label for="title">Title:</label><br>
-        <input type="text" id="title" name="title" value="{{ old('title') }}"><br>
-
-        <label for="isbn">ISBN:</label><br>
-        <input type="text" id="isbn" name="isbn" value="{{ old('isbn') }}"><br>
-
-        <label for="book_code">Book Code:</label><br>
-        <input type="text" id="book_code" name="book_code" value="{{ $bookCode }}" readonly><br>
-
-        <label for="image">Image:</label><br>
-        <input type="file" id="image" name="image"><br>
-
-        <label for="book_category">Category:</label><br>
-        <input type="text" id="book_category" name="book_category" value="{{ old('book_category') }}"><br>
-
-        <label for="publisher">Publisher:</label><br>
-        <input type="text" id="publisher" name="publisher" value="{{ old('publisher') }}"><br>
-
-        <label for="author">Author:</label><br>
-        <input type="text" id="author" name="author" value="{{ old('author') }}"><br>
-
-        <label for="publication_year">Publication Year:</label><br>
-        <input type="text" id="publication_year" name="publication_year" value="{{ old('publication_year') }}"><br>
-
-        <label for="condition">Condition:</label><br>
-        <select id="condition" name="condition">
-            <option value="good" {{ old('condition') == 'good' ? 'selected' : '' }}>Good</option>
-            <option value="damaged" {{ old('condition') == 'damaged' ? 'selected' : '' }}>Damaged</option>
-        </select><br>
-
-        <label for="bookshel_id">Shelf Location:</label><br> <!-- Ganti bookshel_id menjadi shelf_location_id -->
-        <select id="shelf_location_id" name="shelf_location_id">
-            @foreach ($bookshelves as $bookshelf)
-                <option value="{{ $bookshelf->id }}">{{ $bookshelf->shelf_location }}</option>
-            @endforeach
-        </select><br>
-
-        <label for="copy_number">Copy Number:</label><br>
-        <input type="text" id="copy_number" name="copy_number" value="{{ old('copy_number') }}"><br>
-
-        <button type="submit">Submit</button>
-    </form>
+    </div>
 </body>
 
 </html>
