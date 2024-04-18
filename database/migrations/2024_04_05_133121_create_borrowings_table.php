@@ -15,9 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('borrow_code');
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('book_id');
             $table->string('borrow_date', 125);
+            $table->enum('status', ['booking', 'borrow'])->default('booking');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('book_id')->references('id')->on('books');
         });
     }
 

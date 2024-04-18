@@ -29,9 +29,9 @@
                                             <tr>
                                                 <th>Kode Peminjaman</th>
                                                 <th>Peminjam</th>
+                                                <th>Buku</th>
                                                 <th>Tanggal Pinjam</th>
-                                                <th>Kondisi</th>
-                                                <th>Aksi</th> <!-- Kolom tambahan untuk tombol aksi -->
+                                                <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -39,8 +39,8 @@
                                                 <tr>
                                                     <td>{{ $borrow->borrow_code }}</td>
                                                     <td>{{ $borrow->user->fullname }}</td>
+                                                    <td>{{ $borrow->book->title }}</td>
                                                     <td>{{ $borrow->borrow_date }}</td>
-                                                    <td>{{ $borrow->book_condition }}</td>
                                                     <td>
                                                         <!-- Tambahkan tombol untuk edit dan delete -->
                                                         <a href="{{ route('borrowings.edit', $borrow->id) }}"

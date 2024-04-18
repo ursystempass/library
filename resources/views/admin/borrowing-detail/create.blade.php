@@ -1,10 +1,14 @@
+<!-- resources/views/admin/borrowing-detail/create.blade.php -->
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Borrowing Detail</title>
 </head>
+
 <body>
     <h1>Create Borrowing Detail</h1>
     <form method="POST" action="{{ route('borrowingdetails.store') }}">
@@ -18,16 +22,8 @@
             </select>
         </div>
         <div>
-            <label for="book_id">Book:</label>
-            <select name="book_id" id="book_id">
-                @foreach($books as $book)
-                    <option value="{{ $book->id }}">{{ $book->book_code }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div>
-            <label for="return_date">Return Date:</label>
-            <input type="date" name="return_date" id="return_date">
+            <label for="due_date">Due Date:</label>
+            <input type="date" name="due_date" id="due_date" value="{{ $dueDate }}" readonly>
         </div>
         <div>
             <label for="type">Type:</label>
@@ -47,4 +43,5 @@
         <button type="submit">Create Borrowing Detail</button>
     </form>
 </body>
+
 </html>
