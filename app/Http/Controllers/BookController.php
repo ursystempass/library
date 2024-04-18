@@ -21,44 +21,35 @@ class BookController extends Controller
         return view('admin.book.create', compact('bookshelves', 'bookCode'));
     }
     public function store(Request $request)
-    {
-        $request->validate([
-            'title' => 'required',
-            'isbn' => 'nullable|unique:books',
-            'book_code' => 'required|unique:books',
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'book_category' => 'required',
-            'publisher' => 'required',
-            'author' => 'required',
-            'publication_year' => 'required|integer',
-            'condition' => 'required|in:good,damaged',
-            'shelf_location_id' => 'required|exists:book_shelves,id', // Ganti bookshel_id menjadi shelf_location_id
-            'copy_number' => 'required|integer|min:1',
-        ]);
+{
+    $request->validate([
+        'no' => 'required',
+        'book_code' => 'required|unique:books',
+        'judul_buku' => 'required',
+        'pengarang' => 'required',
+        'penerbit' => 'required',
+        'tahun_terbit' => 'required|integer',
+        'tgl_thn_perolehan' => 'required|date',
+        'jumlah_exsemplar' => 'required|integer|min:1',
+        'sumber_perolehan' => 'required',
+    ]);
 
-        $book = new Book();
-        $book->title = $request->input('title');
-        $book->isbn = $request->input('isbn');
-        $book->book_code = $this->generateBookCode(); // Generate kode buku otomatis
-        $book->book_category = $request->input('book_category');
-        $book->publisher = $request->input('publisher');
-        $book->author = $request->input('author');
-        $book->publication_year = $request->input('publication_year');
-        $book->condition = $request->input('condition');
-        $book->shelf_location_id = $request->input('shelf_location_id'); // Ganti bookshel_id menjadi shelf_location_id
-        $book->copy_number = $request->input('copy_number');
+    $book = new Book();
+    $book->no = $request->input('no');
+    $book->book_code = $request->input('book_code');
+    $book->judul_buku = $request->input('judul_buku');
+    $book->pengarang = $request->input('pengarang');
+    $book->penerbit = $request->input('penerbit');
+    $book->tahun_terbit = $request->input('tahun_terbit');
+    $book->tgl_thn_perolehan = $request->input('tgl_thn_perolehan');
+    $book->jumlah_exsemplar = $request->input('jumlah_exsemplar');
+    $book->sumber_perolehan = $request->input('sumber_perolehan');
 
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images/books'), $imageName);
-            $book->image = 'images/books/' . $imageName;
-        }
+    $book->save();
 
-        $book->save();
+    return redirect()->route('books.index')->with('success', 'Book created successfully');
+}
 
-        return redirect()->route('books.index')->with('success', 'Book created successfully');
-    }
 
 
     private function generateBookCode()
@@ -84,45 +75,35 @@ class BookController extends Controller
     }
 
     public function update(Request $request, $id)
-    {
-        $book = Book::findOrFail($id);
+{
+    $book = Book::findOrFail($id);
 
-        $request->validate([
-            'title' => 'required',
-            'isbn' => 'nullable|unique:books,isbn,' . $id,
-            'book_code' => 'required|unique:books,book_code,' . $id,
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'book_category' => 'required',
-            'publisher' => 'required',
-            'author' => 'required',
-            'publication_year' => 'required|integer',
-            'condition' => 'required|in:good,damaged',
-            'shelf_location_id' => 'required|exists:book_shelves,id',
-            'copy_number' => 'required|integer|min:1',
-        ]);
+    $request->validate([
+        'no' => 'required',
+        'book_code' => 'required|unique:books,book_code,' . $id,
+        'judul_buku' => 'required',
+        'pengarang' => 'required',
+        'penerbit' => 'required',
+        'tahun_terbit' => 'required|integer',
+        'tgl_thn_perolehan' => 'required|date',
+        'jumlah_exsemplar' => 'required|integer|min:1',
+        'sumber_perolehan' => 'required',
+    ]);
 
-        $book->title = $request->input('title');
-        $book->isbn = $request->input('isbn');
-        $book->book_code = $request->input('book_code');
-        $book->book_category = $request->input('book_category');
-        $book->publisher = $request->input('publisher');
-        $book->author = $request->input('author');
-        $book->publication_year = $request->input('publication_year');
-        $book->condition = $request->input('condition');
-        $book->shelf_location_id = $request->input('shelf_location_id');
-        $book->copy_number = $request->input('copy_number');
+    $book->no = $request->input('no');
+    $book->book_code = $request->input('book_code');
+    $book->judul_buku = $request->input('judul_buku');
+    $book->pengarang = $request->input('pengarang');
+    $book->penerbit = $request->input('penerbit');
+    $book->tahun_terbit = $request->input('tahun_terbit');
+    $book->tgl_thn_perolehan = $request->input('tgl_thn_perolehan');
+    $book->jumlah_exsemplar = $request->input('jumlah_exsemplar');
+    $book->sumber_perolehan = $request->input('sumber_perolehan');
 
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images/books'), $imageName);
-            $book->image = 'images/books/' . $imageName;
-        }
+    $book->save();
 
-        $book->save();
-
-        return redirect()->route('books.index')->with('success', 'Book updated successfully');
-    }
+    return redirect()->route('books.index')->with('success', 'Book updated successfully');
+}
 
     public function destroy($id)
     {

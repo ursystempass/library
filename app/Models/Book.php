@@ -10,21 +10,15 @@ class Book extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title',
-        'isbn',
+        'no',
         'book_code',
-        'image',
-        'book_category',
-        'publisher',
-        'author',
-        'publication_year',
-        'condition',
-        'bookshel_id',
-        'copy_number',
+        'no_induk',
+        'judul_buku',
+        'pengarang',
+        'penerbit',
+        'tahun_terbit',
+        'tgl_thn_perolehan',
+        'jumlah_exsemplar',
+        'sumber_perolehan',
     ];
-
-    public function bookShelves()
-    {
-        return $this->belongsTo(BookShelves::class, 'bookshel_id'); // Corrected method name and foreign key
-    }
 }
