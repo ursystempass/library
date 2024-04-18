@@ -23,6 +23,10 @@ return new class extends Migration
             $table->date('tgl_thn_perolehan');
             $table->integer('jumlah_exsemplar');
             $table->string('sumber_perolehan');
+            $table->unsignedBigInteger('type_id');
+            $table->foreign('type_id')->references('id')->on('types');
+            $table->unsignedBigInteger('bookshelve_id');
+            $table->foreign('bookshelve_id')->references('id')->on('book_shelves');
             $table->timestamps();
         });
     }
