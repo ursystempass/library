@@ -104,55 +104,20 @@ class BorrowingController extends Controller
         return redirect()->route('borrowings.index')->with('success', 'Booking approved successfully.');
     }
 
-    public function scan(Request $request)
-{
-    try {
-        $borrowCode = $request->input('borrow_code');
-        $bookCode = $request->input('book_code');
-        $borrowing = Borrowing::where('borrow_code', $borrowCode)->first();
-
-        // Mencari buku berdasarkan kode buku
-        $book = Book::where('book_code', $bookCode)->first();
-
-        // Memeriksa apakah peminjaman dan buku ditemukan
-        if ($borrowing && $book) {
-            // Mengaitkan buku dengan peminjaman
-            $borrowing->books()->attach($book->id);
-
-            return redirect()->route('borrowings.index')->with('success', 'Buku berhasil ditambahkan ke peminjaman.');
-        } else {
-            // Jika peminjaman atau buku tidak ditemukan
-            return redirect()->back()->with('error', 'Peminjaman atau buku tidak ditemukan.');
-        }
-    } catch (\Exception $e) {
-        // Menangani kesalahan jika terjadi
-        return redirect()->back()->with('error', 'Terjadi kesalahan dalam pemindaian.');
-    }
-}
-    public function scanReservation(Request $request)
+    public function borrowScan()
     {
-        // Mengambil kode peminjaman dari request
-        $borrowCode = $request->input('borrow_code');
+        return view('admin.scan.borrow-scan');
+    }
 
-        // Melakukan validasi input
-        $request->validate([
-            'borrow_code' => 'required|exists:borrowings,borrow_code',
-        ]);
+    public function scanCode(Request $request)
+    {
+        // Proses pemindaian kode di sini
+        // Misalnya, validasi kode dan lakukan tindakan sesuai dengan hasil pemindaian
 
-        // Mendapatkan data peminjaman berdasarkan kode peminjaman
-        $borrowing = Borrowing::where('borrow_code', $borrowCode)->first();
+        // Dummy response untuk contoh
+        $success = true;
 
-        // Jika data peminjaman ditemukan
-        if ($borrowing) {
-            // Lakukan logika yang sesuai, misalnya menampilkan halaman reserv-scan
-            // Anda bisa menambahkan logika lainnya di sini sesuai kebutuhan
-
-            // Misalnya, jika Anda ingin mengembalikan halaman view reserv-scan
-            return view('reserv-scan', compact('borrowing'));
-        } else {
-            // Jika tidak ditemukan, kembalikan dengan pesan error
-            return redirect()->back()->with('error', 'Reservation not found.');
-        }
+        return response()->json(['success' => $success]);
     }
 
 }

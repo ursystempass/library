@@ -47,10 +47,12 @@
                                 <!-- Tampilan untuk pengguna -->
                                 <div class="profile-container">
                                     <div class="profile-image">
-                                        @if($user->image)
-                                            <img src="{{ asset('storage/profile/' . $user->image) }}" alt="Profile Picture">
-                                        @else
-                                            <p>Foto Profil tidak tersedia</p>
+                                        @if($user->role === 'member')
+                                            @if($user->image)
+                                                <img src="{{ asset('storage/profile/' . $user->image) }}" alt="Profile Picture">
+                                            @else
+                                                <p>Update fotomu</p>
+                                            @endif
                                         @endif
                                     </div>
                                     <div class="profile-details">

@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
-use App\Models\BookShelves; // Pastikan model BookShelves sudah diimpor
+use App\Models\Type;
 use Illuminate\Http\Request;
+use App\Models\BookShelves; // Pastikan model BookShelves sudah diimpor
 
 class BookController extends Controller
 {
@@ -17,38 +18,51 @@ class BookController extends Controller
     public function create()
     {
         $bookshelves = BookShelves::all();
-        $bookCode = $this->generateBookCode(); // Generate kode buku otomatis
-        return view('admin.book.create', compact('bookshelves', 'bookCode'));
+        $types = Type::all();
+        $bookCode = $this->generateBookCode(); // Generate automatic book code
+        return view('admin.book.create', compact('bookshelves', 'types', 'bookCode'));
     }
     public function store(Request $request)
-{
-    $request->validate([
-        'no' => 'required',
-        'book_code' => 'required|unique:books',
-        'judul_buku' => 'required',
-        'pengarang' => 'required',
-        'penerbit' => 'required',
-        'tahun_terbit' => 'required|integer',
-        'tgl_thn_perolehan' => 'required|date',
-        'jumlah_exsemplar' => 'required|integer|min:1',
-        'sumber_perolehan' => 'required',
-    ]);
+    {
+        $request->validate([
+            'no' => 'required',
+            'book_code' => 'required|unique:books,book_code',
+            'title' => 'required',
+            'author' => 'required',
+            'publisher' => 'required',
+            'publication_year' => 'required|integer',
+            'acquisition_date' => 'required|date',
+            'number_of_copies' => 'required|integer|min:1',
+            'acquisition_source' => 'required',
+            'type_id' => 'required|exists:types,id',
+            'bookshelf_id' => 'required|exists:book_shelves,id',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
-    $book = new Book();
-    $book->no = $request->input('no');
-    $book->book_code = $request->input('book_code');
-    $book->judul_buku = $request->input('judul_buku');
-    $book->pengarang = $request->input('pengarang');
-    $book->penerbit = $request->input('penerbit');
-    $book->tahun_terbit = $request->input('tahun_terbit');
-    $book->tgl_thn_perolehan = $request->input('tgl_thn_perolehan');
-    $book->jumlah_exsemplar = $request->input('jumlah_exsemplar');
-    $book->sumber_perolehan = $request->input('sumber_perolehan');
+        $book = new Book();
+        $book->no = $request->input('no');
+        $book->book_code = $request->input('book_code');
+        $book->title = $request->input('title');
+        $book->author = $request->input('author');
+        $book->publisher = $request->input('publisher');
+        $book->publication_year = $request->input('publication_year');
+        $book->acquisition_date = $request->input('acquisition_date');
+        $book->number_of_copies = $request->input('number_of_copies');
+        $book->acquisition_source = $request->input('acquisition_source');
+        $book->type_id = $request->input('type_id');
+        $book->bookshelf_id = $request->input('bookshelf_id');
 
-    $book->save();
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images/books'), $imageName);
+            $book->image = 'images/books/' . $imageName;
+        }
 
-    return redirect()->route('books.index')->with('success', 'Book created successfully');
-}
+        $book->save();
+
+        return redirect()->route('books.index')->with('success', 'Book created successfully');
+    }
 
 
 
@@ -75,35 +89,35 @@ class BookController extends Controller
     }
 
     public function update(Request $request, $id)
-{
-    $book = Book::findOrFail($id);
+    {
+        $book = Book::findOrFail($id);
 
-    $request->validate([
-        'no' => 'required',
-        'book_code' => 'required|unique:books,book_code,' . $id,
-        'judul_buku' => 'required',
-        'pengarang' => 'required',
-        'penerbit' => 'required',
-        'tahun_terbit' => 'required|integer',
-        'tgl_thn_perolehan' => 'required|date',
-        'jumlah_exsemplar' => 'required|integer|min:1',
-        'sumber_perolehan' => 'required',
-    ]);
+        $request->validate([
+            'no' => 'required',
+            'book_code' => 'required|unique:books,book_code,' . $id,
+            'judul_buku' => 'required',
+            'pengarang' => 'required',
+            'penerbit' => 'required',
+            'tahun_terbit' => 'required|integer',
+            'tgl_thn_perolehan' => 'required|date',
+            'jumlah_exsemplar' => 'required|integer|min:1',
+            'sumber_perolehan' => 'required',
+        ]);
 
-    $book->no = $request->input('no');
-    $book->book_code = $request->input('book_code');
-    $book->judul_buku = $request->input('judul_buku');
-    $book->pengarang = $request->input('pengarang');
-    $book->penerbit = $request->input('penerbit');
-    $book->tahun_terbit = $request->input('tahun_terbit');
-    $book->tgl_thn_perolehan = $request->input('tgl_thn_perolehan');
-    $book->jumlah_exsemplar = $request->input('jumlah_exsemplar');
-    $book->sumber_perolehan = $request->input('sumber_perolehan');
+        $book->no = $request->input('no');
+        $book->book_code = $request->input('book_code');
+        $book->judul_buku = $request->input('judul_buku');
+        $book->pengarang = $request->input('pengarang');
+        $book->penerbit = $request->input('penerbit');
+        $book->tahun_terbit = $request->input('tahun_terbit');
+        $book->tgl_thn_perolehan = $request->input('tgl_thn_perolehan');
+        $book->jumlah_exsemplar = $request->input('jumlah_exsemplar');
+        $book->sumber_perolehan = $request->input('sumber_perolehan');
 
-    $book->save();
+        $book->save();
 
-    return redirect()->route('books.index')->with('success', 'Book updated successfully');
-}
+        return redirect()->route('books.index')->with('success', 'Book updated successfully');
+    }
 
     public function destroy($id)
     {

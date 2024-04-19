@@ -9,16 +9,15 @@ class Book extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'no',
-        'book_code',
-        'no_induk',
-        'judul_buku',
-        'pengarang',
-        'penerbit',
-        'tahun_terbit',
-        'tgl_thn_perolehan',
-        'jumlah_exsemplar',
-        'sumber_perolehan',
-    ];
+    protected $guarded = [];
+
+    public function type()
+    {
+        return $this->belongsTo(Type::class);
+    }
+
+    public function bookshelf()
+    {
+        return $this->belongsTo(BookShelf::class, 'bookshelf_id');
+    }
 }
