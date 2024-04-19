@@ -13,4 +13,9 @@ class BookShelves extends Model
         'shelf_number',
         'shelf_location',
     ];
+
+    public function books()
+    {
+        return $this->hasMany(Book::class);
+    }
 }

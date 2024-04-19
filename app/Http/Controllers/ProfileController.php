@@ -2,46 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Major;
+use App\Models\Classe;
 use Illuminate\Http\Request;
-use App\Models\User; // Import model User
 use Illuminate\Support\Facades\Storage;
+use App\Models\User; // Import model User
 
 class ProfileController extends Controller
 {
-    /**
-     * Menampilkan profil pengguna yang sedang login.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show()
-    {
-        // Mendapatkan profil pengguna yang sedang login
-        $user = auth()->user();
 
-        // Mengirimkan data user ke view profile
-        return view('profile', compact('user'));
-    }
+        public function show()
+        {
+            // Mendapatkan profil pengguna yang sedang login
+            $user = auth()->user();
 
-    /**
-     * Menampilkan form untuk mengedit profil pengguna.
-     *
-     * @return \Illuminate\Http\Response
-     */
+            // Mengirimkan data user ke view profile
+            return view('admin.profile', compact('user'));
+        }
+        public function showMember()
+        {
+            // Mendapatkan profil pengguna yang sedang login
+            $user = auth()->user();
+            $majors = Major::all();
+            $classes = Classe::all();
+            // Mengirimkan data user ke view profile
+            return view('member.profile-member', compact('user', 'majors', 'classes'));
+        }
+
     public function edit()
     {
-        // Mendapatkan profil pengguna yang sedang login
         $user = auth()->user();
-
-        // Mengirimkan data user ke view edit_profile
         return view('edit_profile', compact('user'));
     }
 
-    /**
-     * Memperbarui profil pengguna yang sedang login.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request)
     {
         // Validasi data yang dikirim dari form
@@ -52,7 +45,6 @@ class ProfileController extends Controller
             'password' => 'required|string', // Anda mungkin ingin menambahkan validasi tambahan untuk password
             'image' => 'nullable|image|max:2048', // Anda mungkin ingin menambahkan validasi tambahan untuk gambar
             'alamat' => 'required|string|max:225',
-            // Tambahkan validasi untuk field lain sesuai kebutuhan
         ]);
 
         // Perbarui data profil pengguna yang sedang login
@@ -77,7 +69,7 @@ class ProfileController extends Controller
         }
 
         // Simpan perubahan
-      
+
 
         // Redirect ke halaman profil dengan pesan sukses
         return redirect()->route('profile.show')->with('success', 'Profil berhasil diperbarui.');

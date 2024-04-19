@@ -3,6 +3,7 @@
 use App\Http\Controllers\DescController;
 use App\Http\Controllers\ReturnBackController;
 use App\Http\Controllers\ReturnDetailController;
+use App\Http\Controllers\TypeController;
 use App\Models\BookShelves;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -49,22 +50,22 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/users/admin', [UserController::class, 'showAdminPage'])->name('users.admin');
     Route::resource('users', UserController::class);
     Route::resource('borrowings', BorrowingController::class);
-    Route::get('borrow-scan', [BorrowingController::class, 'scan'])->name('borrow.scan');
-    Route::get('reserv-scan', [BorrowingController::class, 'scanReservation'])->name('reserv.scan.get');
-    Route::post('reserv-scan', [BorrowingController::class, 'scanReservation'])->name('reserv.scan.post');
-    Route::post('borrow-scan', 'BorrowingController@scanCode')->name('scan.code');
     Route::resource('borrowingdetails', BorrowingDetailController::class);
     Route::put('/borrowingdetails/{id}/updateStatus', [BorrowingDetailController::class, 'updateStatus'])->name('borrowingdetails.updateStatus');
+    Route::get('/borrow-scan', [BorrowingController::class, 'borrowScan'])->name('borrow.scan');
+    Route::post('/scan-code', [BorrowingController::class, 'scanCode'])->name('scan.code');
     Route::resource('rebacks', ReturnBackController::class);
     Route::resource('redets', ReturnDetailController::class);
+    Route::resource('types', TypeController::class);
 });
 
 
 Route::middleware('member')->group(function () {
-        Route::resource('catalog', CatalogController::class)->names([
-            'index' => 'member.catalog',
-        ]);
-        Route::get('/greeting', [CatalogController::class, 'greeting'])->name('catalog.greeting'); // Rute untuk halaman greeting di CatalogController
+    Route::resource('catalog', CatalogController::class)->names([
+        'index' => 'member.catalog',
+    ]);
+    Route::get('/greeting', [CatalogController::class, 'greeting'])->name('catalog.greeting'); // Rute untuk halaman greeting di CatalogController
     Route::get('/book/{id}', [CatalogController::class, 'showDescription'])->name('member.desc');
+    Route::get('/profile-member', [ProfileController::class, 'showMember'])->name('profile.showMember');
 });
 

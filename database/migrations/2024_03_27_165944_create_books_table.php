@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -15,18 +14,19 @@ return new class extends Migration
             $table->id();
             $table->string('no');
             $table->string('book_code')->unique();
-            $table->string('no_induk')->nullable();
-            $table->string('judul_buku');
-            $table->string('pengarang');
-            $table->string('penerbit');
-            $table->integer('tahun_terbit');
-            $table->date('tgl_thn_perolehan');
-            $table->integer('jumlah_exsemplar');
-            $table->string('sumber_perolehan');
+            $table->string('registration_number')->nullable();
+            $table->string('title');
+            $table->string('author');
+            $table->string('publisher');
+            $table->string('image');
+            $table->integer('publication_year');
+            $table->date('acquisition_date');
+            $table->integer('number_of_copies');
+            $table->string('acquisition_source');
             $table->unsignedBigInteger('type_id');
             $table->foreign('type_id')->references('id')->on('types');
-            $table->unsignedBigInteger('bookshelve_id');
-            $table->foreign('bookshelve_id')->references('id')->on('book_shelves');
+            $table->unsignedBigInteger('bookshelf_id');
+            $table->foreign('bookshelf_id')->references('id')->on('book_shelves');
             $table->timestamps();
         });
     }
