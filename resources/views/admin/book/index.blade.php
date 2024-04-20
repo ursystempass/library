@@ -42,13 +42,13 @@
                                                 <tr>
                                                     <td>{{ $book->no }}</td>
                                                     <td>{{ $book->book_code }}</td>
-                                                    <td>{{ $book->judul_buku }}</td>
-                                                    <td>{{ $book->pengarang }}</td>
-                                                    <td>{{ $book->penerbit }}</td>
-                                                    <td>{{ $book->tahun_terbit }}</td>
-                                                    <td>{{ $book->tgl_thn_perolehan }}</td>
-                                                    <td>{{ $book->jumlah_exsemplar }}</td>
-                                                    <td>{{ $book->sumber_perolehan }}</td>
+                                                    <td>{{ $book->title }}</td>
+                                                    <td>{{ $book->author }}</td>
+                                                    <td>{{ $book->publisher }}</td>
+                                                    <td>{{ $book->publication_year }}</td>
+                                                    <td>{{ $book->acquisition_date }}</td>
+                                                    <td>{{ $book->number_of_copies }}</td>
+                                                    <td>{{ $book->acquisition_source }}</td>
                                                     <td>
                                                         <a href="{{ route('books.edit', $book->id) }}"
                                                             class="btn btn-info btn-sm">Edit</a>
