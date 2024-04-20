@@ -21,8 +21,7 @@ class BookController extends Controller
         $types = Type::all();
         $bookCode = $this->generateBookCode(); // Generate automatic book code
         return view('admin.book.create', compact('bookshelves', 'types', 'bookCode'));
-    }
-    public function store(Request $request)
+    }    public function store(Request $request)
     {
         $request->validate([
             'no' => 'required',
@@ -33,6 +32,7 @@ class BookController extends Controller
             'publication_year' => 'required|integer',
             'acquisition_date' => 'required|date',
             'number_of_copies' => 'required|integer|min:1',
+            'status' => 'required|in:ready,borrow',
             'acquisition_source' => 'required',
             'type_id' => 'required|exists:types,id',
             'bookshelf_id' => 'required|exists:book_shelves,id',
@@ -40,43 +40,64 @@ class BookController extends Controller
         ]);
 
         $book = new Book();
-        $book->no = $request->input('no');
-        $book->book_code = $request->input('book_code');
-        $book->title = $request->input('title');
-        $book->author = $request->input('author');
-        $book->publisher = $request->input('publisher');
-        $book->publication_year = $request->input('publication_year');
-        $book->acquisition_date = $request->input('acquisition_date');
-        $book->number_of_copies = $request->input('number_of_copies');
-        $book->acquisition_source = $request->input('acquisition_source');
-        $book->type_id = $request->input('type_id');
-        $book->bookshelf_id = $request->input('bookshelf_id');
-
+        $book->no = $request->no;
+        $book->book_code = $request->book_code;
+        $book->title = $request->title;
+        $book->author = $request->author;
+        $book->publisher = $request->publisher;
+        $book->publication_year = $request->publication_year;
+        $book->acquisition_date = $request->acquisition_date;
+        $book->number_of_copies = $request->number_of_copies;
+        $book->status = $request->status;
+        $book->acquisition_source = $request->acquisition_source;
+        $book->type_id = $request->type_id;
+        $book->bookshelf_id = $request->bookshelf_id;
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('images/books'), $imageName);
-            $book->image = 'images/books/' . $imageName;
+            $book->image = $imageName;
         }
 
         $book->save();
 
-        return redirect()->route('books.index')->with('success', 'Book created successfully');
+        // Membuat salinan buku
+        $numberOfCopies = $request->number_of_copies;
+        for ($i = 1; $i < $numberOfCopies; $i++) {
+            $copy = new Book();
+            $copy->no = $book->no + $i;
+            $copy->book_code = $book->book_code . '-' . $i;
+            $copy->title = $book->title;
+            $copy->author = $book->author;
+            $copy->publisher = $book->publisher;
+            $copy->publication_year = $book->publication_year;
+            $copy->acquisition_date = $book->acquisition_date;
+            $copy->number_of_copies = 1; // Setiap salinan memiliki jumlah 1
+            $copy->status = $book->status;
+            $copy->acquisition_source = $book->acquisition_source;
+            $copy->type_id = $book->type_id;
+            $copy->bookshelf_id = $book->bookshelf_id;
+
+            // Jika ada gambar, salin gambar ke salinan buku
+            if ($request->hasFile('image')) {
+                $copy->image = $imageName;
+            }
+
+            $copy->save();
+        }
+
+        return redirect()->route('books.index')->with('success', 'Buku berhasil dibuat');
     }
-
-
 
     private function generateBookCode()
     {
-        $latestBook = Book::latest()->first(); // Dapatkan data buku terbaru
+        $latestBook = Book::latest()->first();
         if ($latestBook) {
-            // Jika ada buku terbaru, ekstrak nomor urut dari kode buku terbaru dan tambahkan 1
             $latestBookCode = $latestBook->book_code;
             $latestBookNumber = intval(substr($latestBookCode, 4));
             $newBookNumber = $latestBookNumber + 1;
             return "CODE$newBookNumber";
         } else {
-            // Jika tidak ada buku terbaru, mulai dari CODE1
             return "CODE1";
         }
     }

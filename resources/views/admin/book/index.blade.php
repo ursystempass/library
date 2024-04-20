@@ -27,6 +27,7 @@
                                             <tr>
                                                 <th>No</th>
                                                 <th>Kode Buku</th>
+                                                <th>Nomor Induk</th>
                                                 <th>Judul Buku</th>
                                                 <th>Pengarang</th>
                                                 <th>Penerbit</th>
@@ -34,20 +35,28 @@
                                                 <th>Tanggal & Tahun Perolehan</th>
                                                 <th>Jumlah Exsemplar</th>
                                                 <th>Sumber Perolehan</th>
+                                                <th>Series</th>
+                                                <th>Status Ketersediaan</th>
+                                                <th>Rak Buku</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($books as $book)
                                                 <tr>
-                                                    <td>{{ $book->no }}</td>
+                                                    <th scope="row">{{ $loop->iteration }}</th>
                                                     <td>{{ $book->book_code }}</td>
+                                                    <td>{{ $book->no }}</td>
                                                     <td>{{ $book->title }}</td>
                                                     <td>{{ $book->author }}</td>
                                                     <td>{{ $book->publisher }}</td>
                                                     <td>{{ $book->publication_year }}</td>
                                                     <td>{{ $book->acquisition_date }}</td>
                                                     <td>{{ $book->number_of_copies }}</td>
+                                                    <td>{{ $book->acquisition_source }}</td>
+                                                    <td>{{ $book->type->name }}</td>
+                                                    <td>{{ $book->status }}</td>
+                                                    <td>{{ $book->bookshelf->shelf_location }}</td>
                                                     <td>{{ $book->acquisition_source }}</td>
                                                     <td>
                                                         <a href="{{ route('books.edit', $book->id) }}"

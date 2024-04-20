@@ -1,0 +1,18 @@
+        /* Changing theme to gradasi biru dan ungu */
+        .banner-area {
+            background: linear-gradient(to bottom, #4e54c8, #8f94fb);
+        }
+        .primary-btn {
+            background-color: #9b59b6;
+            border-color: #9b59b6;
+        }
+
+        .single-testimonial.item {
+    margin-right: 20px; /* Menambahkan margin kanan */
+}
+
+/* Untuk menghindari margin pada elemen terakhir */
+.single-testimonial.item:last-child {
+    margin-right: 0;
+}
+

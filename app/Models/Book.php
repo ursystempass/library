@@ -18,6 +18,6 @@ class Book extends Model
 
     public function bookshelf()
     {
-        return $this->belongsTo(BookShelf::class, 'bookshelf_id');
+        return $this->belongsTo(BookShelves::class, 'bookshelf_id');
     }
 }

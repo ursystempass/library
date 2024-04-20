@@ -1,24 +1,25 @@
 <?php
 
-use App\Http\Controllers\DescController;
-use App\Http\Controllers\ReturnBackController;
-use App\Http\Controllers\ReturnDetailController;
-use App\Http\Controllers\TypeController;
 use App\Models\BookShelves;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\DescController;
+use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MajorController;
 use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\CatalogController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\BorrowingController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ReturnBackController;
 use App\Http\Controllers\BookShelvesController;
+use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\ReturnDetailController;
 use App\Http\Controllers\BorrowingDetailController;
-use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,9 +32,7 @@ use App\Http\Controllers\ProfileController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [LandingPageController::class, 'index']);
 
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
