@@ -18,7 +18,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             // Jika autentikasi berhasil, redirect sesuai peran pengguna
-            if (Auth::user()->role === 'admin') {
+            if (Auth::user()->role === 'admin') {   
                 return redirect()->route('admin.dashboard');
             } else {
                 return redirect()->route('catalog.greeting');
