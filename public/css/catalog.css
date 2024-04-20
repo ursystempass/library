@@ -190,3 +190,45 @@ body {
     background-color: #ff007f; /* Ubah warna latar belakang saat hover */
     color: #fff; /* Ubah warna teks saat hover */
 }
+/* CSS untuk kartu Type */
+.type-card {
+    width: calc(20% - 20px); /* Lebar kartu 50% minus margin */
+    margin: 10px; /* Spasi antar kartu */
+    background-color: #fff; /* Warna latar belakang kartu */
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); /* Efek bayangan untuk tampilan 3D */
+    border-radius: 10px; /* Sudut melengkung untuk tampilan lebih lembut */
+    text-align: center; /* Posisi konten di tengah */
+    display: inline-block; /* Membuat kartu type menjadi kotak */
+    vertical-align: top; /* Mengatur vertikal ke atas */
+}
+
+.type-card h3 {
+    color: #000; /* Warna teks judul */
+}
+
+.type-card p {
+    color: #333; /* Warna teks konten */
+}
+
+.type-card button {
+    margin-top: 10px; /* Spasi antara konten dan tombol */
+    padding: 8px 16px; /* Padding untuk tombol */
+    border-radius: 20px; /* Sudut melengkung untuk tombol */
+    background-color: #ffcc00; /* Warna latar belakang tombol */
+    color: white; /* Warna teks tombol */
+    border: none; /* Menghapus garis pinggir tombol */
+    cursor: pointer; /* Mengubah kursor menjadi tangan saat dihover */
+    transition: background-color 0.3s ease; /* Efek transisi saat hover */
+}
+
+.type-card button:hover {
+    background-color: #ff9900; /* Warna latar belakang tombol saat dihover */
+}
+
+/* Media queries untuk responsif */
+@media only screen and (max-width: 768px) {
+    .type-card {
+        width: calc(100% - 20px); /* Lebar kartu 100% minus margin */
+    }
+}
