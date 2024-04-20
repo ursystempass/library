@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersTableSeeder::class);
         $this->call(SettingSeeder::class);
         $this->call(BookShelvSeeder::class);
+        $this->call(TypeSeeder::class);
 
     }
 }
