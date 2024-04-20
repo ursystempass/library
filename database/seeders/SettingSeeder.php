@@ -14,11 +14,11 @@ class SettingSeeder extends Seeder
     public function run()
     {
         Setting::create([
-            'name' => 'Nama Pengaturan',
-            'image' => 'path/to/image.jpg',
-            'desc' => 'Deskripsi Pengaturan',
-                'address' => 'Alamat Pengaturan',
-            'email' => 'pengaturan@example.com',
+            'name' => 'Perpustakaan SMK Negeri 1 Cibinong',
+            'image' => 'images/setting/OIP.jpg',
+            'desc' => '"Perpustakaan SMK Negeri 1 Cibinong merupakan pusat pengetahuan yang menyediakan beragam koleksi buku dan sumber informasi untuk mendukung kegiatan belajar mengajar."',
+            'address' => 'Jl. Raya Karadenan No.7, Karadenan, Kec. Cibinong, Kabupaten Bogor, Jawa Barat 16111',
+            'email' => 'smkn1cibinongperpustakaan.com',
         ]);
     }
 }
