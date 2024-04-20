@@ -1,5 +1,3 @@
-<!-- resources/views/admin/borrowing/create.blade.php -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,14 +31,6 @@
                                                     value="{{ $borrowCode }}" readonly required />
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="book_id">Select a Book:</label>
-                                            <select name="book_id" id="book_id" class="form-control">
-                                                @foreach ($books as $book)
-                                                    <option value="{{ $book->id }}">{{ $book->title }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
                                         <div class="col-md-6">
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">User</label>
@@ -54,9 +44,14 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Tanggal Peminjaman</label>
+                                            <div class="col-sm-9">
+                                                <input type="date" class="form-control" name="borrow_date"
+                                                    value="{{ $borrowDate }}" required />
+                                            </div>
+                                        </div>
                                     </div>
-                                    <!-- Input hidden untuk borrow_date -->
-                                    <input type="hidden" name="borrow_date" value="{{ $borrowDate }}" />
 
                                     <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
                                     <a href="{{ route('borrowings.index') }}" class="btn btn-light">Cancel</a>

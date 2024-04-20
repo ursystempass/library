@@ -1,3 +1,4 @@
+User
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,8 +34,15 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label for="due_date">Tanggal Jatuh Tempo:</label>
-                                                <input type="date" name="due_date" id="due_date" value="{{ $dueDate }}" readonly class="form-control">
+                                                <label for="book_id">Buku:</label>
+                                                <select name="book_id" id="book_id" class="form-control">
+                                                    <!-- Tambahkan pilihan buku yang tersedia -->
+                                                    @foreach($books as $book)
+                                                        @if($book->status !== 'borrow')
+                                                            <option value="{{ $book->id }}">{{ $book->title }}</option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
