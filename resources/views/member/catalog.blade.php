@@ -72,5 +72,74 @@
     </div>
 
     <script src="{{ asset('js/catalog.js') }}"></script>
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Mencegah form dari pengiriman
+            var query = this.querySelector('input[name="q"]').value
+        .toLowerCase(); // Dapatkan nilai dari input pencarian
+            if (!query.trim()) {
+                Swal.fire({
+                    icon: 'error',
+	@@ -66,58 +80,68 @@
+                        content: 'monochrome-content'
+                    }
+                });
+                return; // Keluar dari fungsi jika query kosong
+            }
+            var books = document.querySelectorAll('.book'); // Dapatkan semua elemen buku
+            var bookList = document.getElementById('bookList'); // Dapatkan div daftar buku
+            var searchContainer = document.getElementById('searchContainer'); // Dapatkan elemen pencarian
+            // Loop melalui setiap buku
+            books.forEach(function(book) {
+                var title = book.querySelector('h3').innerText.toLowerCase(); // Dapatkan judul buku
+                var author = book.querySelector('p:nth-of-type(2)').innerText
+            .toLowerCase(); // Dapatkan pengarang buku
+                // Periksa apakah judul buku atau pengarang buku cocok dengan query pencarian
+                if (title.includes(query) || author.includes(query)) {
+                    book.style.display = 'block'; // Tampilkan buku jika cocok
+                } else {
+                    book.style.display = 'none'; // Sembunyikan buku jika tidak cocok
+                }
+            });
+            // Tampilkan daftar buku jika ada buku yang cocok dengan pencarian
+            bookList.style.display = 'block';
+            // Pindahkan elemen pencarian
+            searchContainer.style.top = '20px'; // Sesuaikan nilai top sesuai kebutuhan
+            searchContainer.style.bottom = 'auto'; // Hapus nilai bottom
+        });
+    </script>
+    <script>
+        function logout() {
+            Swal.fire({
+                title: 'Logout',
+                text: 'Are you sure you want to logout?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, logout'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch('/logout', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                window.location.href = '{{ route('login') }}';
+                            } else {
+                                console.error('Logout failed');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                }
+            });
+        }
+    </script>
 </body>
 </html>

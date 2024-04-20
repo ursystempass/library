@@ -21,11 +21,11 @@ class BorrowingDetailController extends Controller
     public function create(Request $request)
     {
         $borrowingId = $request->input('borrowing_id'); // Mendapatkan ID peminjaman dari URL
-
+        $books = Book::all(); // Mendapatkan semua buku
         $selectedBorrowing = Borrowing::findOrFail($borrowingId);
         $dueDate = now()->addDays(3)->toDateString();
 
-        return view('admin.borrowing-detail.create', compact('selectedBorrowing', 'dueDate'));
+        return view('admin.borrowing-detail.create', compact('selectedBorrowing', 'dueDate', 'books'));
     }
 
     public function store(Request $request)
@@ -33,25 +33,31 @@ class BorrowingDetailController extends Controller
         try {
             $request->validate([
                 'borrowing_id' => 'required|numeric',
-                'book_condition' => 'required|string|max:125',
-                'type' => 'required|in:personal,monthly,annual',
+                'book_id' => 'required|numeric|exists:books,id',
+                'book_condition' => 'required|string|in:good,damaged',
+                'type' => 'required|string|in:personal,monthly,annual',
             ]);
 
-            $borrowing = Borrowing::findOrFail($request->borrowing_id);
-            $dueDate = Carbon::parse($borrowing->borrow_date)->addDays(3);
+            // Periksa apakah buku sudah dipinjam sebelumnya
+            $bookId = $request->input('book_id');
+            $existingBorrowingDetail = BorrowingDetail::where('book_id', $bookId)->first();
+            if ($existingBorrowingDetail) {
+                return back()->withInput()->withErrors(['error' => 'This book is already borrowed.']);
+            }
 
-            $data = $request->all();
-            $data['due_date'] = $dueDate;
+            // Buat detail peminjaman baru
+            BorrowingDetail::create($request->all());
 
-            BorrowingDetail::create($data);
+            // Perbarui status buku menjadi 'borrow'
+            $book = Book::findOrFail($bookId);
+            $book->status = 'borrow';
+            $book->save();
 
             return redirect()->route('borrowings.index')->with('success', 'Borrowing detail created successfully.');
         } catch (QueryException $e) {
             return back()->withInput()->withErrors(['error' => 'Failed to create borrowing detail. Please try again later.']);
         }
     }
-
-
 
     public function edit($id)
     {

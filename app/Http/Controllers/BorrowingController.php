@@ -6,13 +6,15 @@ use Carbon\Carbon;
 use App\Models\Book;
 use App\Models\User;
 use App\Models\Borrowing;
+use App\Models\BorrowingDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class BorrowingController extends Controller
 {
     public function index()
     {
-        $borrowing = Borrowing::with('user')->get();
+        $borrowing = Borrowing::all();
         return view('admin.borrowing.index', compact('borrowing'));
     }
 
@@ -20,40 +22,38 @@ class BorrowingController extends Controller
     {
         $users = User::all();
         $books = Book::all();
-        $borrowCode = $this->generateBorrowCode(); // Generate kode peminjaman otomatis
-
-        // Mendapatkan tanggal saat ini
+        $borrowCode = $this->generateBorrowCode();
         $borrowDate = now()->toDateString();
 
-        return view('admin.borrowing.create', compact('users', 'borrowCode', 'borrowDate', 'books'));
+        return view('admin.borrowing.create', compact('users', 'books', 'borrowCode', 'borrowDate'));
     }
-
 
     public function store(Request $request)
     {
         $request->validate([
-            'borrow_code' => 'required',
             'user_id' => 'required|exists:users,id',
-            'book_id' => 'required|exists:books,id',
+            'borrow_date' => 'required|date',
         ]);
 
-        $borrowDate = Carbon::now()->toDateString(); // Ambil tanggal saat ini
-        $request->merge(['borrow_date' => $borrowDate]);
+        // Menambahkan logika untuk mengatur due_date 3 hari setelah borrow_date
+        $borrowDate = Carbon::parse($request->borrow_date);
+        $dueDate = $borrowDate->addDays(3)->toDateString(); // Menggunakan addDays() untuk menambahkan 3 hari
+        // End logika
 
-        // Menyimpan Borrowing dengan book_id
         $borrowing = new Borrowing();
-        $borrowing->borrow_code = $request->borrow_code;
+        $borrowing->borrow_code = $this->generateBorrowCode();
         $borrowing->user_id = $request->user_id;
         $borrowing->borrow_date = $borrowDate;
-        $borrowing->book_id = $request->book_id;
+        $borrowing->due_date = $dueDate; // Menyimpan hasil due_date yang sudah diatur
         $borrowing->save();
 
-        return redirect()->route('borrowingdetails.create', ['borrowing_id' => $borrowing->id])->with('success', 'Borrowing created successfully.');
-    }
+        return redirect()->route('borrowingdetails.create', ['borrowing_id' => $borrowing->id])->with('success', 'Borrowing created successfully.');    }
+
+    // Method lain tetap sama
 
     private function generateBorrowCode()
     {
-        $latestBorrow = Borrowing::latest()->first(); // Dapatkan data peminjaman terbaru
+        $latestBorrow = Borrowing::latest()->first();
         if ($latestBorrow) {
             $latestBorrowCode = $latestBorrow->borrow_code;
             $latestBorrowNumber = intval(substr($latestBorrowCode, 10));
@@ -64,27 +64,34 @@ class BorrowingController extends Controller
         }
     }
 
-
     public function edit($id)
     {
         $borrowing = Borrowing::findOrFail($id);
         $users = User::all();
+        $books = Book::all();
         return view('admin.borrowing.edit', compact('borrowing', 'users', 'books'));
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
-            'borrow_code' => 'required',
             'user_id' => 'required|exists:users,id',
-            'borrow_date' => 'required',
+            'book_id' => 'required|exists:books,id',
         ]);
 
         $borrowing = Borrowing::findOrFail($id);
-        $borrowing->update($request->all());
+        $borrowing->user_id = $request->user_id;
+        $borrowing->save();
+
+        // Update detail peminjaman (bisa disesuaikan dengan kebutuhan)
+        $borrowingDetail = $borrowing->details()->first();
+        $borrowingDetail->book_id = $request->book_id;
+        // Tambahkan informasi detail peminjaman lainnya sesuai kebutuhan
+        $borrowingDetail->save();
 
         return redirect()->route('borrowings.index')->with('success', 'Borrowing updated successfully.');
     }
+
     public function destroy($id)
     {
         $borrowing = Borrowing::findOrFail($id);
@@ -103,22 +110,4 @@ class BorrowingController extends Controller
 
         return redirect()->route('borrowings.index')->with('success', 'Booking approved successfully.');
     }
-
-    public function borrowScan()
-    {
-        return view('admin.scan.borrow-scan');
-    }
-
-    public function scanCode(Request $request)
-    {
-        // Proses pemindaian kode di sini
-        // Misalnya, validasi kode dan lakukan tindakan sesuai dengan hasil pemindaian
-
-        // Dummy response untuk contoh
-        $success = true;
-
-        return response()->json(['success' => $success]);
-    }
-
 }
-
