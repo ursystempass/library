@@ -14,11 +14,12 @@ return new class extends Migration
         Schema::create('borrowing_details', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('borrowing_id');
-            $table->date('due_date')->nullable();
+            $table->unsignedBigInteger('book_id');
             $table->enum('book_condition', ['good', 'damaged'])->default('good');
             $table->enum('type', ['personal', 'monthly', 'annual']);
             $table->timestamps();
             $table->foreign('borrowing_id')->references('id')->on('borrowings')->onDelete('cascade');
+            $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');
         });
     }
 
