@@ -46,6 +46,9 @@
                     <!-- Menampilkan class -->
                     <p>Class:</p>
                     <p>{{ $user->class->nama }}</p> <!-- Assumed field "nama" in the classes table -->
+                    <!-- Menampilkan barcode -->
+                    <p>Barcode:</p>
+                    <img src="generate_qr.php?nis={{ $user->nis }}" alt="Barcode" width="150" height="150">
                     <button class="logout-btn">Logout</button>
                 </div>
             </div>
