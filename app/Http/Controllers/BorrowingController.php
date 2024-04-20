@@ -48,7 +48,7 @@ class BorrowingController extends Controller
         $borrowing->book_id = $request->book_id;
         $borrowing->save();
 
-        return redirect()->route('borrowings.index')->with('success', 'Borrowing created successfully.');
+        return redirect()->route('borrowingdetails.create', ['borrowing_id' => $borrowing->id])->with('success', 'Borrowing created successfully.');
     }
 
     private function generateBorrowCode()

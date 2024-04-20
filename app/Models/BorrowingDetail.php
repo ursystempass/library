@@ -16,8 +16,8 @@ class BorrowingDetail extends Model
         return $this->belongsTo(Book::class);
     }
 
-    public function borrowingDetails()
+    public function borrowing()
     {
-        return $this->hasMany(BorrowingDetail::class);
+        return $this->belongsTo(Borrowing::class);
     }
 }

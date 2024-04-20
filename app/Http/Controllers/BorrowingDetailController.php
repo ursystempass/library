@@ -13,20 +13,20 @@ class BorrowingDetailController extends Controller
 {
     public function index()
     {
-        $borrowingDetails = BorrowingDetail::with('book')->get();
+        $borrowingDetails = BorrowingDetail::with('borrowing.book')->get();
         return view('admin.borrowing-detail.index', compact('borrowingDetails'));
     }
 
-    public function create()
-    {
-        $borrowings = Borrowing::all();
-        $books = Book::all();
 
+    public function create(Request $request)
+    {
+        $borrowingId = $request->input('borrowing_id'); // Mendapatkan ID peminjaman dari URL
+
+        $selectedBorrowing = Borrowing::findOrFail($borrowingId);
         $dueDate = now()->addDays(3)->toDateString();
 
-        return view('admin.borrowing-detail.create', compact('borrowings', 'books', 'dueDate'));
+        return view('admin.borrowing-detail.create', compact('selectedBorrowing', 'dueDate'));
     }
-
 
     public function store(Request $request)
     {
@@ -45,7 +45,7 @@ class BorrowingDetailController extends Controller
 
             BorrowingDetail::create($data);
 
-            return redirect()->route('borrowingdetails.index')->with('success', 'Borrowing detail created successfully.');
+            return redirect()->route('borrowings.index')->with('success', 'Borrowing detail created successfully.');
         } catch (QueryException $e) {
             return back()->withInput()->withErrors(['error' => 'Failed to create borrowing detail. Please try again later.']);
         }

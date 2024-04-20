@@ -21,15 +21,14 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false"
-                aria-controls="ui-basic">
+            <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic-anggota" aria-expanded="false"
+                aria-controls="ui-basic-anggota">
                 <span class="menu-title">Anggota</span>
                 <i class="menu-arrow"></i>
                 <i class="mdi mdi-crosshairs-gps menu-icon"></i>
             </a>
-            <div class="collapse" id="ui-basic">
+            <div class="collapse" id="ui-basic-anggota">
                 <ul class="nav flex-column sub-menu">
-                    {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('c') }}">Buku</a></li> --}}
                     <li class="nav-item"> <a class="nav-link" href="{{ route('users.index') }}">Siswa</a></li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('users.admin') }}">Pengurus</a></li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('classes.index') }}">Kelas</a></li>
@@ -37,6 +36,29 @@
                 </ul>
             </div>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#ui-basic-buku" aria-controls="ui-basic-buku">
+                <span class="menu-title">Buku</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-book menu-icon"></i>
+            </a>
+            <div class="collapse" id="ui-basic-buku">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Buku
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">Buku</a>
+                            <a class="dropdown-item" href="#">Jenis Buku</a>
+                            <a class="dropdown-item" href="#">Rak Buku</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
         {{-- <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
               <span class="menu-title">Anggota</span>
@@ -59,15 +81,21 @@
               <i class="mdi mdi-home menu-icon"></i>
             </a>
       </li> --}}
+        {{-- <li class="nav-item">
+            <a class="nav-link" href="{{ url('books') }}">
+                <span class="menu-title">Buku</span>
+                <i class="mdi mdi-home menu-icon"></i>
+            </a>
+        </li> --}}
         <li class="nav-item">
-            <a class="nav-link" href="{{ url('borrowingdetails') }}">
-                <span class="menu-title">Detail Peminjaman</span>
+            <a class="nav-link" href="{{ url('borrowings') }}">
+                <span class="menu-title">Peminjaman</span>
                 <i class="mdi mdi-home menu-icon"></i>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{{ url('redets') }}">
-                <span class="menu-title">Detail Pengembalian</span>
+                <span class="menu-title">   Pengembalian</span>
                 <i class="mdi mdi-home menu-icon"></i>
             </a>
         </li>
