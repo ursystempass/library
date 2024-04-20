@@ -27,9 +27,10 @@
                                         <thead>
                                             <tr>
                                                 <th>Kode Peminjaman</th>
-                                                <th>Peminjam</th>
                                                 <th>Buku</th>
+                                                <th>Peminjam</th>
                                                 <th>Tanggal Pinjam</th>
+                                                <th>Tanggal Selesai</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -37,9 +38,15 @@
                                             @foreach ($borrowing as $borrow)
                                                 <tr>
                                                     <td>{{ $borrow->borrow_code }}</td>
+                                                    <td>
+                                                        @foreach($borrow->borrowingDetails as $detail)
+                                                            {{ $detail->book->title }}
+                                                            <br>
+                                                        @endforeach
+                                                    </td>
                                                     <td>{{ $borrow->user->fullname }}</td>
-                                                    <td>{{ $borrow->book->title }}</td>
                                                     <td>{{ $borrow->borrow_date }}</td>
+                                                    <td>{{ $borrow->due_date }}</td>
                                                     <td>
                                                         <!-- Tambahkan tombol untuk edit dan delete -->
                                                         <a href="{{ route('borrowings.edit', $borrow->id) }}"
