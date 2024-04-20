@@ -3,25 +3,25 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MemberMiddleware
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
-     */
-    public function handle(Request $request, Closure $next)
+    public function handle($request, Closure $next)
     {
-        // Check if the user is logged in and has 'member' role
-        if ($request->user() && $request->user()->role === 'member') {
-            return $next($request);
+        // Check if the user is logged in
+        if (Auth::check()) {
+            // Check if the user has 'member' role
+            if ($request->user()->role === 'member') {
+                // Jika pengguna adalah "member", biarkan mereka melanjutkan permintaan
+                return $next($request);
+            } elseif ($request->user()->role === 'admin') {
+                // Jika pengguna adalah "admin", alihkan mereka ke halaman dashboard admin
+                return redirect()->route('admin.dashboard');
+            }
         }
-
-        // If not, redirect to unauthorized page or any other action
+        
+        // Jika pengguna belum login, arahkan mereka ke halaman login
         return redirect()->route('login');
     }
 }
