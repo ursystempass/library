@@ -61,26 +61,24 @@
         borrowBtn.addEventListener('click', function(event) {
             event.preventDefault(); // Mencegah perilaku default dari link
 
-            // Tampilkan SweetAlert untuk konfirmasi peminjaman
-            Swal.fire({
-                title: 'Konfirmasi Peminjaman',
-                text: 'Apakah Anda yakin ingin meminjam buku ini?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'Pinjam',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Jika pengguna mengonfirmasi, lakukan aksi peminjaman di sini
-                    // Misalnya, Anda dapat membuat permintaan AJAX untuk mengirim data peminjaman ke server
-                    // dan menangani logika peminjaman di sisi server
-                    // Setelah itu, Anda dapat menampilkan pesan sukses atau pesan yang sesuai dari server menggunakan Swal.fire
-                    Swal.fire(
-                        'Sukses!',
-                        'Buku berhasil dipinjam.',
-                        'success'
-                    );
-                }
+            // Tampilkan notifikasi sukses terlebih dahulu
+            Swal.fire(
+                'Sukses!',
+                'Buku berhasil dipinjam.',
+                'success'
+            ).then(() => {
+                // Tampilkan pesan untuk kembali ke halaman katalog
+                Swal.fire({
+                    title: 'Proses Peminjaman Berhasil',
+                    text: 'Silahkan kembali ke halaman catalog untuk mendapatkan barcode',
+                    icon: 'info',
+                    confirmButtonText: 'OK'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Arahkan pengguna ke halaman katalog
+                        window.location.href = '/catalog';
+                    }
+                });
             });
         });
     </script>

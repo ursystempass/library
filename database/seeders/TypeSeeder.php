@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Type;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class TypeSeeder extends Seeder
 {
@@ -14,8 +13,11 @@ class TypeSeeder extends Seeder
     public function run(): void
     {
         $types = [
-            ['name' => 'Teknik Informatika'],
-            // tambahkan data jurusan lainnya sesuai kebutuhan
+            ['name' => 'Novel'],
+            ['name' => 'Pelajaran'],
+            ['name' => 'Ensiklopedia'],
+            ['name' => 'Majalah'],
+            // Tambahkan data jenis buku lainnya sesuai kebutuhan
         ];
 
         foreach ($types as $typeData) {
