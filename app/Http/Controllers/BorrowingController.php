@@ -6,8 +6,9 @@ use Carbon\Carbon;
 use App\Models\Book;
 use App\Models\User;
 use App\Models\Borrowing;
-use App\Models\BorrowingDetail;
 use Illuminate\Http\Request;
+use App\Models\BorrowingDetail;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class BorrowingController extends Controller
@@ -63,6 +64,40 @@ class BorrowingController extends Controller
             return "CODEPINJAM1";
         }
     }
+
+    public function borrowBook($bookId)
+{
+    // Check if the user is logged in
+    if (!Auth::check()) {
+        return redirect()->route('login')->with('error', 'Anda harus login untuk melakukan peminjaman.');
+    }
+
+    // Get the ID of the currently logged in user
+    $userId = Auth::id();
+
+    // Check if the user exists
+    $user = User::find($userId);
+    if (!$user) {
+        return redirect()->route('login')->with('error', 'Pengguna tidak valid.');
+    }
+
+    // Create a new borrowing with 'booking' status
+    $borrowing = new Borrowing();
+    $borrowing->borrow_code = $this->generateBorrowCode();
+    $borrowing->user_id = $userId;
+    $borrowing->borrow_date = now()->toDateString();
+    $borrowing->due_date = now()->addDays(3)->toDateString(); // Add 3 days from the borrowing date
+    $borrowing->status = 'booking';
+    $borrowing->save();
+
+    // Update the book status to 'booking'
+    $book = Book::findOrFail($bookId);
+    $book->status = 'booking';
+    $book->save();
+
+    // Redirect or provide response as needed
+    return redirect()->route('member.catalog')->with('success', 'Buku berhasil dipinjam.');
+}
 
     public function edit($id)
     {

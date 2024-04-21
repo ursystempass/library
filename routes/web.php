@@ -46,6 +46,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('classes', ClasseController::class);
     Route::resource('bookshelves', BookShelvesController::class);
     Route::resource('books', BookController::class);
+    Route::post('/borrow/book/{bookId}', [BorrowingController::class, 'borrowBook'])->name('borrow.book');
     Route::get('/users/admin', [UserController::class, 'showAdminPage'])->name('users.admin');
     Route::resource('users', UserController::class);
     Route::resource('borrowings', BorrowingController::class);

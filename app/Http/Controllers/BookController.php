@@ -32,7 +32,7 @@ class BookController extends Controller
             'publication_year' => 'required|integer',
             'acquisition_date' => 'required|date',
             'number_of_copies' => 'required|integer|min:1',
-            'status' => 'required|in:ready,borrow',
+            'status' => 'required|in:ready,booking,borrow',
             'acquisition_source' => 'required',
             'type_id' => 'required|exists:types,id',
             'bookshelf_id' => 'required|exists:book_shelves,id',

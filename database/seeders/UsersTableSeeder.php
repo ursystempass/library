@@ -15,20 +15,19 @@ class UsersTableSeeder extends Seeder
      */    public function run()
     {
         DB::table('users')->insert([
-            'kode_user' => 'USR001',
-            'nis' => 'cbn321',
-            'fullname' => 'John Doe',
-            'password' => Hash::make('password'),
-            'image' => 'default.jpg',
-            'alamat' => 'Jl. Contoh No. 123',
+            'kode_user' => 'USR002',
+            'nis' => '0987654321',
+            'fullname' => 'Member',
+            'password' => Hash::make('memberpassword'),
+            'image' => 'member.jpg',
+            'alamat' => 'Member Address',
             'role' => 'member',
             'join_date' => now(),
-            'major_id' => 1,
-            'class_id' => 1,
+            'major_id' => null,
+            'class_id' => null,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-
     {
         DB::table('users')->insert([
             'kode_user' => 'ADM001',

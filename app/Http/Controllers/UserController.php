@@ -29,43 +29,26 @@ class UserController extends Controller
             'kode_user' => 'required|string|max:25',
             'nis' => 'required|string|max:20|unique:users',
             'fullname' => 'required|string|max:125',
-            'password' => 'required|string|min:6',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'password' => 'required|string',
             'alamat' => 'required|string|max:225',
-            'role' => 'nullable|string|max:50',
+            'role' => 'required|string|in:admin,member', // validasi role
             'join_date' => 'required|string|max:125',
             'major_id' => 'nullable|exists:majors,id',
             'class_id' => 'nullable|exists:classes,id',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // tambahkan validasi untuk gambar
         ]);
 
-        try {
-            $user = new User();
-            $user->kode_user = $request->kode_user;
-            $user->nis = $request->nis;
-            $user->fullname = $request->fullname;
-            $user->password = Hash::make($request->password);
-            $user->alamat = $request->alamat;
-            $user->role = $request->role ?? 'member';
-            $user->join_date = $request->join_date;
-            $user->major_id = $request->major_id;
-            $user->class_id = $request->class_id;
-
-            if ($request->hasFile('image')) {
-                $image = $request->file('image');
-                $imageName = time() . '_' . $image->getClientOriginalName();
-                $image->move(public_path('images/users'), $imageName);
-                $user->image = 'images/users/' . $imageName;
-            }
-
-            $user->save();
-
-            return redirect()->route('users.index')
-                ->with('success', 'User created successfully.');
-        } catch (\Exception $e) {
-            return redirect()->route('users.create')
-                ->with('error', 'Failed to create user. ' . $e->getMessage())
-                ->withInput();
+        // Upload gambar jika ada
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images/user', 'public');
+            $request['image'] = $imagePath;
         }
+
+        // Hash password dan simpan pengguna
+        $request['password'] = Hash::make($request['password']);
+        User::create($request->all());
+
+        return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
 
     public function edit($id)

@@ -21,13 +21,16 @@ body {
 h1 {
     text-align: center;
     color: #000;
-    margin-bottom: 20px; /* Spasi antara judul dan form */
+    margin-bottom: 20px;
 }
 
 .login-form {
     display: flex;
     flex-direction: column;
+    max-width: 300px; /* Menyesuaikan lebar maksimum form */
+    margin: 0 auto; /* Membuat form berada di tengah */
 }
+
 
 .login-form label {
     margin-bottom: 5px;
@@ -39,6 +42,7 @@ h1 {
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    width: 100%; /* Membuat input sejajar */
 }
 
 .login-form button[type="submit"] {
@@ -48,6 +52,7 @@ h1 {
     background-color: #6a11cb;
     color: #fff;
     cursor: pointer;
+    width: 100%; /* Membuat tombol sejajar */
 }
 
 .login-form button[type="submit"]:hover {

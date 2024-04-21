@@ -23,7 +23,7 @@ return new class extends Migration {
             $table->date('acquisition_date');
             $table->string('acquisition_source');
             $table->string('image');
-            $table->enum('status', ['ready', 'borrow'])->default('ready');
+            $table->enum('status', ['ready','booking', 'borrow'])->default('ready');
             $table->unsignedBigInteger('type_id');
             $table->foreign('type_id')->references('id')->on('types');
             $table->unsignedBigInteger('bookshelf_id');

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Auth;
+use App\Models\User;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -14,20 +15,36 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        $request->validate([
+            'nis' => 'required|string',
+            'password' => 'required|string',
+        ]);
+
+        // Periksa apakah pengguna dengan NIS yang diberikan ada dalam database
+        $user = User::where('nis', $request->nis)->first();
+
+        if (!$user) {
+            return redirect()->back()->withErrors(['message' => 'User not found. Please register first.']);
+        }
+
+        // Jika pengguna ditemukan, lanjutkan dengan mencoba login
         $credentials = $request->only('nis', 'password');
 
         if (Auth::attempt($credentials)) {
-            // Jika autentikasi berhasil, redirect sesuai peran pengguna
-            if (Auth::user()->role === 'admin') {   
-                return redirect()->route('admin.dashboard');
-            } else {
-                return redirect()->route('catalog.greeting');
-            }
-        }
+            // Jika login berhasil
+            $user = Auth::user();
 
-        // Jika autentikasi gagal, kembalikan ke halaman login dengan pesan error
-        return redirect()->back()->withErrors(['message' => 'Invalid credentials']);
+            if ($user->role === 'admin') {
+                return redirect('/dashboard');
+            } else {
+                return redirect('/greeting');
+            }
+        } else {
+            // Jika login gagal
+            return redirect()->back()->withErrors(['message' => 'Login failed. Please check your credentials.']);
+        }
     }
+
 
     public function logout(Request $request)
     {
