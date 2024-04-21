@@ -2,28 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class ReturnDetail extends Model
 {
-    use HasFactory;
+    protected $fillable = ['returnback_id', 'book_id', 'fine'];
 
-    protected $fillable = [
-        'return_back_id',
-        'borrow_id',
-        'fine',
-    ];
-
-    // Relationship with ReturnBack model
     public function returnBack()
     {
         return $this->belongsTo(ReturnBack::class);
     }
 
-    // Relationship with Borrowing model
-    public function borrowing()
+    public function book()
     {
-        return $this->belongsTo(Borrowing::class, 'borrow_id');
+        return $this->belongsTo(Book::class);
     }
 }

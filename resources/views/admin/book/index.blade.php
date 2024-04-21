@@ -57,7 +57,6 @@
                                                     <td>{{ $book->type->name }}</td>
                                                     <td>{{ $book->status }}</td>
                                                     <td>{{ $book->bookshelf->shelf_location }}</td>
-                                                    <td>{{ $book->acquisition_source }}</td>
                                                     <td>
                                                         <a href="{{ route('books.edit', $book->id) }}"
                                                             class="btn btn-info btn-sm">Edit</a>

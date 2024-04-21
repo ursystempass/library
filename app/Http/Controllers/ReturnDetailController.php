@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use App\Models\Borrowing;
 use App\Models\ReturnBack;
 use App\Models\ReturnDetail;
@@ -17,62 +18,29 @@ class ReturnDetailController extends Controller
 
     public function create()
     {
-        $returnBacks = ReturnBack::all(); // Ambil semua data return_back
-        $borrowings = Borrowing::all(); // Ambil semua data borrowing
-        return view('re-det.create', compact('returnBacks','borrowings'));
+        $returnbacks = ReturnBack::all();
+        $books = Book::all();
+
+        return view('re-det.create', compact('returnbacks', 'books'));
     }
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'return_back_id' => 'required|exists:return_backs,id',
-            'borrow_id' => 'required|exists:borrowings,id',
-            'fine' => 'required|numeric',
-        ], [
-            'return_back_id.exists' => 'The selected return back id is invalid.',
-            'borrow_id.exists' => 'The selected borrow id is invalid.',
+        $request->validate([
+            'returnback_id' => 'required|exists:return_backs,id',
+            'book_id' => 'required|exists:books,id',
+            'fine' => 'required|string',
         ]);
-    
-        // Periksa apakah 'return_back_id' dan 'borrow_id' ada dalam $validatedData
-        if (isset($validatedData['return_back_id']) && isset($validatedData['borrow_id'])) {
-            ReturnDetail::create($validatedData);
-            return redirect()->route('redets.index')->with('success', 'Return Detail created successfully.');
-        } else {
-            // Jika 'return_back_id' atau 'borrow_id' tidak ada dalam $validatedData
-            return back()->withInput()->withErrors(['error' => 'Please select a valid return back and borrowing.']);
-        }
-    }
-    
 
+        // Create new ReturnDetail
+        $returnDetail = ReturnDetail::create($request->all());
 
-    public function show(ReturnDetail $returnDetail)
-    {
-        return view('redets.show', compact('returnDetail'));
-    }
+        // Update status buku kembali menjadi "ready"
+        $book = Book::findOrFail($request->book_id);
+        $book->status = 'ready';
+        $book->save();
 
-    public function edit(ReturnDetail $returnDetail)
-    {
-        return view('re-det.edit', compact('returnDetail'));
-    }
-
-    public function update(Request $request, ReturnDetail $returnDetail)
-{
-    $validatedData = $request->validate([
-        'return_back_id' => 'required|exists:return_backs,id',
-        'borrow_id' => 'required|exists:borrowings,id',
-        'fine' => 'required|numeric',
-    ]);
-
-    $returnDetail->update($validatedData);
-
-    return redirect()->route('redets.index')->with('success', 'Return Detail updated successfully.');
-}
-
-
-    public function destroy(ReturnDetail $returnDetail)
-    {
-        $returnDetail->delete();
-
-        return redirect()->route('redets.index')->with('success', 'Return Detail deleted successfully.');
+        return redirect()->route('rebacks.index');
     }
 }
+
