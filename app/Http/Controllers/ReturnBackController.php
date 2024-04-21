@@ -2,63 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Borrowing;
 use App\Models\ReturnBack;
 use Illuminate\Http\Request;
 
 class ReturnBackController extends Controller
 {
-    // Method untuk menampilkan semua data ReturnBack
     public function index()
     {
         $returnBacks = ReturnBack::all();
-        return view('admin.re-back.index', compact('returnBacks'));
+        $borrowings = Borrowing::all();
+
+        return view('admin.re-back.index', compact('returnBacks', 'borrowings'));
     }
 
     public function create()
     {
-        $users = User::all();
-        return view('admin.re-back.create', compact('users'));
+        $borrowings = Borrowing::all();
+
+        return view('admin.re-back.create', compact('borrowings'));
     }
+
     public function store(Request $request)
     {
         $request->validate([
-            'return_code' => 'required|unique:return_backs',
-            'user_id' => 'required|exists:users,id',
-            'return_date' => 'required|date',
+            'borrowing_id' => 'required|exists:borrowings,id',
+            'return_date' => 'required|string|max:125',
         ]);
 
-
-        // Simpan data ReturnBack baru
-        ReturnBack::create($request->all());
-
-        return redirect()->route('rebacks.index')->with('success', 'ReturnBack created successfully.');
-    }
-
-    public function edit(ReturnBack $returnBack)
-    {
-        $users = User::all();
-        return view('admin.re-back.edit', compact('returnBack', 'users'));
-    }
-
-    // Method untuk menyimpan perubahan pada data ReturnBack yang diedit
-    public function update(Request $request, ReturnBack $returnBack)
-    {
-        // Validasi data dari request
-        $request->validate([
-            'return_code' => 'required|unique:return_back,return_code,' . $returnBack->id,
-            'user_id' => 'required|exists:users,id',
-            'return_date' => 'required|date',
+        $returnBack = ReturnBack::create([
+            'borrowing_id' => $request->borrowing_id,
+            'return_date' => $request->return_date,
         ]);
 
-        $returnBack->update($request->all());
-
-        return redirect()->route('rebacks.index')->with('success', 'ReturnBack updated successfully.');
-    }
-
-    public function destroy(ReturnBack $returnBack)
-    {
-        $returnBack->delete();
-        return redirect()->route('rebacks.index')->with('success', 'ReturnBack deleted successfully.');
+        return redirect()->route('redets.create', $returnBack->id);
     }
 }

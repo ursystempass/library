@@ -1,46 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Return Detail</title>
+    @include('layouts.partials.head')
 </head>
+
 <body>
-    <h1>Create Return Detail</h1>
-    @if ($errors->any())
-        <div>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+    <div class="container-scroller">
+        <!-- Include navbar -->
+        @include('layouts.partials.navbar')
+
+        <div class="container-fluid page-body-wrapper">
+            <!-- Include sidebar -->
+            @include('layouts.partials.sidebar')
+
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Form Peminjaman</h4>
+
+                                <form action="{{ route('redets.store') }}" method="POST">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label for="returnback_id">Return Back ID:</label>
+                                        <select name="returnback_id" id="returnback_id" class="form-control">
+                                            @foreach ($returnbacks as $returnback)
+                                                <option value="{{ $returnback->id }}">{{ $returnback->id }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="book_id">Book ID:</label>
+                                        <select name="book_id" id="book_id" class="form-control">
+                                            @foreach ($books as $book)
+                                                <option value="{{ $book->id }}">{{ $book->id }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fine">Fine:</label>
+                                        <input type="text" name="fine" id="fine" class="form-control">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    @endif
-    <form method="POST" action="{{ route('redets.store') }}">
-        @csrf
-        <div>
-            <label for="return_back_id">Return Back:</label>
-            <select id="return_back_id" name="return_back_id" required>
-                <option value="">Select Return Back</option>
-                @foreach ($returnBacks as $returnBack)
-                    <option value="{{ $returnBack->id }}">{{ $returnBack->return_code }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div>
-            <label for="borrow_id">Borrowing Code:</label>
-            <select id="borrow_id" name="borrow_id" required>
-                <option value="">Select Borrowing</option>
-                @foreach ($borrowings as $borrowing)
-                    <option value="{{ $borrowing->id }}">{{ $borrowing->borrow_code }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div>
-            <label for="fine">Fine:</label>
-            <input type="number" id="fine" name="fine" value="{{ old('fine') }}" required>
-        </div>
-        <button type="submit">Create Return Detail</button>
-    </form>
+    </div>
 </body>
+
 </html>
