@@ -45,10 +45,15 @@
                         </div>
                     </figcaption>
                 </div>
+                <!-- Tambahkan tombol "Pinjam" di halaman deskripsi buku -->
                 <div class="bottom-wrap">
-                    <a href="#" class="btn btn-primary float-right" data-abc="true" id="borrowBtn">Pinjam</a>
-                    <a href="/catalog" class="btn btn-warning float-left" data-abc="true">Cancel</a>
+                    <form action="{{ route('borrow.book', ['bookId' => $book->id]) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-primary float-right">Pinjam</button>
+                    </form>
+                    <a href="/catalog" class="btn btn-warning float-left">Kembali</a>
                 </div>
+
             </figure>
         </div>
     @endisset

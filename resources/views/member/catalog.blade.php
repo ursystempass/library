@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Catalog</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Font Awesome CSS -->
     <!-- Include SweetAlert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <link rel="stylesheet" href="{{ asset('css/catalog.css') }}">
@@ -15,6 +16,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <div class="header">
@@ -25,6 +27,7 @@
         </div>
     </div>
 
+
     <div class="container">
         <form class="search-container" id="searchForm">
             <input type="text" placeholder="Search..." name="q">
@@ -33,19 +36,6 @@
         <button id="logoutButton" onclick="logout()" class="logout-btn">
             Logout
         </button>
-              <!-- Kartu untuk setiap entri dalam tabel types -->
-              <div class="types-container">
-                @foreach ($types as $type)
-                <div class="type-card">
-                    <div class="card-content">
-                        <h3>{{ $type->name }}</h3>
-                        <!-- Di sini Anda dapat menambahkan informasi lain sesuai kebutuhan -->
-                    </div>
-                </div>
-                @endforeach
-            </div>
-
-
         <!-- Daftar buku (akan dimunculkan setelah pencarian dilakukan) -->
         <div id="bookList">
             <div class="catalog">
@@ -68,32 +58,27 @@
     </div>
 
     <div class="footer">
-        <!-- Footer content -->
-    </div>
+	@@ -50,11 +64,11 @@
 
-    <script src="{{ asset('js/catalog.js') }}"></script>
     <script>
         document.getElementById('searchForm').addEventListener('submit', function(event) {
             event.preventDefault(); // Mencegah form dari pengiriman
-            var query = this.querySelector('input[name="q"]').value
-        .toLowerCase(); // Dapatkan nilai dari input pencarian
+            var query = this.querySelector('input[name="q"]').value.toLowerCase(); // Dapatkan nilai dari input pencarian
             if (!query.trim()) {
                 Swal.fire({
                     icon: 'error',
-	@@ -66,58 +80,68 @@
-                        content: 'monochrome-content'
-                    }
+                    title: 'Error',
+                    text: 'Please enter a search query',
+                    confirmButtonColor: '#3085d6',
                 });
                 return; // Keluar dari fungsi jika query kosong
             }
             var books = document.querySelectorAll('.book'); // Dapatkan semua elemen buku
             var bookList = document.getElementById('bookList'); // Dapatkan div daftar buku
-            var searchContainer = document.getElementById('searchContainer'); // Dapatkan elemen pencarian
             // Loop melalui setiap buku
             books.forEach(function(book) {
                 var title = book.querySelector('h3').innerText.toLowerCase(); // Dapatkan judul buku
-                var author = book.querySelector('p:nth-of-type(2)').innerText
-            .toLowerCase(); // Dapatkan pengarang buku
+                var author = book.querySelector('p:nth-of-type(2)').innerText.toLowerCase(); // Dapatkan pengarang buku
                 // Periksa apakah judul buku atau pengarang buku cocok dengan query pencarian
                 if (title.includes(query) || author.includes(query)) {
                     book.style.display = 'block'; // Tampilkan buku jika cocok
@@ -103,11 +88,9 @@
             });
             // Tampilkan daftar buku jika ada buku yang cocok dengan pencarian
             bookList.style.display = 'block';
-            // Pindahkan elemen pencarian
-            searchContainer.style.top = '20px'; // Sesuaikan nilai top sesuai kebutuhan
-            searchContainer.style.bottom = 'auto'; // Hapus nilai bottom
         });
     </script>
+
     <script>
         function logout() {
             Swal.fire({
@@ -141,5 +124,7 @@
             });
         }
     </script>
+
 </body>
+
 </html>

@@ -1,104 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    @include('layouts.partials.head')
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var tanggalInput = document.getElementById('join_date');
-            var now = new Date();
-            var formattedDate = now.toISOString().slice(0, 16);
-            tanggalInput.value = formattedDate;
-        });
-    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New User</title>
+    <!-- Bootstrap CSS atau CSS lainnya -->
 </head>
-
 <body>
-    <div class="container-scroller">
-        <!-- Include navbar -->
-        @include('layouts.partials.navbar')
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">Create New User</div>
 
-        <div class="container-fluid page-body-wrapper">
-            <!-- Include sidebar -->
-            @include('layouts.partials.sidebar')
+                    <div class="card-body">
+                        <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
 
-            <div class="main-panel">
-                <div class="content-wrapper">
-                    <div class="col-lg-12 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Tambah Pengguna</h4>
-                                <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="form-group">
-                                        <label for="kode_user">Kode User</label>
-                                        <input type="text" class="form-control" id="kode_user" name="kode_user"
-                                            placeholder="Kode User" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="nis">NIS</label>
-                                        <input type="text" class="form-control" id="nis" name="nis" placeholder="NIS"
-                                            required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="fullname">Nama Lengkap</label>
-                                        <input type="text" class="form-control" id="fullname" name="fullname"
-                                            placeholder="Nama Lengkap" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="password">Password</label>
-                                        <input type="password" class="form-control" id="password" name="password"
-                                            placeholder="Password" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="image">Image</label>
-                                        <input type="file" class="form-control" id="image" name="image" accept="image/*">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="alamat">Alamat</label>
-                                        <input type="text" class="form-control" id="alamat" name="alamat"
-                                            placeholder="Alamat" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="role">Role</label>
-                                        <select class="form-control" id="role" name="role">
-                                            <option value="member">Member</option>
-                                            <option value="admin">Admin</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="join_date">Tanggal Bergabung</label>
-                                        <input type="datetime-local" class="form-control" id="join_date" name="join_date"
-                                            required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="major_id">Jurusan</label>
-                                        <select class="form-control" id="major_id" name="major_id">
-                                            <option value="">Pilih Jurusan</option>
-                                            @foreach($majors as $major)
-                                            <option value="{{ $major->id }}">{{ $major->nama }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="class_id">Kelas</label>
-                                        <select class="form-control" id="class_id" name="class_id">
-                                            <option value="">Pilih Kelas</option>
-                                            @foreach($classes as $class)
-                                            <option value="{{ $class->id }}">{{ $class->nama }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <button type="submit" class="btn btn-gradient-primary mr-2">Simpan</button>
-                                    <a href="{{ route('users.index') }}" class="btn btn-light">Batal</a>
-                                </form>
+                            <div class="form-group">
+                                <label for="kode_user">Kode User</label>
+                                <input type="text" class="form-control" id="kode_user" name="kode_user" required>
                             </div>
-                        </div>
+
+                            <div class="form-group">
+                                <label for="nis">NIS</label>
+                                <input type="text" class="form-control" id="nis" name="nis" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fullname">Fullname</label>
+                                <input type="text" class="form-control" id="fullname" name="fullname" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="alamat">Alamat</label>
+                                <textarea class="form-control" id="alamat" name="alamat" required></textarea>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="role">Role</label>
+                                <select class="form-control" id="role" name="role" required>
+                                    <option value="admin">Admin</option>
+                                    <option value="member">Member</option>
+                                </select>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="join_date">Join Date</label>
+                                <input type="text" class="form-control" id="join_date" name="join_date" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="major_id">Major</label>
+                                <select class="form-control" id="major_id" name="major_id">
+                                    <option value="" disabled selected>Select Major</option>
+                                    @foreach ($majors as $major)
+                                        <option value="{{ $major->id }}">{{ $major->nama }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="class_id">Class</label>
+                                <select class="form-control" id="class_id" name="class_id">
+                                    <option value="" disabled selected>Select Class</option>
+                                    @foreach ($classes as $class)
+                                        <option value="{{ $class->id }}">{{ $class->nama }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="image">Image</label>
+                                <input type="file" class="form-control-file" id="image" name="image">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Create User</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </body>
-
 </html>
