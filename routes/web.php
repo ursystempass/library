@@ -56,6 +56,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('rebacks', ReturnBackController::class);
     Route::resource('redets', ReturnDetailController::class);
     Route::resource('types', TypeController::class);
+    Route::post('/approve-return/{id}', [ReturnDetailController::class, 'approveReturn'])->name('approve.return');
 });
 
 
