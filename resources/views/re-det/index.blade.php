@@ -19,11 +19,9 @@
                     <div class="col-lg-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Daftar Pengguna</h4>
-                                <!-- <button type="button" class="btn btn-gradient-primary btn-sm">Tambah Pengguna</button> -->
-                                <a href="{{ route('redets.create') }}" class="btn btn-gradient-primary">Tambah
-                                    Pengguna</a>
-                                <div class="table-responsive"> <!-- Tambahkan kelas table-responsive di sini -->
+                                <h4 class="card-title">Daftar Pengembalian</h4>
+                                <a href="{{ route('redets.create') }}" class="btn btn-gradient-primary">Tambah Pengembalian</a>
+                                <div class="table-responsive">
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
@@ -40,6 +38,8 @@
                                                     <td>{{ $returnDetail->borrow_id }}</td>
                                                     <td>{{ $returnDetail->fine }}</td>
                                                     <td>
+                                                        <a href="{{ route('redets.create', ['returnback_id' => $returnDetail->return_back_id]) }}"
+                                                            class="btn btn-success btn-sm">Action Pengembalian</a>
                                                         <a href="{{ route('redets.edit', $returnDetail->id) }}"
                                                             class="btn btn-info btn-sm">Edit</a>
                                                         <form action="{{ route('redets.destroy', $returnDetail->id) }}"
