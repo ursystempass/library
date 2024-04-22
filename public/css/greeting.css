@@ -2,7 +2,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background: linear-gradient(to bottom right, #9370db, #add8e6, #ff69b4); /* Gradasi ungu-biru-pink */
+    background: linear-gradient(to bottom right, #9370db, #add8e6); /* Gradasi ungu-biru-pink */
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -20,12 +20,12 @@ body {
 
 .intro {
     text-align: center;
-    background-color: rgba(255, 255, 255, 0.9); /* Warna latar belakang dengan opacity */
+    background-color: rgba(233, 229, 229, 0.261); /* Mengatur transparansi menjadi 0.5 */
     padding: 40px;
     border-radius: 20px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Shadow */
-    width: 100%; /* Mengatur lebar intro */
-    max-width: 800px; /* Batasi lebar maksimum */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 800px;
 }
 
 h1 {
@@ -46,21 +46,22 @@ p {
 
 .option {
     background-color: #fff;
-    padding: 30px;
+    padding: 20px; /* Mengurangi padding */
     border-radius: 10px;
-    margin: 0 20px 20px;
+    margin: 0 10px 10px; /* Mengurangi margin */
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Shadow */
     transition: transform 0.3s ease;
-    flex: 1 0 calc(33% - 40px);
-    max-width: calc(33% - 40px);
+    flex: 1 0 calc(33% - 20px); /* Sesuaikan dengan perubahan padding dan margin */
+    max-width: calc(33% - 20px); /* Sesuaikan dengan perubahan padding dan margin */
 }
+
 
 .option:hover {
     transform: translateY(-5px); /* Efek mengangkat saat dihover */
 }
 
 .option h2 {
-    color: #ff69b4; /* Warna teks */
+    color: #000000; /* Warna teks */
     font-size: 24px;
     margin-bottom: 10px;
 }

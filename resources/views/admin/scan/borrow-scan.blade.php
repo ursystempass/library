@@ -41,7 +41,7 @@
                                     <div class="card shadow rounded-3 p-3 border-0">
                                         <p class="text-center mb-3" style="color: #000000;">Scan here</p>
                                         <video id="preview" playsinline autoplay muted style="width: 100%;"></video>
-                                        <form action="{{ route('borrow.scan') }}" method="POST" id="form">
+                                        <form action="{{ route('borrow-scan') }}" method="POST" id="form">
                                             @csrf
                                             <input type="hidden" name="event_registration_id" id="event_registration_id">
                                         </form>
@@ -71,14 +71,14 @@
                 });
 
                 scanner.addListener('scan', function(c) {
-                    // Kirim kode yang dipindai ke rute baru
-                    fetch('{{ route("scan.code") }}', {
+                    // Kirim kode yang dipindai ke metode scanBorrow
+                    fetch('{{ route("borrow.scan") }}', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                             'X-CSRF-TOKEN': '{{ csrf_token() }}'
                         },
-                        body: JSON.stringify({ scanned_code: c })
+                        body: JSON.stringify({ borrowing_id: c }) // Anda perlu menyesuaikan dengan atribut yang digunakan untuk mengidentifikasi peminjaman
                     })
                     .then(response => response.json())
                     .then(data => {
@@ -94,6 +94,7 @@
                 });
             });
         </script>
+
     </div>
 </body>
 

@@ -18,43 +18,54 @@
 </head>
 
 <body>
-
     <div class="header">
         <h1>Perpustakaan SMKN 1 Cibinong</h1>
         <div class="header-icons">
+            <button id="logoutButton" onclick="logout()" class="logout-btn">Logout</button> <!-- Tombol Logout -->
             <i class="fas fa-bell"></i> <!-- Icon notifikasi -->
             <i class="fas fa-user"></i> <!-- Icon profil -->
+            <i class="fas fa-barcode" onclick="redirectToBarcode({{ auth()->user()->booking_id }})"></i> <!-- Ikon barcode -->
         </div>
     </div>
-
 
     <div class="container">
         <form class="search-container" id="searchForm">
             <input type="text" placeholder="Search..." name="q">
             <button type="submit">Search</button>
         </form>
-        <button id="logoutButton" onclick="logout()" class="logout-btn">
+        {{-- <button id="logoutButton" onclick="logout()" class="logout-btn">
             Logout
-        </button>
-        <!-- Daftar buku (akan dimunculkan setelah pencarian dilakukan) -->
-        <div id="bookList">
-            <div class="catalog">
-                <!-- HTML untuk menampilkan setiap buku akan ditempatkan di sini -->
-                @foreach ($books as $book)
-                    <div class="book">
-                        <img src="{{ $book->image }}" alt="{{ $book->title }}">
-                        <div class="book-details">
-                            <h3>{{ $book->title }}</h3>
-                            <p>{{ $book->author }}</p>
-                            <p>{{ $book->publisher }}</p>
-                            <p>Rak: {{ $book->shelf_location_id }}</p>
-                            <p class="book-quantity">Jumlah buku: {{ $book->quantity }}</p>
-                            <a href="{{ route('member.desc', ['id' => $book->id]) }}" class="btn-detail">Detail</a>
-                        </div>
-                    </div>
-                @endforeach
+        </button> --}}
+        <div class="type-list">
+            <!-- Tampilkan jenis buku sebagai card -->
+            @foreach ($types as $type)
+            <div class="type-card" onclick="redirectToBookType({{ $type->id }})">
+                <h3>{{ $type->name }}</h3>
             </div>
+            @endforeach
         </div>
+
+        <!-- Daftar buku (akan dimunculkan setelah pencarian dilakukan) -->
+        <div class="container">
+            <!-- Daftar buku (akan dimunculkan setelah pencarian dilakukan) -->
+            <div id="bookList">
+                <div class="catalog">
+                    <!-- HTML untuk menampilkan setiap buku akan ditempatkan di sini -->
+                    @foreach ($books as $book)
+                        <div class="book">
+                            <img src="{{ $book->image }}" alt="{{ $book->title }}">
+                            <div class="book-details">
+                                <h3>{{ $book->title }}</h3>
+                                <p>{{ $book->author }}</p>
+                                <p>{{ $book->publisher }}</p>
+                                <p>Rak: {{ $book->shelf_location_id }}</p>
+                                <p class="book-quantity">Jumlah buku: {{ $book->quantity }}</p>
+                                <a href="{{ route('member.desc', ['id' => $book->id]) }}" class="btn-detail">Detail</a>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
     </div>
 
     <div class="footer">
@@ -90,6 +101,16 @@
             bookList.style.display = 'block';
         });
     </script>
+<script>
+    function redirectToBarcode(bookingId) {
+        window.location.href = '{{ route('barcode') }}/' + bookingId;
+    }
+</script>
+<script>
+    function redirectToBookType(typeId) {
+        window.location.href = '{{ route('member.book_type', ['type_id' => ':type_id']) }}'.replace(':type_id', typeId);
+    }
+</script>
 
     <script>
         function logout() {

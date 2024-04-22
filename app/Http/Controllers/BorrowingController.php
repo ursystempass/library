@@ -48,7 +48,8 @@ class BorrowingController extends Controller
         $borrowing->due_date = $dueDate; // Menyimpan hasil due_date yang sudah diatur
         $borrowing->save();
 
-        return redirect()->route('borrowingdetails.create', ['borrowing_id' => $borrowing->id])->with('success', 'Borrowing created successfully.');    }
+        return redirect()->route('borrowingdetails.create', ['borrowing_id' => $borrowing->id])->with('success', 'Borrowing created successfully.');
+    }
 
     // Method lain tetap sama
 
@@ -66,38 +67,38 @@ class BorrowingController extends Controller
     }
 
     public function borrowBook($bookId)
-{
-    // Check if the user is logged in
-    if (!Auth::check()) {
-        return redirect()->route('login')->with('error', 'Anda harus login untuk melakukan peminjaman.');
+    {
+        // Check if the user is logged in
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Anda harus login untuk melakukan peminjaman.');
+        }
+
+        // Get the ID of the currently logged in user
+        $userId = Auth::id();
+
+        // Check if the user exists
+        $user = User::find($userId);
+        if (!$user) {
+            return redirect()->route('login')->with('error', 'Pengguna tidak valid.');
+        }
+
+        // Create a new borrowing with 'booking' status
+        $borrowing = new Borrowing();
+        $borrowing->borrow_code = $this->generateBorrowCode();
+        $borrowing->user_id = $userId;
+        $borrowing->borrow_date = now()->toDateString();
+        $borrowing->due_date = now()->addDays(3)->toDateString(); // Add 3 days from the borrowing date
+        $borrowing->status = 'booking';
+        $borrowing->save();
+
+        // Update the book status to 'booking'
+        $book = Book::findOrFail($bookId);
+        $book->status = 'booking';
+        $book->save();
+
+        // Redirect or provide response as needed
+        return redirect()->route('member.catalog')->with('success', 'Buku berhasil dipinjam.');
     }
-
-    // Get the ID of the currently logged in user
-    $userId = Auth::id();
-
-    // Check if the user exists
-    $user = User::find($userId);
-    if (!$user) {
-        return redirect()->route('login')->with('error', 'Pengguna tidak valid.');
-    }
-
-    // Create a new borrowing with 'booking' status
-    $borrowing = new Borrowing();
-    $borrowing->borrow_code = $this->generateBorrowCode();
-    $borrowing->user_id = $userId;
-    $borrowing->borrow_date = now()->toDateString();
-    $borrowing->due_date = now()->addDays(3)->toDateString(); // Add 3 days from the borrowing date
-    $borrowing->status = 'booking';
-    $borrowing->save();
-
-    // Update the book status to 'booking'
-    $book = Book::findOrFail($bookId);
-    $book->status = 'booking';
-    $book->save();
-
-    // Redirect or provide response as needed
-    return redirect()->route('member.catalog')->with('success', 'Buku berhasil dipinjam.');
-}
 
     public function edit($id)
     {
@@ -145,4 +146,23 @@ class BorrowingController extends Controller
 
         return redirect()->route('borrowings.index')->with('success', 'Booking approved successfully.');
     }
+    public function generateBorrowQR($borrowId)
+    {
+        // Ambil data peminjaman berdasarkan ID
+        $borrow = Borrowing::find($borrowId);
+
+        if (!$borrow) {
+            // Handle jika peminjaman tidak ditemukan
+            return response()->json(['error' => 'Peminjaman tidak ditemukan'], 404);
+        }
+
+        // Generate QR code dengan ID peminjaman
+        $qrCodePath = public_path('images/qrborrow/'.$borrow->id.'.png');
+        QRcode::png($borrow->id, $qrCodePath);
+
+        // Mengembalikan path gambar QR code
+        return $qrCodePath;
+    }
+
+
 }

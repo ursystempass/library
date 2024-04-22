@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\DescController;
+use App\Http\Controllers\ScanController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MajorController;
@@ -51,9 +52,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('borrowings', BorrowingController::class);
     Route::resource('borrowingdetails', BorrowingDetailController::class);
-    Route::put('/borrowingdetails/{id}/updateStatus', [BorrowingDetailController::class, 'updateStatus'])->name('borrowingdetails.updateStatus');
-    Route::get('/borrow-scan', [BorrowingController::class, 'borrowScan'])->name('borrow.scan');
-    Route::post('/scan-code', [BorrowingController::class, 'scanCode'])->name('scan.code');
+    Route::post('/borrow-scan', [ScanController::class, 'index'])->name('borrow.scan');
     Route::resource('rebacks', ReturnBackController::class);
     Route::resource('redets', ReturnDetailController::class);
     Route::resource('types', TypeController::class);
@@ -66,6 +65,10 @@ Route::middleware('member')->group(function () {
     ]);
     Route::get('/greeting', [CatalogController::class, 'greeting'])->name('catalog.greeting'); // Rute untuk halaman greeting di CatalogController
     Route::get('/book/{id}', [CatalogController::class, 'showDescription'])->name('member.desc');
+    Route::get('/barcode', [CatalogController::class, 'showBarcode'])->name('barcode');
+Route::get('catalog/barcode/{bookingId}', [CatalogController::class, 'showBarcode'])->name('catalog.barcode');
+Route::get('/member/book_type/{type_id}', [CatalogController::class, 'showBooksByType'])->name('member.book_type');
     Route::get('/profile-member', [ProfileController::class, 'showMember'])->name('profile.showMember');
+
 });
 

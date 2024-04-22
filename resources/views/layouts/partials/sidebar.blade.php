@@ -36,7 +36,7 @@
                 </ul>
             </div>
         </li>
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#ui-basic-buku" aria-controls="ui-basic-buku">
                 <span class="menu-title">Buku</span>
                 <i class="menu-arrow"></i>
@@ -57,7 +57,7 @@
                     </li>
                 </ul>
             </div>
-        </li>
+        </li> --}}
 
         {{-- <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
@@ -81,12 +81,12 @@
               <i class="mdi mdi-home menu-icon"></i>
             </a>
       </li> --}}
-        {{-- <li class="nav-item">
+        <li class="nav-item">
             <a class="nav-link" href="{{ url('books') }}">
                 <span class="menu-title">Buku</span>
                 <i class="mdi mdi-home menu-icon"></i>
             </a>
-        </li> --}}
+        </li>
         <li class="nav-item">
             <a class="nav-link" href="{{ url('borrowings') }}">
                 <span class="menu-title">Peminjaman</span>

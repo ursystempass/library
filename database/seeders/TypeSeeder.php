@@ -17,6 +17,12 @@ class TypeSeeder extends Seeder
             ['name' => 'Pelajaran'],
             ['name' => 'Ensiklopedia'],
             ['name' => 'Majalah'],
+            ['name' => 'Cerpen'],
+            ['name' => 'Paket'],
+            ['name' => 'Kamus'],
+            ['name' => 'Sejarah'],
+            ['name' => 'Hiburan'],
+            ['name' => 'Religi'],
             // Tambahkan data jenis buku lainnya sesuai kebutuhan
         ];
 
