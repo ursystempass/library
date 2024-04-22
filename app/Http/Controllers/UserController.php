@@ -32,21 +32,23 @@ class UserController extends Controller
             'password' => 'required|string',
             'alamat' => 'required|string|max:225',
             'role' => 'required|string|in:admin,member', // validasi role
-            'join_date' => 'required|string|max:125',
+            'join_date' => 'required|date', // validasi tanggal
             'major_id' => 'nullable|exists:majors,id',
             'class_id' => 'nullable|exists:classes,id',
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // tambahkan validasi untuk gambar
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // tambahkan validasi untuk gambar
         ]);
 
         // Upload gambar jika ada
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('images/user', 'public');
+            $imagePath = $request->file('image')->store('images/users', 'public');
             $request['image'] = $imagePath;
         }
 
         // Hash password dan simpan pengguna
         $request['password'] = Hash::make($request['password']);
-        User::create($request->all());
+        User::create($request->only([
+            'kode_user', 'nis', 'fullname', 'password', 'alamat', 'role', 'join_date', 'major_id', 'class_id', 'image'
+        ]));
 
         return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
@@ -69,7 +71,7 @@ class UserController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'alamat' => 'required|string|max:225',
             'role' => 'nullable|string|max:50',
-            'join_date' => 'required|string|max:125',
+            'join_date' => 'required|date', // validasi tanggal
             'major_id' => 'nullable|exists:majors,id',
             'class_id' => 'nullable|exists:classes,id',
         ]);
@@ -92,10 +94,8 @@ class UserController extends Controller
 
         // Handle image upload
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images/users'), $imageName);
-            $user->image = $imageName;
+            $imagePath = $request->file('image')->store('images/users', 'public');
+            $user->image = $imagePath;
         }
 
         $user->save();
@@ -107,7 +107,6 @@ class UserController extends Controller
     {
         $user->delete();
 
-        return redirect()->route('users.index')
-            ->with('success', 'User deleted successfully');
+        return redirect()->route('users.index')->with('success', 'User deleted successfully');
     }
 }
