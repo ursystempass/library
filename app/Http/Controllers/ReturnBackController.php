@@ -24,17 +24,30 @@ class ReturnBackController extends Controller
     }
 
     public function store(Request $request)
+{
+    $request->validate([
+        'borrowing_id' => 'required|exists:borrowings,id',
+        'return_date' => 'required|string|max:125',
+    ]);
+
+    $returnBack = ReturnBack::create([
+        'borrowing_id' => $request->borrowing_id,
+        'return_date' => $request->return_date,
+    ]);
+
+    return response()->json(['message' => 'Return back created successfully'], 200);
+}
+
+public function destroy($id)
     {
-        $request->validate([
-            'borrowing_id' => 'required|exists:borrowings,id',
-            'return_date' => 'required|string|max:125',
-        ]);
+        // Temukan data pengembalian berdasarkan ID
+        $returnBack = ReturnBack::findOrFail($id);
 
-        $returnBack = ReturnBack::create([
-            'borrowing_id' => $request->borrowing_id,
-            'return_date' => $request->return_date,
-        ]);
+        // Hapus data pengembalian
+        $returnBack->delete();
 
-        return redirect()->route('redets.create', $returnBack->id);
+        // Redirect ke halaman indeks pengembalian dengan pesan sukses
+        return redirect()->route('rebacks.index')->with('success', 'Data pengembalian berhasil dihapus');
     }
+
 }

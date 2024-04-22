@@ -34,20 +34,20 @@
                                         <tbody>
                                             @foreach ($returnDetails as $returnDetail)
                                                 <tr>
-                                                    <td>{{ $returnDetail->return_back_id }}</td>
+                                                    <td>{{ $returnDetail->returnback_id }}</td>
+                                                    <td>{{ $returnDetail->book_id }}</td>
                                                     <td>{{ $returnDetail->borrow_id }}</td>
                                                     <td>{{ $returnDetail->fine }}</td>
                                                     <td>
-                                                        <a href="{{ route('redets.create', ['returnback_id' => $returnDetail->return_back_id]) }}"
-                                                            class="btn btn-success btn-sm">Action Pengembalian</a>
-                                                        <a href="{{ route('redets.edit', $returnDetail->id) }}"
-                                                            class="btn btn-info btn-sm">Edit</a>
-                                                        <form action="{{ route('redets.destroy', $returnDetail->id) }}"
-                                                            method="POST" style="display: inline;">
+                                                        <form action="{{ route('approve.return', $returnDetail->id) }}" method="POST" style="display: inline;">
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-success btn-sm" onclick="return confirm('Apakah Anda yakin ingin menyetujui pengembalian ini?')">Dikembalikan</button>
+                                                        </form>
+                                                        <a href="{{ route('redets.edit', $returnDetail->id) }}" class="btn btn-info btn-sm">Edit</a>
+                                                        <form action="{{ route('redets.destroy', $returnDetail->id) }}" method="POST" style="display: inline;">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit" class="btn btn-danger btn-sm"
-                                                                onclick="return confirm('Apakah Anda yakin ingin menghapus pengguna ini?')">Delete</button>
+                                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus pengguna ini?')">Delete</button>
                                                         </form>
                                                     </td>
                                                 </tr>

@@ -19,7 +19,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Form Peminjaman</h4>
+                                <h4 class="card-title">Form Pengembalian</h4>
                                 <!-- resources/views/admin/re-back/create.blade.php -->
 
                                 <form action="{{ route('rebacks.store') }}" method="POST">

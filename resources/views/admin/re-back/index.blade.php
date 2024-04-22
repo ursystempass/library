@@ -40,6 +40,11 @@
                                                     <td>{{ $returnBack->return_date }}</td>
                                                     <td>
                                                         <a href="{{ route('redets.create', $returnBack->id) }}" class="btn btn-primary">Tambah Detail</a>
+                                                        <form action="{{ route('rebacks.destroy', $returnBack->id) }}" method="POST" style="display: inline;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus pengembalian ini?')">Hapus</button>
+                                                        </form>
                                                         <!-- Jika Anda membutuhkan tombol untuk edit atau hapus, Anda bisa tambahkan di sini -->
                                                     </td>
                                                 </tr>
