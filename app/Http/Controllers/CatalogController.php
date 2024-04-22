@@ -5,14 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use BarcodeGenerator;
 use App\Models\Setting;
+use App\Models\Borrowing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Type; // Import model Type
 
 class CatalogController extends Controller
 {
     public function index()
     {
+
         $books = Book::all(); // Mengambil semua data buku dari database
         $setting = Setting::all(); // Mengambil semua data buku dari database
         $types = Type::all(); // Mengambil semua data jenis buku dari database
@@ -31,27 +34,24 @@ class CatalogController extends Controller
         return view('member.desc', compact('book'));
     }
 
-    public function showBarcode($bookingId)
-    {
-        // Cari pemesanan buku berdasarkan ID
-        $booking = Booking::findOrFail($bookingId);
-
-        // Generate barcode image using the booking ID
-        $barcode = new BarcodeGenerator();
-        $barcode->setText($bookingId); // Set the data to be encoded in the barcode
-        $barcode->setType(\BarcodeGenerator::Code128); // Set the type of barcode (Code 128 in this case)
-        $barcode->setScale(2); // Set the scaling factor for the barcode
-        $barcode->setThickness(30); // Set the thickness of the bars
-        $barcode->setFontSize(10); // Set the font size for the human-readable text
-        $barcodeImage = $barcode->generate();
-
-        // Return the barcode image
-        return response()->make($barcodeImage, 200, ['Content-Type' => 'image/png']);
-    }
-
     public function showBooksByType($type_id)
     {
         $books = Book::where('type_id', $type_id)->get();
         return view('member.book_type', compact('books'));
     }
+    public function listBorrowedBooks()
+    {
+        // Ambil ID pengguna yang sedang login
+        $userId = Auth::id();
+
+        // Ambil daftar buku yang dipinjam oleh pengguna dengan status booking atau borrow
+        $borrowedBooks = Book::whereHas('borrowingDetails.borrowing', function ($query) use ($userId) {
+            $query->where('user_id', $userId)
+                ->whereIn('status', ['booking', 'borrow']);
+        })->get();
+
+        return view('member.list-borrowing', compact('borrowedBooks'));
+    }
+
+
 }
