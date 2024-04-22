@@ -36,7 +36,7 @@
                                 <div class="card-body">
                                     <h4 class="font-weight-normal mb-3">Buku <i class="mdi mdi-book-open-page-variant mdi-24px float-right"></i>
                                     </h4>
-                                    <h2 class="mb-5" style="font-size: 18px;">250 <br> tersedia</h2>
+                                    <h2 class="mb-5" style="font-size: 18px;">{{ $jumlahBuku }} <br> tersedia</h2>
                                 </div>
                             </div>
                         </div>
@@ -44,8 +44,7 @@
                             <div class="card bg-gradient-info card-img-holder text-white">
                                 <div class="card-body">
                                     <h4 class="font-weight-normal mb-3">Anggota <i class="mdi mdi-account-group mdi-24px float-right"></i></h4>
-                                    <h2 class="mb-5" style="font-size: 18px;">15 <br> terdaftar</h2>
-
+                                    <h2 class="mb-5" style="font-size: 18px;">{{ $jumlahAnggota }} <br> terdaftar</h2>
                                 </div>
                             </div>
                         </div>
@@ -53,7 +52,7 @@
                             <div class="card bg-gradient-success card-img-holder text-white">
                                 <div class="card-body">
                                     <h4 class="font-weight-normal mb-2" style="font-size: 18px;">Peminjaman Buku<i class="mdi mdi-book-open mdi-24px float-right"></i></h4>
-                                    <h2 class="mb-5" style="font-size: 18px;">70 <br> terpinjam</h2>
+                                    <h2 class="mb-5" style="font-size: 18px;">{{ $jumlahPeminjaman }} <br> terpinjam</h2>
                                 </div>
                             </div>
                         </div>
@@ -61,11 +60,10 @@
                             <div class="card bg-gradient-warning card-img-holder text-white">
                                 <div class="card-body">
                                     <h4 class="font-weight-normal mb-2" style="font-size: 18px;">Pengembalian Buku<i class="mdi mdi-reply mdi-24px float-right"></i></h4>
-                                    <h2 class="mb-5" style="font-size: 18px;">20 <br> dikembalikan</h2>
+                                    <h2 class="mb-5" style="font-size: 18px;">{{ $jumlahPengembalian }} <br> dikembalikan</h2>
                                 </div>
                             </div>
                         </div>
-
 
                         <div class="col-12 grid-margin">
                             <div class="card">
@@ -83,48 +81,28 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @foreach($dataPengembalian as $peminjaman)
                                                 <tr>
-                                                    <td> Nevityas </td>
-                                                    <td> Buku Bahasa indonesia </td>
+                                                    <td>{{ $peminjaman->user->name }}</td>
+                                                    <td>{{ $peminjaman->buku->nama }}</td>
                                                     <td>
+                                                        @if($peminjaman->status == 'return')
                                                         <label class="badge badge-gradient-success">Selesai</label>
-                                                    </td>
-                                                    <td> 12 November 2023 </td>
-                                                    <td> 15 November 2023</td>
-                                                </tr>
-                                                <tr>
-                                                    <td> Dinda </td>
-                                                    <td> Novel Hujan</td>
-                                                    <td>
+                                                        @else
                                                         <label class="badge badge-gradient-warning">Dipinjam</label>
+                                                        @endif
                                                     </td>
-                                                    <td> 15 Desember 2023 </td>
-                                                    <td> - </td>
+                                                    <td>{{ $peminjaman->tanggal_peminjaman }}</td>
+                                                    <td>{{ $peminjaman->tanggal_pengembalian ?? '-' }}</td>
                                                 </tr>
-                                                <tr>
-                                                    <td> Dela </td>
-                                                    <td> Kamus bahasa inggris </td>
-                                                    <td>
-                                                        <label class="badge badge-gradient-info">Dipinjam</label>
-                                                    </td>
-                                                    <td> 20 Desember 2023 </td>
-                                                    <td> - </td>
-                                                </tr>
-                                                <tr>
-                                                    <td> Rahma </td>
-                                                    <td> Buku Pelajaran Matematika</td>
-                                                    <td>
-                                                        <label class="badge badge-gradient-danger">Telat</label>
-                                                    </td>
-                                                    <td> 25 Desember 2023 </td>
-                                                    <td> 1 Januari 2024 </td>
-                                                </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="col-12 grid-margin stretch-card">
                                 <div class="card">
