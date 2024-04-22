@@ -27,6 +27,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Kode Peminjaman</th>
+                                                <th>Qr Peminjaman</th>
                                                 <th>Buku</th>
                                                 <th>Peminjam</th>
                                                 <th>Tanggal Pinjam</th>
@@ -38,6 +39,9 @@
                                             @foreach ($borrowing as $borrow)
                                                 <tr>
                                                     <td>{{ $borrow->borrow_code }}</td>
+                                                    <td>
+                                                        <img src="{{ asset('images/qrborrow/'.$borrow->id.'.png') }}" alt="QR Code">
+                                                    </td>
                                                     <td>
                                                         @foreach($borrow->borrowingDetails as $detail)
                                                             {{ $detail->book->title }}

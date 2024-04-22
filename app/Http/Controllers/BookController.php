@@ -21,7 +21,7 @@ class BookController extends Controller
         $types = Type::all();
         $bookCode = $this->generateBookCode(); // Generate automatic book code
         return view('admin.book.create', compact('bookshelves', 'types', 'bookCode'));
-    }    public function store(Request $request)
+    }   public function store(Request $request)
     {
         $request->validate([
             'no' => 'required',
@@ -52,11 +52,12 @@ class BookController extends Controller
         $book->acquisition_source = $request->acquisition_source;
         $book->type_id = $request->type_id;
         $book->bookshelf_id = $request->bookshelf_id;
+
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('images/books'), $imageName);
-            $book->image = $imageName;
+            $book->image = 'images/books/' . $imageName;
         }
 
         $book->save();
@@ -80,7 +81,7 @@ class BookController extends Controller
 
             // Jika ada gambar, salin gambar ke salinan buku
             if ($request->hasFile('image')) {
-                $copy->image = $imageName;
+                $copy->image = 'images/books/' . $imageName;
             }
 
             $copy->save();
@@ -88,6 +89,8 @@ class BookController extends Controller
 
         return redirect()->route('books.index')->with('success', 'Buku berhasil dibuat');
     }
+
+
 
     private function generateBookCode()
     {

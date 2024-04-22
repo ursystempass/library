@@ -18,15 +18,19 @@ class BorrowingDetailController extends Controller
     }
 
 
-    public function create(Request $request)
-    {
-        $borrowingId = $request->input('borrowing_id'); // Mendapatkan ID peminjaman dari URL
-        $books = Book::all(); // Mendapatkan semua buku
-        $selectedBorrowing = Borrowing::findOrFail($borrowingId);
-        $dueDate = now()->addDays(3)->toDateString();
+public function create(Request $request)
+{
+    $borrowingId = $request->input('borrowing_id');
+    $selectedBorrowing = Borrowing::findOrFail($borrowingId);
 
-        return view('admin.borrowing-detail.create', compact('selectedBorrowing', 'dueDate', 'books'));
-    }
+    // Dapatkan semua buku yang belum dipinjam sebelumnya
+    $books = Book::where('status', '!=', 'borrow')->get();
+
+    $dueDate = now()->addDays(3)->toDateString();
+
+    return view('admin.borrowing-detail.create', compact('selectedBorrowing', 'dueDate', 'books'));
+}
+
 
     public function store(Request $request)
     {

@@ -39,9 +39,9 @@
                             <div class="col-md-9 col-xs-9">
                                 <span class="shelf-location">Rak: {{ $book->shelf_location_id }}</span>
                             </div>
-                            <div class="col-md-3 col-xs-3">
+                            {{-- <div class="col-md-3 col-xs-3">
                                 <span class="quantity">Jumlah buku: {{ $totalQuantity }}</span>
-                            </div>
+                            </div> --}}
                         </div>
                     </figcaption>
                 </div>
