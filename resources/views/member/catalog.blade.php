@@ -22,7 +22,7 @@
         <h1>Perpustakaan SMKN 1 Cibinong</h1>
         <div class="header-icons">
             <button id="logoutButton" onclick="logout()" class="logout-btn">Logout</button> <!-- Tombol Logout -->
-            <i class="fas fa-bell"></i> <!-- Icon notifikasi -->
+            <i class="fas fa-bell" onclick="redirectToBorrowedBooks()"></i> <!-- Icon notifikasi -->
             <i class="fas fa-user"></i> <!-- Icon profil -->
             <i class="fas fa-barcode" onclick="redirectToBarcode({{ auth()->user()->booking_id }})"></i> <!-- Ikon barcode -->
         </div>
@@ -145,6 +145,11 @@
             });
         }
     </script>
+<script>
+    function redirectToBorrowedBooks() {
+        window.location.href = '{{ route('list.borrowed.books') }}';
+    }
+</script>
 
 </body>
 

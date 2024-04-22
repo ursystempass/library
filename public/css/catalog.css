@@ -252,3 +252,8 @@ body {
     display: flex;
     align-items: center;
 }
+
+.bottom-wrap {
+    display: flex;
+    justify-content: space-between;
+}

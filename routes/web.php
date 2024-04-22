@@ -68,6 +68,7 @@ Route::middleware('member')->group(function () {
     Route::get('/barcode', [CatalogController::class, 'showBarcode'])->name('barcode');
 Route::get('catalog/barcode/{bookingId}', [CatalogController::class, 'showBarcode'])->name('catalog.barcode');
 Route::get('/member/book_type/{type_id}', [CatalogController::class, 'showBooksByType'])->name('member.book_type');
+Route::get('/member/list-borrowed-books', [CatalogController::class, 'listBorrowedBooks'])->name('list.borrowed.books');
     Route::get('/profile-member', [ProfileController::class, 'showMember'])->name('profile.showMember');
 
 });

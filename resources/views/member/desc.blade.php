@@ -49,7 +49,7 @@
                 <div class="bottom-wrap">
                     <form action="{{ route('borrow.book', ['bookId' => $book->id]) }}" method="POST">
                         @csrf
-                        <button type="submit" class="btn btn-primary float-right">Pinjam</button>
+                        {{-- <button type="submit" class="btn btn-primary float-right">Pinjam</button> --}}
                     </form>
                     <a href="/catalog" class="btn btn-warning float-left">Kembali</a>
                 </div>
@@ -58,35 +58,6 @@
         </div>
     @endisset
 
-    <script>
-        // Ambil tombol pinjam
-        const borrowBtn = document.getElementById('borrowBtn');
-
-        // Tambahkan event listener untuk klik pada tombol pinjam
-        borrowBtn.addEventListener('click', function(event) {
-            event.preventDefault(); // Mencegah perilaku default dari link
-
-            // Tampilkan notifikasi sukses terlebih dahulu
-            Swal.fire(
-                'Sukses!',
-                'Buku berhasil dipinjam.',
-                'success'
-            ).then(() => {
-                // Tampilkan pesan untuk kembali ke halaman katalog
-                Swal.fire({
-                    title: 'Proses Peminjaman Berhasil',
-                    text: 'Silahkan kembali ke halaman catalog untuk mendapatkan barcode',
-                    icon: 'info',
-                    confirmButtonText: 'OK'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Arahkan pengguna ke halaman katalog
-                        window.location.href = '/catalog';
-                    }
-                });
-            });
-        });
-    </script>
 
 </body>
 
