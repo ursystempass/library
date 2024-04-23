@@ -17,4 +17,10 @@ class ReturnDetail extends Model
     {
         return $this->belongsTo(Book::class);
     }
+
+
+    public function borrowing()
+    {
+        return $this->belongsTo(Borrowing::class, 'borrowing_id');
+    }
 }

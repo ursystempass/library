@@ -22,21 +22,26 @@ class ReturnBackController extends Controller
 
         return view('admin.re-back.create', compact('borrowings'));
     }
-
     public function store(Request $request)
-{
-    $request->validate([
-        'borrowing_id' => 'required|exists:borrowings,id',
-        'return_date' => 'required|string|max:125',
-    ]);
+    {
+        $request->validate([
+            'borrowing_id' => 'required|exists:borrowings,id',
+            'return_date' => 'required|string|max:125',
+        ]);
 
-    $returnBack = ReturnBack::create([
-        'borrowing_id' => $request->borrowing_id,
-        'return_date' => $request->return_date,
-    ]);
+        $returnBack = ReturnBack::create([
+            'borrowing_id' => $request->borrowing_id,
+            'return_date' => $request->return_date,
+        ]);
 
-    return response()->json(['message' => 'Return back created successfully'], 200);
-}
+        // Ambil ID pengembalian yang baru saja dibuat
+        $returnBackId = $returnBack->id;
+
+        // Redirect ke halaman pembuatan detail pengembalian dengan menyertakan ID pengembalian
+        return redirect()->route('redets.create', ['return_details_id' => $returnBackId])->with('success', 'Return back created successfully.');
+    }
+
+
 
 public function destroy($id)
     {

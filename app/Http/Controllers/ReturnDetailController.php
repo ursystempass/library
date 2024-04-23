@@ -11,16 +11,17 @@ class ReturnDetailController extends Controller
 {
     public function index()
     {
-        $returnDetails = ReturnDetail::all();
-        return view('re-det.index', compact('returnDetails'));
+        $returnDetails = ReturnDetail::with('borrowing')->get(); // Memuat relasi borrowing
+        return view('admin.re-det.index', compact('returnDetails'));
     }
+
 
     public function create()
     {
         $returnbacks = ReturnBack::all();
         $books = Book::all();
 
-        return view('re-det.create', compact('returnbacks', 'books'));
+        return view('admin.re-det.create', compact('returnbacks', 'books'));
     }
 
     public function store(Request $request)

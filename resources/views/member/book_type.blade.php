@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Temukan Buku Favoritemu!</title>
+    <title>Temukan Buku Favor</title>
     <link rel="stylesheet" href="{{ asset('css/catalog.css') }}">
 </head>
 
 <body>
 
     <div class="header">
-        <h1>Temukan Buku Favoritemu!</h1>
+        <h1>Temukan Buku Favor</h1>
     </div>
 
     <div class="container">

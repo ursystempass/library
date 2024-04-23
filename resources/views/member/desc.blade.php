@@ -51,7 +51,7 @@
                         @csrf
                         {{-- <button type="submit" class="btn btn-primary float-right">Pinjam</button> --}}
                     </form>
-                    <a href="/catalog" class="btn btn-warning float-left">Kembali</a>
+                    <a href="/catalog" class="btn btn-warning ">Kembali</a>
                 </div>
 
             </figure>

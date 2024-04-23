@@ -52,11 +52,19 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('borrowings', BorrowingController::class);
     Route::resource('borrowingdetails', BorrowingDetailController::class);
-    Route::post('/borrow-scan', [ScanController::class, 'index'])->name('borrow.scan');
+    Route::get('generate-qr/{borrowId}', [BorrowingController::class, 'generateBorrowQR'])->name('generate.qr');
+
+    // Route::get('/admin/scan/borrow-scan', [ScanController::class, 'showBorrowScanPage'])->name('borrow-scan-page');
+    Route::post('/admin/scan/borrow-scan', [ScanController::class, 'borrowScan'])->name('borrow-scan');
+    Route::get('/borrow-scan-page', [ScanController::class, 'showBorrowScanPage'])->name('borrow-scan-page');
+    Route::post('/admin/scan/borrow-scan/{userId}/{borrowingId}/{bookId}', [ScanController::class, 'borrowScan'])->name('borrow-scan');
+    Route::post('/admin/scan/borrow-scan/{userId}/{borrowingId}/{bookId}', [ScanController::class, 'borrowScan'])->name('custom-borrow-scan');
+
     Route::resource('rebacks', ReturnBackController::class);
     Route::resource('redets', ReturnDetailController::class);
     Route::resource('types', TypeController::class);
     Route::post('/approve-return/{id}', [ReturnDetailController::class, 'approveReturn'])->name('approve.return');
+
 });
 
 
@@ -67,9 +75,9 @@ Route::middleware('member')->group(function () {
     Route::get('/greeting', [CatalogController::class, 'greeting'])->name('catalog.greeting'); // Rute untuk halaman greeting di CatalogController
     Route::get('/book/{id}', [CatalogController::class, 'showDescription'])->name('member.desc');
     Route::get('/barcode', [CatalogController::class, 'showBarcode'])->name('barcode');
-Route::get('catalog/barcode/{bookingId}', [CatalogController::class, 'showBarcode'])->name('catalog.barcode');
-Route::get('/member/book_type/{type_id}', [CatalogController::class, 'showBooksByType'])->name('member.book_type');
-Route::get('/member/list-borrowed-books', [CatalogController::class, 'listBorrowedBooks'])->name('list.borrowed.books');
+    Route::get('catalog/barcode/{bookingId}', [CatalogController::class, 'showBarcode'])->name('catalog.barcode');
+    Route::get('/member/book_type/{type_id}', [CatalogController::class, 'showBooksByType'])->name('member.book_type');
+    Route::get('/member/list-borrowed-books', [CatalogController::class, 'listBorrowedBooks'])->name('list.borrowed.books');
     Route::get('/profile-member', [ProfileController::class, 'showMember'])->name('profile.showMember');
 
 });
