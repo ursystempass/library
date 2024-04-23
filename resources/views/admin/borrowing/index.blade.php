@@ -40,10 +40,12 @@
                                                 <tr>
                                                     <td>{{ $borrow->borrow_code }}</td>
                                                     <td>
-                                                        <img src="{{ asset('images/qrborrow/'.$borrow->id.'.png') }}" alt="QR Code">
+                                                        <!-- Tampilkan gambar QR code -->
+                                                        <img src="{{ asset('images/qrborrow/' . $borrow->id . '.png') }}" alt="QR Code" width="100">
                                                     </td>
+
                                                     <td>
-                                                        @foreach($borrow->borrowingDetails as $detail)
+                                                        @foreach ($borrow->borrowingDetails as $detail)
                                                             {{ $detail->book->title }}
                                                             <br>
                                                         @endforeach

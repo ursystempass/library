@@ -25,9 +25,9 @@
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
-                                                <th>Reback Code</th>
-                                                <th>Borrow code</th>
-                                                <th>Fine</th>
+                                                <th>Kode Peminjaman</th>
+                                                <th>Buku</th>
+                                                <th>Denda</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -36,7 +36,6 @@
                                                 <tr>
                                                     <td>{{ $returnDetail->returnback_id }}</td>
                                                     <td>{{ $returnDetail->book_id }}</td>
-                                                    <td>{{ $returnDetail->borrow_id }}</td>
                                                     <td>{{ $returnDetail->fine }}</td>
                                                     <td>
                                                         <form action="{{ route('approve.return', $returnDetail->id) }}" method="POST" style="display: inline;">

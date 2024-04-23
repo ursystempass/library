@@ -149,3 +149,19 @@ a {
 .fa {
     color: #FF5722;
 }
+
+.btn-warning {
+    color: #fff; /* Text color */
+    background-color: #ffa500; /* Button background color (change to any color you want) */
+    border-color: #ffa500; /* Button border color (change to match background color) */
+    border-radius: 50px; /* Makes the button oval-shaped */
+    padding: 0.5rem 1.5rem; /* Adjust padding as needed */
+    display: inline-block; /* Ensures button takes only required space */
+    text-align: center; /* Centers text horizontally */
+    text-decoration: none; /* Removes any underline */
+}
+
+.btn-warning:hover {
+    background-color: #ff8c00; /* Change color on hover (optional) */
+    border-color: #ff8c00; /* Change border color on hover (optional) */
+}

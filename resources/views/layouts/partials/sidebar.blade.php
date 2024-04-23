@@ -100,17 +100,17 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ url('borrow-scan') }}">
+            <a class="nav-link" href="{{ url('borrow-scan-page') }}">
                 <span class="menu-title">Pinjam Langsung</span>
                 <i class="mdi mdi-home menu-icon"></i>
             </a>
         </li>
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link" href="{{ url('reserv-scan') }}">
                 <span class="menu-title">Pinjam Reservasi</span>
                 <i class="mdi mdi-home menu-icon"></i>
             </a>
-        </li>
+        </li> --}}
 
         {{-- <li class="nav-item">
           <a class="nav-link" href="{{ url('/majors') }}">

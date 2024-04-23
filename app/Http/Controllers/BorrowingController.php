@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
+use chillerlan\QRCode\QRCode;
+use chillerlan\QRCode\QROptions;
 use Carbon\Carbon;
 use App\Models\Book;
 use App\Models\User;
@@ -179,13 +182,22 @@ class BorrowingController extends Controller
             return response()->json(['error' => 'Peminjaman tidak ditemukan'], 404);
         }
 
+        // Konfigurasi options untuk QR code
+        $options = new QROptions([
+            'outputType' => QRCode::OUTPUT_IMAGE_PNG,
+            'imageBase64' => false,
+            'imageTransparent' => false,
+            'imageTransparentColour' => [0, 0, 0],
+            'imageTransparentAlpha' => 127,
+        ]);
+
+        // Buat instance QRCode
+        $qrcode = new QRCode($options);
+
         // Generate QR code dengan ID peminjaman
-        $qrCodePath = public_path('images/qrborrow/'.$borrow->id.'.png');
-        QRcode::png($borrow->id, $qrCodePath);
+        $qrcode->render(route('borrowings.show', $borrow->id), public_path('images/qrborrow/' . $borrow->id . '.png'));
 
         // Mengembalikan path gambar QR code
-        return $qrCodePath;
+        return public_path('images/qrborrow/' . $borrow->id . '.png');
     }
-
-
 }

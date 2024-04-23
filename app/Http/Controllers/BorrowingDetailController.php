@@ -18,23 +18,23 @@ class BorrowingDetailController extends Controller
     }
 
 
-public function create(Request $request)
-{
-    $borrowingId = $request->input('borrowing_id');
-    $selectedBorrowing = Borrowing::findOrFail($borrowingId);
+    public function create(Request $request)
+    {
+        $borrowingId = $request->input('borrowing_id');
+        $selectedBorrowing = Borrowing::findOrFail($borrowingId);
 
-    // Dapatkan semua buku yang belum dipinjam sebelumnya
-    $books = Book::where('status', '!=', 'borrow')->get();
+        // Dapatkan semua buku yang belum dipinjam sebelumnya
+        $books = Book::where('status', '!=', 'borrow')->get();
 
-    $dueDate = now()->addDays(3)->toDateString();
+        $dueDate = now()->addDays(3)->toDateString();
 
-    return view('admin.borrowing-detail.create', compact('selectedBorrowing', 'dueDate', 'books'));
-}
+        return view('admin.borrowing-detail.create', compact('selectedBorrowing', 'dueDate', 'books'));
+    }
 
 
-public function store(Request $request)
-{
-    try {
+    public function store(Request $request)
+    {
+        // Validasi input
         $request->validate([
             'borrowing_id' => 'required|numeric',
             'book_id' => 'required|numeric|exists:books,id',
@@ -42,58 +42,41 @@ public function store(Request $request)
             'type' => 'required|string|in:personal,monthly,annual',
         ]);
 
-        // Periksa apakah buku sudah dipinjam sebelumnya
-        $bookId = $request->input('book_id');
-        $existingBorrowingDetail = BorrowingDetail::where('book_id', $bookId)->first();
-        if ($existingBorrowingDetail) {
-            return back()->withInput()->withErrors(['error' => 'Buku ini sudah dipinjam sebelumnya.']);
+        try {
+            // Periksa apakah buku sudah dipinjam sebelumnya
+            $bookId = $request->input('book_id');
+            $existingBorrowingDetail = BorrowingDetail::where('book_id', $bookId)->first();
+            if ($existingBorrowingDetail) {
+                return back()->withInput()->withErrors(['error' => 'Buku ini sudah dipinjam sebelumnya.']);
+            }
+
+            // Buat detail peminjaman baru
+            $borrowingDetail = new BorrowingDetail();
+            $borrowingDetail->borrowing_id = $request->input('borrowing_id');
+            $borrowingDetail->book_id = $bookId;
+            $borrowingDetail->book_condition = $request->input('book_condition');
+            $borrowingDetail->type = $request->input('type');
+            $borrowingDetail->save();
+
+            // Perbarui status buku menjadi 'borrow'
+            $book = Book::findOrFail($bookId);
+            $book->status = 'borrow';
+            $book->save();
+
+            // Perbarui status peminjaman menjadi 'borrowed'
+            $borrowingId = $request->input('borrowing_id');
+            $borrowing = Borrowing::findOrFail($borrowingId);
+            $borrowing->status = 'borrow';
+            $borrowing->save();
+
+            // Redirect ke halaman borrowing.index setelah penyimpanan berhasil
+            return redirect()->route('borrowings.index')->with('success', 'Detail peminjaman berhasil dibuat.');
+
+        } catch (\Exception $e) {
+            // Tangani kesalahan penyimpanan data
+            return back()->withInput()->withErrors(['error' => 'Gagal membuat detail peminjaman. Silakan coba lagi nanti.']);
         }
-
-        // Buat detail peminjaman baru
-        BorrowingDetail::create($request->all());
-
-        // Perbarui status buku menjadi 'borrow'
-        $book = Book::findOrFail($bookId);
-        $book->status = 'borrow';
-        $book->save();
-
-        // Ubah status peminjaman menjadi 'borrowed'
-        $borrowingId = $request->input('borrowing_id');
-        $borrowing = Borrowing::findOrFail($borrowingId);
-        $borrowing->status = 'borrowed';
-        $borrowing->save();
-
-        return redirect()->route('borrowings.index')->with('success', 'Detail peminjaman dibuat berhasil.');
-    } catch (QueryException $e) {
-        return back()->withInput()->withErrors(['error' => 'Gagal membuat detail peminjaman. Silakan coba lagi nanti.']);
     }
-}
-    public function edit($id)
-    {
-        $borrowingDetail = BorrowingDetail::findOrFail($id);
-        $borrowings = Borrowing::all();
-        $books = Book::all();
-        return view('admin.borrowing-detail.edit', compact('borrowingDetail', 'borrowings', 'books'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'borrowing_id' => 'required|numeric',
-            'book_id' => 'required|numeric',
-            'return_date' => 'required|date',
-            'book_condition' => 'required|string|max:125',
-            'type' => 'required|in:personal,monthly,annual',
-
-        ]);
-
-        $borrowingDetail = BorrowingDetail::findOrFail($id);
-        $borrowingDetail->update($request->all());
-
-        return redirect()->route('borrowingdetails.index')
-            ->with('success', 'Borrowing detail updated successfully.');
-    }
-
     public function destroy($id)
     {
         $borrowingDetail = BorrowingDetail::findOrFail($id);

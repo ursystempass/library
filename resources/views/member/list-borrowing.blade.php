@@ -64,7 +64,7 @@
             <!-- Tampilkan setiap buku yang dipinjam -->
             @foreach ($borrowedBooks as $book)
                 <div class="book">
-                    <img src="{{ $book->image }}" alt="{{ $book->title }}">
+                    {{-- <img src="{{ asset('images/qrborrow/' . $borrow->id . '.png') }}" alt="QR Code" width="100"> --}}
                     <div class="book-details">
                         <h3>{{ $book->title }}</h3>
                         <p>{{ $book->author }}</p>
