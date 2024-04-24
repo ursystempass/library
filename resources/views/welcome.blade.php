@@ -103,40 +103,37 @@
         </div>
     </section>
 
-    <!-- Bagian Penghitung -->
     <section class="counter-area">
-    <div class="container">
-        <div class="row justify-content-center"> <!-- Pusatkan ke tengah -->
-            <div class="col-lg-3 col-md-6">
-                <div class="single-counter">
-                    <h1 class="counter">2536</h1>
-                    <p>Buku</p>
+        <!-- Bagian Penghitung -->
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-3 col-md-6">
+                    <div class="single-counter">
+                        <h1 class="counter">{{ $jumlah_buku }}</h1>
+                        <p>Buku</p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="single-counter">
-                    <h1 class="counter">6784</h1>
-                    <p>Peminjaman Buku</p>
+                <div class="col-lg-3 col-md-6">
+                    <div class="single-counter">
+                        <h1 class="counter">{{ $jumlah_peminjaman }}</h1>
+                        <p>Peminjaman Buku</p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="single-counter">
-                    <h1 class="counter">1059</h1>
-                    <p>Anggota</p>
+                <div class="col-lg-3 col-md-6">
+                    <div class="single-counter">
+                        <h1 class="counter">{{ $jumlah_anggota }}</h1>
+                        <p>Anggota</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-
-  <!-- Bagian Footer -->
+    </section>
     <footer class="footer-area section-gap">
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-md-6 single-footer-widget">
                     <h4>Tentang Kami</h4>
-                    <p>
-                    </p>
+                    <!-- Isi tentang kami di sini -->
                 </div>
                 <div class="col-lg-3 col-md-6 single-footer-widget">
                     <h4>Berlangganan</h4>
@@ -155,14 +152,7 @@
                 <div class="col-lg-3 col-md-6 single-footer-widget">
                     <h4>Feed Instagram</h4>
                     <div class="instafeed d-flex flex-wrap">
-                        <a href="#"><img src="img/i1.jpg" alt=""></a>
-                        <a href="#"><img src="img/i2.jpg" alt=""></a>
-                        <a href="#"><img src="img/i3.jpg" alt=""></a>
-                        <a href="#"><img src="img/i4.jpg" alt=""></a>
-                        <a href="#"><img src="img/i5.jpg" alt=""></a>
-                        <a href="#"><img src="img/i6.jpg" alt=""></a>
-                        <a href="#"><img src="img/i7.jpg" alt=""></a>
-                        <a href="#"><img src="img/i8.jpg" alt=""></a>
+                        <!-- Gambar dari feed Instagram -->
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 single-footer-widget">
@@ -186,6 +176,7 @@
         </div>
     </footer>
 
+    <!-- JavaScript Files -->
     <script src="js/vendor/jquery-2.2.4.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/vendor/bootstrap.min.js"></script>

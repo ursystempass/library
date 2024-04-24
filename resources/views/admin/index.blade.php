@@ -65,7 +65,7 @@
                             </div>
                         </div>
 
-                        <div class="col-12 grid-margin">
+                        <!-- <div class="col-12 grid-margin">
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title">Data Peminjaman Buku</h4>
@@ -101,7 +101,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="row">
                             <div class="col-12 grid-margin stretch-card">
@@ -121,8 +121,7 @@
                                         <div class="d-flex mt-5 align-items-top">
                                             <div class="mb-0 flex-grow">
                                                 <h5 class="me-2 mb-2">Perpustakaan SMK NEGERI 1 CIBINONG.</h5>
-                                                <p class="mb-0 font-weight-light">It is a long established fact that a
-                                                    reader will be distracted by the readable content of a page.</p>
+                                                <p class="mb-0 font-weight-light">Jl. Raya Karadenan No.7, Karadenan, Kec. Cibinong, Kabupaten Bogor, Jawa Barat 16111</p>
                                             </div>
                                             <div class="ms-auto">
                                                 <i class="mdi mdi-heart-outline text-muted"></i>
