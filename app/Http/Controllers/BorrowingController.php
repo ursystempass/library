@@ -162,42 +162,5 @@ class BorrowingController extends Controller
         return redirect()->route('borrowings.index')->with('success', 'Borrowing deleted successfully.');
     }
 
-    public function approveBooking($id)
-    {
-        $borrowing = Borrowing::findOrFail($id);
-        $borrowing->setStatus('borrow');
 
-        // Lakukan pembaruan stok buku di sini jika diperlukan
-        // Misalnya, mengurangi jumlah buku yang tersedia setelah peminjaman dibuat
-
-        return redirect()->route('borrowings.index')->with('success', 'Booking approved successfully.');
-    }
-    public function generateBorrowQR($borrowId)
-    {
-        // Ambil data peminjaman berdasarkan ID
-        $borrow = Borrowing::find($borrowId);
-
-        if (!$borrow) {
-            // Handle jika peminjaman tidak ditemukan
-            return response()->json(['error' => 'Peminjaman tidak ditemukan'], 404);
-        }
-
-        // Konfigurasi options untuk QR code
-        $options = new QROptions([
-            'outputType' => QRCode::OUTPUT_IMAGE_PNG,
-            'imageBase64' => false,
-            'imageTransparent' => false,
-            'imageTransparentColour' => [0, 0, 0],
-            'imageTransparentAlpha' => 127,
-        ]);
-
-        // Buat instance QRCode
-        $qrcode = new QRCode($options);
-
-        // Generate QR code dengan ID peminjaman
-        $qrcode->render(route('borrowings.show', $borrow->id), public_path('images/qrborrow/' . $borrow->id . '.png'));
-
-        // Mengembalikan path gambar QR code
-        return public_path('images/qrborrow/' . $borrow->id . '.png');
-    }
 }
