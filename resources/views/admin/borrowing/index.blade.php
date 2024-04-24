@@ -39,16 +39,15 @@
                                             @foreach ($borrowing as $borrow)
                                                 <tr>
                                                     <td>{{ $borrow->borrow_code }}</td>
-                                                    <td>
-                                                        <!-- Tampilkan gambar QR code -->
-                                                        <img src="{{ asset('images/qrborrow/' . $borrow->id . '.png') }}" alt="QR Code" width="100">
-                                                    </td>
+                                                    @foreach ($borrow->borrowingDetails as $detail)
+                                                        <td>
+                                                            <img src="{{ (new \chillerlan\QRCode\QRCode())->render('borrowing_id:' . $borrow->id ) }}"
+                                                            alt="QR">
 
-                                                    <td>
-                                                        @foreach ($borrow->borrowingDetails as $detail)
-                                                            {{ $detail->book->title }}
-                                                            <br>
-                                                        @endforeach
+                                                        </td>
+                                                        <td>{{ $detail->book->title }}</td>
+                                                        <br>
+                                                    @endforeach
                                                     </td>
                                                     <td>{{ $borrow->user->fullname }}</td>
                                                     <td>{{ $borrow->borrow_date }}</td>

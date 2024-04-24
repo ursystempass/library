@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,8 +24,9 @@
         <div class="header-icons">
             <button id="logoutButton" onclick="logout()" class="logout-btn">Logout</button> <!-- Tombol Logout -->
             <i class="fas fa-bell" onclick="redirectToBorrowedBooks()"></i> <!-- Icon notifikasi -->
-            <i class="fas fa-user"></i> <!-- Icon profil -->
-            <i class="fas fa-barcode" onclick="redirectToBarcode({{ auth()->user()->booking_id }})"></i> <!-- Ikon barcode -->
+            <i class="fas fa-user" onclick="redirectToProfile()"></i>
+            <i class="fas fa-barcode" onclick="redirectToBarcode({{ auth()->user()->booking_id }})"></i>
+            <!-- Ikon barcode -->
         </div>
     </div>
 
@@ -39,9 +41,9 @@
         <div class="type-list">
             <!-- Tampilkan jenis buku sebagai card -->
             @foreach ($types as $type)
-            <div class="type-card" onclick="redirectToBookType({{ $type->id }})">
-                <h3>{{ $type->name }}</h3>
-            </div>
+                <div class="type-card" onclick="redirectToBookType({{ $type->id }})">
+                    <h3>{{ $type->name }}</h3>
+                </div>
             @endforeach
         </div>
 
@@ -66,90 +68,98 @@
                     @endforeach
                 </div>
             </div>
-    </div>
+        </div>
 
-    <div class="footer">
-	@@ -50,11 +64,11 @@
+        <div class="footer">
+            @@ -50,11 +64,11 @@
 
-    <script>
-        document.getElementById('searchForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Mencegah form dari pengiriman
-            var query = this.querySelector('input[name="q"]').value.toLowerCase(); // Dapatkan nilai dari input pencarian
-            if (!query.trim()) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Please enter a search query',
-                    confirmButtonColor: '#3085d6',
-                });
-                return; // Keluar dari fungsi jika query kosong
-            }
-            var books = document.querySelectorAll('.book'); // Dapatkan semua elemen buku
-            var bookList = document.getElementById('bookList'); // Dapatkan div daftar buku
-            // Loop melalui setiap buku
-            books.forEach(function(book) {
-                var title = book.querySelector('h3').innerText.toLowerCase(); // Dapatkan judul buku
-                var author = book.querySelector('p:nth-of-type(2)').innerText.toLowerCase(); // Dapatkan pengarang buku
-                // Periksa apakah judul buku atau pengarang buku cocok dengan query pencarian
-                if (title.includes(query) || author.includes(query)) {
-                    book.style.display = 'block'; // Tampilkan buku jika cocok
-                } else {
-                    book.style.display = 'none'; // Sembunyikan buku jika tidak cocok
-                }
-            });
-            // Tampilkan daftar buku jika ada buku yang cocok dengan pencarian
-            bookList.style.display = 'block';
-        });
-    </script>
-<script>
-    function redirectToBarcode(bookingId) {
-        window.location.href = '{{ route('barcode') }}/' + bookingId;
-    }
-</script>
-<script>
-    function redirectToBookType(typeId) {
-        window.location.href = '{{ route('member.book_type', ['type_id' => ':type_id']) }}'.replace(':type_id', typeId);
-    }
-</script>
-
-    <script>
-        function logout() {
-            Swal.fire({
-                title: 'Logout',
-                text: 'Are you sure you want to logout?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, logout'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    fetch('/logout', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                            },
-                        })
-                        .then(response => {
-                            if (response.ok) {
-                                window.location.href = '{{ route('login') }}';
-                            } else {
-                                console.error('Logout failed');
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
+            <script>
+                document.getElementById('searchForm').addEventListener('submit', function(event) {
+                    event.preventDefault(); // Mencegah form dari pengiriman
+                    var query = this.querySelector('input[name="q"]').value
+                .toLowerCase(); // Dapatkan nilai dari input pencarian
+                    if (!query.trim()) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Please enter a search query',
+                            confirmButtonColor: '#3085d6',
                         });
+                        return; // Keluar dari fungsi jika query kosong
+                    }
+                    var books = document.querySelectorAll('.book'); // Dapatkan semua elemen buku
+                    var bookList = document.getElementById('bookList'); // Dapatkan div daftar buku
+                    // Loop melalui setiap buku
+                    books.forEach(function(book) {
+                        var title = book.querySelector('h3').innerText.toLowerCase(); // Dapatkan judul buku
+                        var author = book.querySelector('p:nth-of-type(2)').innerText
+                    .toLowerCase(); // Dapatkan pengarang buku
+                        // Periksa apakah judul buku atau pengarang buku cocok dengan query pencarian
+                        if (title.includes(query) || author.includes(query)) {
+                            book.style.display = 'block'; // Tampilkan buku jika cocok
+                        } else {
+                            book.style.display = 'none'; // Sembunyikan buku jika tidak cocok
+                        }
+                    });
+                    // Tampilkan daftar buku jika ada buku yang cocok dengan pencarian
+                    bookList.style.display = 'block';
+                });
+            </script>
+            <script>
+                function redirectToBarcode(bookingId) {
+                    window.location.href = '{{ route('barcode') }}/' + bookingId;
                 }
-            });
-        }
-    </script>
-<script>
-    function redirectToBorrowedBooks() {
-        window.location.href = '{{ route('list.borrowed.books') }}';
-    }
-</script>
+            </script>
+            <script>
+                function redirectToBookType(typeId) {
+                    window.location.href = '{{ route('member.book_type', ['type_id' => ':type_id']) }}'.replace(':type_id',
+                    typeId);
+                }
+            </script>
+            <script>
+                function redirectToProfile() {
+                    window.location.href = '{{ route('profile.showMember') }}';
+                }
+            </script>
+
+            <script>
+                function logout() {
+                    Swal.fire({
+                        title: 'Logout',
+                        text: 'Are you sure you want to logout?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, logout'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            fetch('/logout', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                    },
+                                })
+                                .then(response => {
+                                    if (response.ok) {
+                                        window.location.href = '{{ route('login') }}';
+                                    } else {
+                                        console.error('Logout failed');
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                });
+                        }
+                    });
+                }
+            </script>
+            <script>
+                function redirectToBorrowedBooks() {
+                    window.location.href = '{{ route('list.borrowed.books') }}';
+                }
+            </script>
 
 </body>
 

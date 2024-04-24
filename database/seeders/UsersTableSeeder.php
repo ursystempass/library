@@ -23,8 +23,8 @@ class UsersTableSeeder extends Seeder
             'alamat' => 'Member Address',
             'role' => 'member',
             'join_date' => now(),
-            'major_id' => null,
-            'class_id' => null,
+            'major_id' => 1,
+            'class_id' => 1,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
