@@ -30,6 +30,7 @@
                                                 <th>Qr Peminjaman</th>
                                                 <th>Buku</th>
                                                 <th>Peminjam</th>
+                                                <th>Status buku</th>
                                                 <th>Tanggal Pinjam</th>
                                                 <th>Tanggal Selesai</th>
                                                 <th>Aksi</th>
@@ -40,15 +41,20 @@
                                             <tr>
                                                 <td>{{ $borrowing->borrow_code }}</td>
                                                 <td>
-                                                    <img src="{{ (new \chillerlan\QRCode\QRCode())->render('borrowing_id:' . $borrowing->id ) }}"
+                                                    <img src="{{ (new \chillerlan\QRCode\QRCode())->render($borrowing->borrow_code ) }}"
                                                     alt="QR">
                                                 </td>
                                                 <td>
                                                     @foreach ($borrowing->borrowingDetails as $detail)
-                                                        {{ $detail->book->title }} <br>
+                                                        {{ $detail->book->title }}  <br>
                                                     @endforeach
                                                 </td>
                                                 <td>{{ $borrowing->user->fullname }}</td>
+                                                <td>
+                                                    @foreach ($borrowing->borrowingDetails as $detail)
+                                                        {{ $detail->book->status }}  <br>
+                                                    @endforeach
+                                                </td>
                                                 <td>{{ $borrowing->borrow_date }}</td>
                                                 <td>{{ $borrowing->due_date }}</td>
                                                 <td>

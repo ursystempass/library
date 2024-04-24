@@ -27,28 +27,51 @@
         document.addEventListener('DOMContentLoaded', function () {
             let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
 
-            scanner.addListener('scan', function (content) {
+            scanner.addListener('scan', async function (content) {
                 console.log('QR content:', content);
-                // Kirim permintaan AJAX untuk memindai QR dan mengubah status
-                fetch('{{ route("scanner.scan") }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({ borrowing_code: content })
-                })
-                .then(response => {
+                try {
+                    let response = await fetch('{{ route("scanner.scan") }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({ borrowing_code: content })
+                    });
+                    let json = await response.json();
+
                     if (!response.ok) {
-                        throw new Error('Gagal memindai QR');
+                        throw new Error("Gagal memindai QR");
+                    }else {
+                        window.location.href = '{{ route("borrowings.index") }}';
                     }
-                    // Redirect atau lakukan tindakan lain setelah berhasil
-                    window.location.href = '{{ route("borrowings.index") }}';
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    // Handle error jika diperlukan
-                });
+                } catch (error) {
+                    alert(error.message);
+                }
+                // Kirim permintaan AJAX untuk memindai QR dan mengubah status
+                // fetch('{{ route("scanner.scan") }}', {
+                //     method: 'POST',
+                //     headers: {
+                //         'Content-Type': 'application/json',
+                //         'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                //     },
+                //     body: JSON.stringify({ borrowing_code: content })
+                // })
+                // .then(response => {
+                //     if (!response.ok) {
+                //         throw new Error('Gagal memindai QR');
+                //     }
+                //     // Redirect atau lakukan tindakan lain setelah berhasil
+                // //     console.log({response});
+                //     window.location.href = '{{ route("borrowings.index") }}';
+                // })
+                // .then(data => {
+                //     console.log(data)
+                // })
+                // .catch(error => {
+                //     console.error('Error:', error);
+                //     // Handle error jika diperlukan
+                // });
             });
 
             Instascan.Camera.getCameras().then(function (cameras) {
