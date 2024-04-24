@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\Request;
 use App\Models\Borrowing;
 use App\Models\Book;
@@ -21,7 +22,7 @@ class ScannerController extends Controller
         $borrow = Borrowing::where('borrow_code', $borrowingCode)->first();
 
         if (!$borrow) {
-            return redirect()->back()->with('error', 'Kode peminjaman tidak valid.');
+            return response()->json('Kode peminjaman tidak valid.', 500);
         }
 
         // Update status peminjaman menjadi 'borrow'
@@ -29,14 +30,14 @@ class ScannerController extends Controller
         $borrow->save();
 
         // Update status buku yang dipinjam menjadi 'borrow'
-        $borrowingDetails = $borrow->details;
+        $borrowingDetails = $borrow->borrowingDetails;
         foreach ($borrowingDetails as $detail) {
             $book = Book::find($detail->book_id);
             $book->status = 'borrow';
             $book->save();
         }
 
-        return redirect()->back()->with('success', 'Status berhasil diperbarui.');
+        return response()->json('Status berhasil diperbarui.');
     }
 
 }

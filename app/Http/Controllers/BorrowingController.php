@@ -19,8 +19,8 @@ class BorrowingController extends Controller
 {
     public function index()
     {
-        $borrowing = Borrowing::all();
-        return view('admin.borrowing.index', compact('borrowing'));
+        $borrow = Borrowing::all();
+        return view('admin.borrowing.index', compact('borrow'));
     }
 
     public function create()

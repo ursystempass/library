@@ -25,10 +25,10 @@
                     <p>{{ $user->alamat }}</p>
                     <!-- Menampilkan major -->
                     <p>Major:</p>
-                    <p>{{ $user->major->nama }}</p> <!-- Assumed field "nama" in the majors table -->
+                    <p>{{ $user->major?->nama ?? '' }}</p> <!-- Assumed field "nama" in the majors table -->
                     <!-- Menampilkan class -->
                     <p>Class:</p>
-                    <p>{{ $user->class->nama }}</p> <!-- Assumed field "nama" in the classes table -->
+                    <p>{{ $user->class?->nama ?? '' }}</p> <!-- Assumed field "nama" in the classes table -->
                     <!-- Menampilkan barcode -->
                      <p>Barcode:</p>
                     <img src="{{ (new \chillerlan\QRCode\QRCode)->render(json_encode(['nis' => $user->nis])) }}" alt="Barcode" width="150" height="150">
