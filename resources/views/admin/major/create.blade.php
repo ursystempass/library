@@ -19,7 +19,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Form User</h4>
+                                <h4 class="card-title">Form Jurusan</h4>
                                 <form action="{{ route('majors.store') }}" method="post" enctype="multipart/form-data">
                                     @csrf
                                     <p class="card-description">Informasi Jurusan</p>
@@ -33,7 +33,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">Kakom</label>
+                                                <label class="col-sm-3 col-form-label">Kepala Program Keahlian                                                </label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control" name="dept_head"
                                                         required />
@@ -41,8 +41,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
-                                    <a href="{{ route('majors.index') }}" class="btn btn-light">Cancel</a>
+                                    <button type="submit" class="btn btn-gradient-primary me-2">Simpan</button>
+                                    <a href="{{ route('majors.index') }}" class="btn btn-light">Batal</a>
                                 </form>
                             </div>
                         </div>

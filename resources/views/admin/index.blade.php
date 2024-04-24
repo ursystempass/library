@@ -68,8 +68,8 @@
                         <div class="col-12 grid-margin">
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title">Data Peminjaman Buku</h4>
-                                    <div class="table-responsive">
+                                    {{-- <h4 class="card-title">Data Peminjaman Buku</h4> --}}
+                                    {{-- <div class="table-responsive">
                                         <table class="table">
                                             <thead>
                                                 <tr>
@@ -98,7 +98,7 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>
