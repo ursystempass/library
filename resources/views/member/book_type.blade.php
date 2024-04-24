@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Temukan Buku Favor</title>
     <link rel="stylesheet" href="{{ asset('css/catalog.css') }}">
+    <!-- Sertakan skrip SweetAlert di sini -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -18,6 +20,7 @@
         <div id="bookList">
             <div class="catalog">
                 @foreach ($books as $book)
+                @if ($book->status === 'ready') <!-- Filter buku hanya jika statusnya "ready" -->
                     <div class="book">
                         @if ($book->image)
                             <img src="{{ asset($book->image) }}" alt="{{ $book->title }}">
@@ -28,12 +31,6 @@
                             <h3>{{ $book->title }}</h3>
                             <p>{{ $book->author }}</p>
                             <p>{{ $book->publisher }}</p>
-                            {{-- <p>Rak: {{ $book->shelf_location_id }}</p> --}}
-                            {{-- <p class="book-quantity">Jumlah buku: {{ $book->quantity }}</p> --}}
-                            {{-- <p class="book-quantity">Jumlah buku: {{ $book->quantity }}</p> --}}
-                            {{-- <p class="book-quantity">Jumlah buku: {{ $book->quantity }}</p> --}}
-                            {{-- <p class="book-quantity">Jumlah buku: {{ $book->quantity }}</p> --}}
-                            {{-- <p class="book-quantity">Jumlah buku: {{ $book->quantity }}</p> --}}
                             <div class="bottom-wrap">
                                 <!-- Detail button -->
                                 <form action="{{ route('member.desc', ['id' => $book->id]) }}" method="GET"
@@ -45,46 +42,73 @@
                                 <!-- Pinjam button -->
                                 <form action="{{ route('borrow.book', ['bookId' => $book->id]) }}" method="POST">
                                     @csrf
-                                    <button type="submit" class="btn btn-warning">Pinjam</button>
+                                    <!-- Pinjam button -->
+                                    <button type="button" class="btn btn-warning borrowBtn"
+                                        data-book-id="{{ $book->id }}">Pinjam</button>
                                 </form>
+
                             </div>
 
                         </div>
                     </div>
-                @endforeach
+                @endif
+            @endforeach
+
             </div>
         </div>
     </div>
 
     <script>
-        // Ambil tombol pinjam
-        const borrowBtn = document.getElementById('borrowBtn');
+        // Ambil semua tombol "Pinjam"
+        const borrowBtns = document.querySelectorAll('.borrowBtn');
 
-        // Tambahkan event listener untuk klik pada tombol pinjam
-        borrowBtn.addEventListener('click', function(event) {
-            event.preventDefault(); // Mencegah perilaku default dari link
+        // Tambahkan event listener untuk klik pada setiap tombol "Pinjam"
+        borrowBtns.forEach(btn => {
+            btn.addEventListener('click', function(event) {
+                event.preventDefault(); // Mencegah perilaku default dari tombol submit
 
-            // Tampilkan notifikasi sukses terlebih dahulu
-            Swal.fire(
-                'Sukses!',
-                'Buku berhasil dipinjam.',
-                'success'
-            ).then(() => {
-                // Tampilkan pesan untuk kembali ke halaman katalog
-                Swal.fire({
-                    title: 'Proses Peminjaman Berhasil',
-                    text: 'Silahkan kembali ke halaman catalog untuk mendapatkan barcode',
-                    icon: 'info',
-                    confirmButtonText: 'OK'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Arahkan pengguna ke halaman katalog
-                        window.location.href = '/catalog';
+                const bookId = this.getAttribute('data-book-id');
+
+                // Kirim permintaan AJAX untuk memperbarui status buku menjadi "booking"
+                fetch(`/borrow/book/${bookId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Gagal memperbarui status buku.');
+                    }
+                    // Tampilkan notifikasi sukses
+                    Swal.fire(
+                        'Sukses!',
+                        'Buku berhasil dipinjam.',
+                        'success'
+                    ).then(() => {
+                        // Tampilkan pesan untuk kembali ke halaman katalog
+                        Swal.fire({
+                            title: 'Proses Peminjaman Berhasil',
+                            text: 'Silahkan kembali ke halaman catalog untuk mendapatkan barcode',
+                            icon: 'info',
+                            confirmButtonText: 'OK'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // Arahkan pengguna ke halaman katalog
+                                window.location.href = '/catalog';
+                            }
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('Terjadi kesalahan:', error);
                 });
             });
         });
     </script>
+
+
 </body>
 
 </html>
