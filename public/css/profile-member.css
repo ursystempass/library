@@ -2,18 +2,18 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(to right,  #9370db, #add8e6, #ff69b4);
+    background: linear-gradient(to right, #9370db, #add8e6);
 }
 
 .container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 80vh; /* Menjaga tinggi kontainer */
 }
 
 .profile-box {
-    width: 400px;
+    width: 400px; /* Menjaga lebar kotak profil */
     background-color: #fff;
     padding: 20px;
     border-radius: 20px;
@@ -71,4 +71,20 @@ body {
 .logout-btn:hover {
     background-color: #ff007f;
     color: #fff;
+}
+
+.barcode {
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+    position: absolute;
+    top: 0;
+    left: 110%;
+    opacity: 0;
+    transition: all 0.5s ease;
+}
+
+#profile-picture:hover .barcode {
+    left: 50%;
+    opacity: 1;
 }

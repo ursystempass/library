@@ -12,6 +12,7 @@ use App\Http\Controllers\MajorController;
 use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ScannerController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\BorrowingController;
@@ -52,13 +53,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('borrowings', BorrowingController::class);
     Route::resource('borrowingdetails', BorrowingDetailController::class);
-    Route::get('generate-qr/{borrowId}', [BorrowingController::class, 'generateBorrowQR'])->name('generate.qr');
-
-    // Route::get('/admin/scan/borrow-scan', [ScanController::class, 'showBorrowScanPage'])->name('borrow-scan-page');
-    Route::post('/admin/scan/borrow-scan', [ScanController::class, 'borrowScan'])->name('borrow-scan');
-    Route::get('/borrow-scan-page', [ScanController::class, 'showBorrowScanPage'])->name('borrow-scan-page');
-    Route::post('/admin/scan/borrow-scan/{userId}/{borrowingId}/{bookId}', [ScanController::class, 'borrowScan'])->name('borrow-scan');
-    Route::post('/admin/scan/borrow-scan/{userId}/{borrowingId}/{bookId}', [ScanController::class, 'borrowScan'])->name('custom-borrow-scan');
+    Route::get('/scanner', [ScannerController::class, 'index'])->name('scanner.index');
+    Route::post('/scanner/scan', [ScannerController::class, 'scan'])->name('scanner.scan');
 
     Route::resource('rebacks', ReturnBackController::class);
     Route::resource('redets', ReturnDetailController::class);

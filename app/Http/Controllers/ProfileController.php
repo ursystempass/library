@@ -11,23 +11,26 @@ use App\Models\User; // Import model User
 class ProfileController extends Controller
 {
 
-        public function show()
-        {
-            // Mendapatkan profil pengguna yang sedang login
-            $user = auth()->user();
+    public function show()
+    {
+        // Mendapatkan profil pengguna yang sedang login
+        $user = auth()->user();
 
-            // Mengirimkan data user ke view profile
-            return view('admin.profile', compact('user'));
-        }
-        public function showMember()
-        {
-            // Mendapatkan profil pengguna yang sedang login
-            $user = auth()->user();
-            $majors = Major::all();
-            $classes = Classe::all();
-            // Mengirimkan data user ke view profile
-            return view('member.profile-member', compact('user', 'majors', 'classes'));
-        }
+        // Mengirimkan data user ke view profile
+        return view('admin.profile', compact('user'));
+    }
+    public function showMember()
+    {
+        // Mendapatkan profil pengguna yang sedang login
+        $user = auth()->user();
+
+        // Mengambil semua majors dan classes dari database
+        $majors = Major::all();
+        $classes = Classe::all();
+
+        // Mengirimkan data user, majors, dan classes ke view profile-member
+        return view('member.profile-member', compact('user', 'majors', 'classes'));
+    }
 
     public function edit()
     {

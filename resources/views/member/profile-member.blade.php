@@ -5,25 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
     <link rel="stylesheet" href="{{ asset('css/profile-member.css') }}">
-    <style>
-        .profile-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .profile-info p {
-            margin: 5px 0;
-        }
-
-        .profile-info p:nth-child(odd) {
-            width: 100px; /* Sesuaikan lebar kolom */
-            font-weight: bold;
-        }
-
-        .profile-info p:nth-child(even) {
-            flex: 1;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
@@ -32,9 +13,11 @@
                 <h2>User Profile</h2>
             </div>
             <div class="profile-body">
-                <div class="profile-picture">
-                    <img src="{{ asset($user->image) }}" alt="Profile Picture">
+                <div class="profile-picture" id="profile-picture">
+                    <img src="{{ asset($user->image) }}" alt="Profile Picture"">
+                    {{-- <img src="{{ (new \chillerlan\QRCode\QRCode)->render(json_encode(['nis' => $user->nis])) }}" alt="Barcode" class="barcode" id="barcode"> --}}
                 </div>
+
                 <div class="profile-info">
                     <p>NIS:</p>
                     <p>{{ $user->nis }}</p>
@@ -47,8 +30,8 @@
                     <p>Class:</p>
                     <p>{{ $user->class->nama }}</p> <!-- Assumed field "nama" in the classes table -->
                     <!-- Menampilkan barcode -->
-                    <p>Barcode:</p>
-                    <img src="generate_qr.php?nis={{ $user->nis }}" alt="Barcode" width="150" height="150">
+                     <p>Barcode:</p>
+                    <img src="{{ (new \chillerlan\QRCode\QRCode)->render(json_encode(['nis' => $user->nis])) }}" alt="Barcode" width="150" height="150">
                     <button class="logout-btn">Logout</button>
                 </div>
             </div>
