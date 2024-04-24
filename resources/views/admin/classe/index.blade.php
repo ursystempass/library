@@ -19,10 +19,10 @@
                     <div class="col-lg-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Daftar Pengguna</h4>
+                                <h4 class="card-title">Daftar Kelas</h4>
                                 <!-- <button type="button" class="btn btn-gradient-primary btn-sm">Tambah Pengguna</button> -->
                                 <a href="{{ route('classes.create') }}" class="btn btn-gradient-primary">Tambah
-                                    Pengguna</a>
+                                    Kelas</a>
                                 <div class="table-responsive"> <!-- Tambahkan kelas table-responsive di sini -->
                                     <table class="table table-striped">
                                         <thead>
