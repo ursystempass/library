@@ -13,7 +13,7 @@
           <div class="input-group-prepend bg-transparent">
             <i class="input-group-text border-0 mdi mdi-magnify"></i>
           </div>
-          <input type="text" class="form-control bg-transparent border-0" placeholder="Search projects">
+          <!-- <input type="text" class="form-control bg-transparent border-0" placeholder="Search projects"> -->
         </div>
       </form>
     </div>
@@ -36,11 +36,11 @@
         <a class="dropdown-item" href="#">
             <i class="mdi mdi-cached me-2 text-success"></i> Profile
           </a>
-          <div class="dropdown-divider"></div>
+          <!-- <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">
             <i class="mdi mdi-logout me-2 text-primary"></i> Signout
           </a>
-        </div>
+        </div> -->
       </li>
       <li class="nav-item d-none d-lg-block full-screen-link">
         <a class="nav-link">
