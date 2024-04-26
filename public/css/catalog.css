@@ -152,19 +152,7 @@ body {
     color: #000; /* Set text color to black */
 }
 
-.book button {
-    margin-top: 10px; /* Adjust spacing between the content and button */
-    padding: 8px 16px; /* Padding for the button */
-    border-radius: 20px; /* Rounded button */
-    background-color: #ffcc00; /* Button background color */
-    color: white; /* Button text color */
-    border: none; /* Remove button border */
-    cursor: pointer; /* Change cursor to pointer on hover */
-}
-
-.book button:hover {
-    background-color: #ff9900; /* Change button background color on hover */
-}
+/*  */
 
 .book-details {
     color: #000; /* Set text color to black */
@@ -256,4 +244,14 @@ body {
 .bottom-wrap {
     display: flex;
     justify-content: space-between;
+}
+
+/* CSS untuk tombol "Pinjam" dengan kelas tambahan btn-primary */
+.book .btn.btn-primary {
+    background-color: #007bff; /* Warna biru */
+}
+
+/* CSS untuk tombol "Pinjam" dengan kelas tambahan btn-info */
+.book .btn.btn-info {
+    background-color: #17a2b8; /* Warna biru kehijauan */
 }
