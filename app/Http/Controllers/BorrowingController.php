@@ -138,21 +138,28 @@ class BorrowingController extends Controller
     {
         $request->validate([
             'user_id' => 'required|exists:users,id',
-            'book_id' => 'required|exists:books,id',
+            'borrow_date' => 'required|date',
         ]);
+
+        // Menambahkan logika untuk mengatur due_date 3 hari setelah borrow_date
+        $borrowDate = Carbon::parse($request->borrow_date);
+        $dueDate = $borrowDate->addDays(3)->toDateString();
 
         $borrowing = Borrowing::findOrFail($id);
         $borrowing->user_id = $request->user_id;
+        $borrowing->borrow_date = $borrowDate;
+        $borrowing->due_date = $dueDate;
         $borrowing->save();
 
-        // Update detail peminjaman (bisa disesuaikan dengan kebutuhan)
-        $borrowingDetail = $borrowing->details()->first();
-        $borrowingDetail->book_id = $request->book_id;
-        // Tambahkan informasi detail peminjaman lainnya sesuai kebutuhan
-        $borrowingDetail->save();
+        // Update detail peminjaman
+        $borrowingDetails = $borrowing->details;
+        // Anda bisa menambahkan informasi detail peminjaman lainnya sesuai kebutuhan di sini
 
-        return redirect()->route('borrowings.index')->with('success', 'Borrowing updated successfully.');
+        $borrowing->save();
+
+        return redirect()->route('borrowingdetails.create', ['borrowing_id' => $borrowing->id])->with('success', 'Borrowing created successfully.');
     }
+
 
     public function destroy($id)
     {

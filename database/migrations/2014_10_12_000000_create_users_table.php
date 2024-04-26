@@ -17,8 +17,8 @@ return new class extends Migration
             $table->char('nis', 20)->unique();
             $table->string('fullname', 125);
             $table->string('password')->bcrypt();
-            $table->string('image')->nullable(); // Kolom untuk menyimpan nama file gambar
             $table->string('alamat', 225);
+            $table->string('image');
             $table->string('role', 50)->default('member'); // Tambah kolom role
             $table->string('join_date', 125);
             $table->unsignedBigInteger('major_id')->nullable();

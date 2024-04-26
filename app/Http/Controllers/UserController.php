@@ -35,17 +35,14 @@ class UserController extends Controller
             'join_date' => 'required|date', // validasi tanggal
             'major_id' => 'nullable|exists:majors,id',
             'class_id' => 'nullable|exists:classes,id',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // tambahkan validasi untuk gambar
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Tambahkan validasi gambar
         ]);
 
-        // Upload gambar jika ada
+        $request['password'] = Hash::make($request['password']);
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('images/users', 'public');
+            $imagePath = $request->file('image')->store('images/profile', 'public');
             $request['image'] = $imagePath;
         }
-
-        // Hash password dan simpan pengguna
-        $request['password'] = Hash::make($request['password']);
         User::create($request->only([
             'kode_user', 'nis', 'fullname', 'password', 'alamat', 'role', 'join_date', 'major_id', 'class_id', 'image'
         ]));

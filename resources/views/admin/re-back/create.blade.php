@@ -25,7 +25,7 @@
                                 <form action="{{ route('rebacks.store') }}" method="POST">
                                     @csrf
                                     <div class="form-group">
-                                        <label for="borrowing_id">Borrowing ID:</label>
+                                        <label for="borrowing_id">Kode Peminjaman</label>
                                         <select name="borrowing_id" id="borrowing_id" class="form-control">
                                             @foreach ($borrowings as $borrowing)
                                                 <option value="{{ $borrowing->id }}">{{ $borrowing->borrow_code }}</option>
@@ -34,8 +34,8 @@
 
                                     </div>
                                     <div class="form-group">
-                                        <label for="return_date">Return Date:</label>
-                                        <input type="text" name="return_date" id="return_date" class="form-control">
+                                        <label for="return_date">Tanggal Pengembalian</label>
+                                        <input type="date" name="return_date" id="return_date" class="form-control">
                                     </div>
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </form>

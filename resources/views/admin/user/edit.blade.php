@@ -82,12 +82,6 @@
                                             @endforeach
                                         </select>
                                     </div>
-
-                                    <div class="form-group">
-                                        <label for="image">Image</label>
-                                        <input type="file" class="form-control-file" id="image" name="image">
-                                    </div>
-
                                     <button type="submit" class="btn btn-gradient-primary me-2">Update User</button>
                                     <a href="{{ route('users.index') }}" class="btn btn-light">Cancel</a>
                                 </form>

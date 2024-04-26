@@ -77,6 +77,34 @@ class BorrowingDetailController extends Controller
             return back()->withInput()->withErrors(['error' => 'Gagal membuat detail peminjaman. Silakan coba lagi nanti.']);
         }
     }
+
+    public function edit($id)
+    {
+        $borrowingDetail = BorrowingDetail::findOrFail($id);
+        $books = Book::where('status', '!=', 'borrow')->get();
+
+        return view('admin.borrowing-detail.edit', compact('borrowingDetail', 'books'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'book_id' => 'required|numeric|exists:books,id',
+            'book_condition' => 'required|string|in:good,damaged',
+        ]);
+
+        try {
+            $borrowingDetail = BorrowingDetail::findOrFail($id);
+            $borrowingDetail->book_id = $request->input('book_id');
+            $borrowingDetail->book_condition = $request->input('book_condition');
+            $borrowingDetail->save();
+
+            return redirect()->route('borrowings.index')->with('success', 'Borrowing detail updated successfully.');
+        } catch (\Exception $e) {
+            return back()->withInput()->withErrors(['error' => 'Failed to update borrowing detail. Please try again later.']);
+        }
+    }
+
     public function destroy($id)
     {
         $borrowingDetail = BorrowingDetail::findOrFail($id);

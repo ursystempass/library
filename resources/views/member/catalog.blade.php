@@ -21,20 +21,21 @@
 <body>
     <div class="header">
         <h1>Perpustakaan SMKN 1 Cibinong</h1>
+        <p>Temukan Buku Sesuai Kebutuhanmu</p>
+
         <div class="header-icons">
             <button id="logoutButton" onclick="logout()" class="logout-btn">Logout</button> <!-- Tombol Logout -->
             <i class="fas fa-bell" onclick="redirectToBorrowedBooks()"></i> <!-- Icon notifikasi -->
             <i class="fas fa-user" onclick="redirectToProfile()"></i>
-            <i class="fas fa-barcode" onclick="redirectToBarcode({{ auth()->user()->booking_id }})"></i>
             <!-- Ikon barcode -->
         </div>
     </div>
 
     <div class="container">
-        <form class="search-container" id="searchForm">
+        {{-- <form class="search-container" id="searchForm">
             <input type="text" placeholder="Search..." name="q">
             <button type="submit">Search</button>
-        </form>
+        </form> --}}
         {{-- <button id="logoutButton" onclick="logout()" class="logout-btn">
             Logout
         </button> --}}
@@ -71,7 +72,6 @@
         </div>
 
         <div class="footer">
-            @@ -50,11 +64,11 @@
 
             <script>
                 document.getElementById('searchForm').addEventListener('submit', function(event) {

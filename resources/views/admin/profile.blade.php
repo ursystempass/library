@@ -59,7 +59,6 @@
                                         <h4>Selamat datang, {{ $user->fullname }}!</h4>
                                         <p>Kode User: {{ $user->kode_user }}</p>
                                         <p>NIS: {{ $user->nis }}</p>
-                                        <p>Email: {{ $user->email }}</p>
                                         <p>Alamat: {{ $user->alamat }}</p>
                                         <!-- Tambahkan informasi profil lainnya yang Anda inginkan -->
                                     </div>

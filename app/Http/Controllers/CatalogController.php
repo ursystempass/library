@@ -44,13 +44,13 @@ class CatalogController extends Controller
         // Ambil ID pengguna yang sedang login
         $userId = Auth::id();
 
-        // Ambil daftar buku yang dipinjam oleh pengguna dengan status booking atau borrow
+        $borrowing = Borrowing::all();
         $borrowedBooks = Book::whereHas('borrowingDetails.borrowing', function ($query) use ($userId) {
             $query->where('user_id', $userId)
                 ->whereIn('status', ['booking', 'borrow']);
         })->get();
 
-        return view('member.list-borrowing', compact('borrowedBooks'));
+        return view('member.list-borrowing', compact('borrowedBooks', 'borrowing'));
     }
 
 

@@ -34,7 +34,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="fullname">Fullname</label>
+                                        <label for="fullname">Nama Lengkap</label>
                                         <input type="text" class="form-control" id="fullname" name="fullname" required>
                                     </div>
 
@@ -49,7 +49,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="role">Role</label>
+                                        <label for="role">Peranan</label>
                                         <select class="form-control" id="role" name="role" required>
                                             <option value="admin">Admin</option>
                                             <option value="member">Member</option>
@@ -57,12 +57,12 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="join_date">Join Date</label>
+                                        <label for="join_date">Tanggal Bergabung</label>
                                         <input type="text" class="form-control" id="join_date" name="join_date" value="{{ date('Y-m-d') }}" readonly>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="major_id">Major</label>
+                                        <label for="major_id">Jurusan</label>
                                         <select class="form-control" id="major_id" name="major_id">
                                             <option value="" disabled selected>Select Major</option>
                                             @foreach ($majors as $major)
@@ -72,7 +72,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="class_id">Class</label>
+                                        <label for="class_id">Kelas</label>
                                         <select class="form-control" id="class_id" name="class_id">
                                             <option value="" disabled selected>Select Class</option>
                                             @foreach ($classes as $class)
@@ -80,12 +80,10 @@
                                             @endforeach
                                         </select>
                                     </div>
-
                                     <div class="form-group">
                                         <label for="image">Image</label>
-                                        <input type="file" class="form-control-file" id="image" name="image">
+                                        <input type="file" class="form-control" id="image" name="image">
                                     </div>
-
                                     <button type="submit" class="btn btn-gradient-primary me-2">Create User</button>
                                     <a href="{{ route('users.index') }}" class="btn btn-light">Cancel</a>
                                 </form>
