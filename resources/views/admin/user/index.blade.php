@@ -27,17 +27,20 @@
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
+                                                <th>Gambar</th>
                                                 <th>Kode User</th>
                                                 <th>NIS</th>
                                                 <th>Nama Lengkap</th>
-                                                <th>Role</th>
-                                                <th>Tanggal Bergabung</th>
+                                                <th>Peranan</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($users as $user)
                                                 <tr>
+                                                    <td>
+                                                        <img src="{{ asset($user->image) }}">
+                                                    </td>
                                                     <td>{{ $user->kode_user }}</td>
                                                     <td>{{ $user->nis }}</td>
                                                     <td>{{ $user->fullname }}</td>

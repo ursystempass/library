@@ -20,7 +20,6 @@
         <div id="bookList">
             <div class="catalog">
                 @foreach ($books as $book)
-                @if ($book->status === 'ready') <!-- Filter buku hanya jika statusnya "ready" -->
                     <div class="book">
                         @if ($book->image)
                             <img src="{{ asset($book->image) }}" alt="{{ $book->title }}">
@@ -51,9 +50,7 @@
 
                         </div>
                     </div>
-                @endif
-            @endforeach
-
+                @endforeach
             </div>
         </div>
     </div>

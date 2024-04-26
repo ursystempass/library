@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,8 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(to right,  #9370db, #add8e6); /* Gradasi warna baru */
+            background: linear-gradient(to right, #9370db, #add8e6);
+            /* Gradasi warna baru */
             margin: 0;
             padding: 0;
         }
@@ -26,18 +28,24 @@
         }
 
         .book {
-            width: calc(25% - 20px); /* 4 books per row with spacing */
+            width: calc(25% - 20px);
+            /* 4 books per row with spacing */
             margin: 20px;
-            background-color: #fff; /* Book background color */
+            background-color: #fff;
+            /* Book background color */
             padding: 20px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); /* Added shadow for 3D effect */
-            border-radius: 10px; /* Rounded corners for a smoother look */
-            text-align: center; /* Center-align the content */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+            /* Added shadow for 3D effect */
+            border-radius: 10px;
+            /* Rounded corners for a smoother look */
+            text-align: center;
+            /* Center-align the content */
         }
 
         .book img {
             max-width: 100%;
-            max-height: 200px; /* Max height of book cover */
+            max-height: 200px;
+            /* Max height of book cover */
             height: auto;
             margin-bottom: 10px;
         }
@@ -58,13 +66,16 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="catalog">
             <!-- Tampilkan setiap buku yang dipinjam -->
             @foreach ($borrowedBooks as $book)
                 <div class="book">
-                    {{-- <img src="{{ asset('images/qrborrow/' . $borrow->id . '.png') }}" alt="QR Code" width="100"> --}}
+                    @if ($book->borrowingDetails->isNotEmpty() && $book->borrowingDetails->first()->borrowing)
+                        <img src="{{ (new \chillerlan\QRCode\QRCode())->render($book->borrowingDetails->first()->borrowing->borrow_code) }}" alt="QR">
+                    @endif
                     <div class="book-details">
                         <h3>{{ $book->title }}</h3>
                         <p>{{ $book->author }}</p>
@@ -76,4 +87,5 @@
         </div>
     </div>
 </body>
+
 </html>

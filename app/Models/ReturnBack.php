@@ -20,4 +20,9 @@ class ReturnBack extends Model
     {
         return $this->hasMany(ReturnDetail::class);
     }
+
+    public function returnback()
+    {
+        return $this->belongsTo(Returnback::class);
+    }
 }

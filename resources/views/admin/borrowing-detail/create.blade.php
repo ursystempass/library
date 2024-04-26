@@ -1,4 +1,3 @@
-User
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,30 +27,31 @@ User
                                             <div class="form-group">
                                                 <label for="borrowing_id">Peminjaman:</label>
                                                 <select name="borrowing_id" id="borrowing_id" class="form-control">
-                                                    <option value="{{ $selectedBorrowing->id }}">{{ $selectedBorrowing->borrow_code }}</option>
+                                                    <option value="{{ $selectedBorrowing->id }}">
+                                                        {{ $selectedBorrowing->borrow_code }}</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label for="book_id">Buku:</label>
                                                 <select name="book_id" id="book_id" class="form-control">
                                                     <!-- Tambahkan pilihan buku yang tersedia -->
-                                                    @foreach($books as $book)
-                                                        @if($book->status !== 'borrow')
-                                                            <option value="{{ $book->id }}">{{ $book->title }}</option>
+                                                    @foreach ($books as $book)
+                                                        @if ($book->status !== 'borrow')
+                                                            <option value="{{ $book->id }}" @if(old('book_id') == $book->id) selected @endif>{{ $book->title }}</option>
                                                         @endif
                                                     @endforeach
                                                 </select>
+
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label for="type">Tipe:</label>
                                                 <select name="type" id="type" class="form-control">
-                                                    <option value="personal">Pribadi</option>
-                                                    <option value="monthly">Bulanan</option>
-                                                    <option value="annual">Tahunan</option>
+                                                    <option value="personal" @if(old('type') == 'personal') selected @endif>Pribadi</option>
+                                                    <option value="monthly" @if(old('type') == 'monthly') selected @endif>Bulanan</option>
+                                                    <option value="annual" @if(old('type') == 'annual') selected @endif>Tahunan</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -59,8 +59,8 @@ User
                                             <div class="form-group">
                                                 <label for="book_condition">Kondisi Buku:</label>
                                                 <select name="book_condition" id="book_condition" class="form-control">
-                                                    <option value="good">Baik</option>
-                                                    <option value="damaged">Rusak</option>
+                                                    <option value="good" @if(old('book_condition') == 'good') selected @endif>Baik</option>
+                                                    <option value="damaged" @if(old('book_condition') == 'damaged') selected @endif>Rusak</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -72,6 +72,7 @@ User
                                         </div>
                                     </div>
                                 </form>
+
                             </div>
                         </div>
                     </div>

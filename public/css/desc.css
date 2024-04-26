@@ -1,143 +1,53 @@
-body {
-    background: linear-gradient(to right, #9370db, #add8e6, #ff69b4);
-}
-
-a {
-    text-decoration: none !important;
-}
-
-.card-product-list,
-.card-product-grid {
-    margin-bottom: 0;
-}
-
 .container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Mengisi tinggi container dengan tinggi viewport */
+    height: 100vh;
+    background: linear-gradient(45deg, #9370db, #add8e6); /* Gradient dari ungu ke biru muda */
+}
+
+.box {
+    display: flex;
+    flex-direction: row; /* Menetapkan arah flex ke horizontal */
+    align-items: center; /* Pusatkan vertikal */
+    width: 800px; /* Lebar total kotak */
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* Tambahkan bayangan yang lebih menarik */
+    border-radius: 20px; /* Tambahkan border-radius untuk membuat kotak */
+    background-color: #f5f5f5; /* Warna latar belakang abu-abu muda */
+}
+
+.image-container {
+    width: 40%; /* Lebar gambar (40% dari lebar kotak) */
+    padding: 20px;
+    background-color: #fff; /* Warna latar belakang gambar putih */
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* Tambahkan bayangan pada gambar */
+}
+
+.image-container img {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
 }
 
 .card {
-    /* Kode CSS Anda untuk kartu */
-    width: 500px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    word-wrap: break-word;
-    background-color: #fff;
-    background-clip: border-box;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 23px;
-    margin-top: 50px;
+    width: 60%; /* Lebar card (60% dari lebar kotak) */
+    background-color: #fff; /* Warna latar belakang card putih */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* Tambahkan bayangan pada card */
+    border-radius: 20px;
+    margin-left: 20px; /* Jarak antara gambar dan card */
 }
 
-
-.card-product-grid:hover {
-    box-shadow: 0 4px 15px rgba(153, 153, 153, 0.3);
-    transition: 0.3s;
-}
-
-.card-product-grid .img-wrap {
-    border-radius: 0.2rem 0.2rem 0 0;
-    height: 220px;
-}
-
-.card .img-wrap {
-    overflow: hidden;
-}
-
-.card-lg .img-wrap {
-    height: 280px;
-}
-
-.card-product-grid .img-wrap {
-    border-radius: 0.2rem 0.2rem 0 0;
-    height: 275px;
-    padding: 16px;
-}
-
-[class*='card-product'] .img-wrap img {
-    height: 100%;
-    max-width: 100%;
-    width: auto;
-    display: inline-block;
-    object-fit: cover;
-}
-
-.img-wrap {
-    text-align: center;
-    display: block;
-}
-
-.card-product-grid .info-wrap {
-    overflow: hidden;
-    padding: 18px 20px;
-}
-
-[class*='card-product'] a.title {
-    color: #212529;
-    display: block;
-}
-
-.rating-stars {
-    display: inline-block;
-    vertical-align: middle;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    position: relative;
-    white-space: nowrap;
-    clear: both;
-}
-
-.rating-stars li.stars-active {
-    z-index: 2;
-    position: absolute;
-    top: 0;
-    left: 0;
-    overflow: hidden;
-}
-
-.rating-stars li {
-    display: block;
-    text-overflow: clip;
-    white-space: nowrap;
-    z-index: 1;
-}
-
-.card-product-grid .bottom-wrap {
-    padding: 18px;
-    border-top: 1px solid #e4e4e4;
-}
-
-.bottom-wrap-payment {
-    padding: 0px;
-    border-top: 1px solid #e4e4e4;
-}
-
-.rated {
-    font-size: 10px;
-    color: #b3b4b6;
+.info-wrap {
+    padding: 20px;
+    font-size: 18px;
 }
 
 .btn {
     display: inline-block;
-    font-weight: 600;
-    color: #343a40;
-    text-align: center;
-    vertical-align: middle;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    background-color: transparent;
-    border: 1px solid transparent;
-    padding: 0.45rem 0.85rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    border-radius: 0.2rem;
+    font-size: 16px;
+    margin-top: 10px;
 }
 
 .btn-primary {
@@ -146,22 +56,18 @@ a {
     border-color: #9370db;
 }
 
-.fa {
-    color: #FF5722;
-}
-
 .btn-warning {
-    color: #fff; /* Text color */
-    background-color: #ffa500; /* Button background color (change to any color you want) */
-    border-color: #ffa500; /* Button border color (change to match background color) */
-    border-radius: 50px; /* Makes the button oval-shaped */
-    padding: 0.5rem 1.5rem; /* Adjust padding as needed */
-    display: inline-block; /* Ensures button takes only required space */
-    text-align: center; /* Centers text horizontally */
-    text-decoration: none; /* Removes any underline */
+    color: #fff;
+    background-color: #ffa500;
+    border-color: #ffa500;
+    border-radius: 30px;
+    padding: 8px 16px;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
 }
 
 .btn-warning:hover {
-    background-color: #ff8c00; /* Change color on hover (optional) */
-    border-color: #ff8c00; /* Change border color on hover (optional) */
+    background-color: #ff8c00;
+    border-color: #ff8c00;
 }

@@ -17,32 +17,32 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->insert([
             'kode_user' => 'USR002',
             'nis' => '0987654321',
-            'fullname' => 'Member',
-            'password' => Hash::make('memberpassword'),
-            'image' => 'member.jpg',
-            'alamat' => 'Member Address',
+            'fullname' => 'Nevityas Puspakania',
+            'password' => Hash::make('password'),
+            'alamat' => '2024-04-25 12:59:07.390 [info] Laravel Extra Intellisense Started...',
             'role' => 'member',
             'join_date' => now(),
             'major_id' => 1,
+            'image' => 'images/profile/1714020100.jpg',
             'class_id' => 1,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
     {
-        DB::table('users')->insert([
-            'kode_user' => 'ADM001',
-            'nis' => 'cbn123',
-            'fullname' => 'Admin',
-            'password' => Hash::make('password'),
-            'image' => null,
-            'alamat' => 'Alamat Admin',
-            'role' => 'admin',
-            'join_date' => now(),
-            'major_id' => null,
-            'class_id' => null,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+            DB::table('users')->insert([
+                'kode_user' => 'ADM001',
+                'nis' => 'cbn123',
+                'fullname' => 'Fadilah Nurhasani',
+                'password' => Hash::make('password'),
+                'alamat' => ' Jl. Raya Karadenan No.7, Karadenan, Kec. Cibinong, Kabupaten Bogor, Jawa Barat 16111',
+                'role' => 'admin',
+                'join_date' => now(),
+                'major_id' => null,
+                'image' => 'images/profile/1714020100.jpg',
+                'class_id' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
 }
 }
 }

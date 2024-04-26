@@ -19,16 +19,16 @@
                     <div class="col-lg-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Edit Setting</h4>
+                                <h4 class="card-title">Edit Setelan</h4>
                                 <form action="{{ route('settings.update', $setting->id) }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
                                     <div class="form-group">
-                                        <label>Name</label>
+                                        <label>Nama</label>
                                         <input type="text" name="name" class="form-control" value="{{ $setting->name }}" required>
                                     </div>
                                     <div class="form-group">
-                                        <label>Image</label>
+                                        <label>Gambar</label>
                                         @if($setting->image)
                                             <!-- Tampilkan gambar yang sudah ada jika ada -->
                                             <img src="{{ asset($setting->image) }}" alt="Current Image" class="mt-2" style="max-width: 200px;">
@@ -40,11 +40,11 @@
                                         <input type="file" name="image" class="form-control-file">
                                     </div>
                                     <div class="form-group">
-                                        <label>Description</label>
+                                        <label>Deskripsi</label>
                                         <textarea name="desc" class="form-control" required>{{ $setting->desc }}</textarea>
                                     </div>
                                     <div class="form-group">
-                                        <label>Address</label>
+                                        <label>Alamat</label>
                                         <input type="text" name="address" class="form-control" value="{{ $setting->address }}" required>
                                     </div>
                                     <div class="form-group">

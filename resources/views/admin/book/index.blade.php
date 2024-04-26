@@ -26,6 +26,7 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
+                                                <th>Gambar</th>
                                                 <th>Kode Buku</th>
                                                 <th>Nomor Induk</th>
                                                 <th>Judul Buku</th>
@@ -45,6 +46,7 @@
                                             @foreach ($books as $book)
                                                 <tr>
                                                     <th scope="row">{{ $loop->iteration }}</th>
+                                                    <td><img src="{{ asset($book->image) }}" alt="Gambar Buku" style="max-width: 100px; max-height: 100px;"></td>
                                                     <td>{{ $book->book_code }}</td>
                                                     <td>{{ $book->no }}</td>
                                                     <td>{{ $book->title }}</td>

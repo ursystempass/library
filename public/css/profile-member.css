@@ -32,7 +32,7 @@ body {
 
 .profile-body {
     display: flex;
-    align-items: center;
+    align-items: flex-start; /* Menjaga agar data sejajar */
 }
 
 .profile-picture {
@@ -48,14 +48,20 @@ body {
 
 .profile-info {
     flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .profile-info h3 {
     margin-top: 0;
 }
 
+.profile-info > div {
+    margin-bottom: 10px; /* Memberikan jarak antar data */
+}
 .profile-info p {
-    margin: 5px 0;
+    margin: 0; /* Menghapus margin bawaan dari <p> */
+    font-weight: bold; /* Menjadikan teks tebal */
 }
 
 .logout-btn {
